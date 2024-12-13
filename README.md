@@ -69,15 +69,15 @@ project/
 ### Details   
 - data/
   - lima/  This subdirectory contains:
-      - fasta barcode files for each pool (bcpr-fw.fasta and bcpr-rv.fasta).
-      - the concatenating files for each pool (cat.sh).
+      - barcode file (lima-bc.fasta).
+      - sample IDs (biosamples.csv).
   - r/  This subdirectory contains:
-      - the manifest files for each pool (manifest.csv).
+      - sample information (metadata.csv).
   - galaxy/  This subdirectory contains:
-      - the sample information for the metabarcoding analysis (metadata.csv).
-      - the metadata and measurements at individual-level in lab trials (pouches-ind.tsv)
+      - sequences from [Lobato et al., 2024](https://doi.org/10.1186/s40168-024-01951-5) used as query in Galaxy (bh_amp.fasta).
+      - sequences from cultured taxa used as a database in Galaxy (bh_pb.fasta)
   - megax/  This subdirectory contains:
-      - the metadata and measurments related to each replicate experiment in lab trials (pouches-exp.tsv)
+      - aligned sequences from cultured taxa obtained from bh_pb.fasta and used for maximum likelyhood tree construction (bh_pb.meg)
   - itol/  This subdirectory contains:
       - the metadata and measurements of the field trials (field23.tsv)
   - julia/  This subdirectory contains:
