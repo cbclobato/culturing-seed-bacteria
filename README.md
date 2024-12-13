@@ -74,16 +74,20 @@ project/
   - r/  This subdirectory contains:
       - sample information (metadata.csv).
   - galaxy/  This subdirectory contains:
-      - sequences from [Lobato et al., 2024](https://doi.org/10.1186/s40168-024-01951-5) used as query in Galaxy (bh_amp.fasta).
-      - sequences from cultured taxa used as a database in Galaxy (bh_pb.fasta)
+      - sequences from [Lobato et al., 2024](https://doi.org/10.1186/s40168-024-01951-5) used as query in [Galaxy](https://usegalaxy.org/) (bh_amp.fasta).
+      - sequences from cultured taxa used as a database in [Galaxy](https://usegalaxy.org/) (bh_pb.fasta)
   - megax/  This subdirectory contains:
       - aligned sequences from cultured taxa obtained from bh_pb.fasta and used for maximum likelyhood tree construction (bh_pb.meg)
   - itol/  This subdirectory contains:
-      - the metadata and measurements of the field trials (field23.tsv)
+      - annotations on genus level for each cultured ASV (bh_pb-genus.txt)
+      - annotations on class level for each cultured ASV (bh_pb-class.txt)
+      - annotations on the number of assignments at >99% similarity between community and cultured sequences (bh_pb-asgn.txt)
   - julia/  This subdirectory contains:
-      - the output gene class table from PLaBase (PLaBase.tsv)
+      - feature table (asv-table-fw.csv).
+      - sample information (metadata-fw.csv).
   - cytoscape/  This subdirectory contains:
-      - the output gene class table from PLaBase (PLaBase.tsv)
+      - ASV mean relative abundance and identification of cultured ASVs (nodes-rel-rec.csv).
+      - ASV taxonomic information (nodes-taxa.csv).
 
 - scripts/
   - r/  This subdirectory contains the scripts used in R to create the phyloseq objects, preprocess the data, and prepare the figures for the manuscript.    
