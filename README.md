@@ -1,4 +1,4 @@
-## Bridging the gap: Addressing the uncultured microbiota in Cannabis seeds
+## Bridging the gap: Addressing the uncultured microbiota in *Cannabis* seeds
 
 Authors: Carolina Lobato, Ahmed Abdelfattah, Gabriele Berg & Tomislav Cernava
 
@@ -77,7 +77,7 @@ project/
       - sequences from [Lobato *et al*., 2024](https://doi.org/10.1186/s40168-024-01951-5) used as query in [Galaxy](https://usegalaxy.org/) (bh_amp.fasta).
       - sequences from cultured taxa used as a database in [Galaxy](https://usegalaxy.org/) (bh_pb.fasta)
   - megax/  This subdirectory contains:
-      - aligned sequences from cultured taxa obtained from bh_pb.fasta and used for maximum likelyhood tree construction (bh_pb.meg)
+      - aligned sequences from cultured taxa obtained from bh_pb.fasta and used for maximum likelihood tree construction (bh_pb.meg)
   - itol/  This subdirectory contains:
       - annotations on genus level for each cultured ASV (bh_pb-genus.txt)
       - annotations on class level for each cultured ASV (bh_pb-class.txt)
@@ -92,13 +92,13 @@ project/
 - scripts/
   - r/  This subdirectory contains the scripts used in R to create the phyloseq objects, preprocess the data, and prepare the figures for the manuscript.    
   -  utils/  This subdirectory contains utility scripts such as:
-      - 0-install.R for installing the necessary packages in R.
-      - demux-lima.txt with the script used for beta diversity representation with UMAP shown in Figure2.
-      - biomarkers/ contains the scripts used for biomarker assessment shown in Figure3.
+      - 0-install.R, for installing the necessary packages in R.
+      - demux-lima.txt, which contains the script for demultiplexing CCS/HiFi reads using [Lima](https://lima.how/).
+      - flashweave.jl contains the script for building the network using [Flashweave](https://github.com/meringlab/FlashWeave.jl).
    
 - outputs/ contains saved outputs.
    
 ### Further content
-The 16S rRNA gene amplicon raw FASTQ files were deposited in [ENA](https://www.ebi.ac.uk/ena) under the accession number PRJXXXXXX.
+The 16S Pacbio V1-V9 rRNA gene amplicon raw FASTQ files for *Cannabis* cultured seed endophytic bacterial taxa were deposited in [ENA](https://www.ebi.ac.uk/ena) under the accession number PRJXXXXXX.
 
 ### References
