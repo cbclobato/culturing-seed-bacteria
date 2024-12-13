@@ -2,63 +2,45 @@
 
 Authors: Carolina Lobato, Ahmed Abdelfattah, Gabriele Berg & Tomislav Cernava
 
-Institute of Environmental Biotechnology (UBT), Graz University of Technology, Graz (Austria) contact: cbotocourinhalobato@tugraz.at
+[Institute of Environmental Biotechnology (UBT)](https://www.tugraz.at/institute/ubt/home/) — TU Graz
 
 ### Project structure
 ```text
 project/
 ├── data/
-│   └── metadata/
-│       ├── CB1/
-│       │   ├── bcpr-fw.fasta
-│       │   ├── bcpr-rv.fasta
-│       │   ├── cat.sh
-│       │   └── manifest.csv
-│       ├── CB2/
-│       │   ├── bcpr-fw.fasta
-│       │   ├── bcpr-rv.fasta
-│       │   ├── cat.sh
-│       │   └── manifest.csv
-│       ├── CB3/
-│       │   ├── bcpr-fw.fasta
-│       │   ├── bcpr-rv.fasta
-│       │   ├── cat.sh
-│       │   └── manifest.csv
-│       ├── metadata.csv
-│       ├── pouches-ind.tsv
-│       ├── pouches-exp.tsv
-│       ├── field23.tsv
-│       └── PLaBase.tsv
-├── scripts/
-│   ├── qiime2/
-│   │   └── bioprocessing_pipeline.sh
-│   ├── r/
-│   │   ├── Setup.Rmd
-│   │   ├── Figure1.Rmd
-│   │   ├── Figure2.Rmd
-│   │   ├── Figure3.Rmd
-│   │   ├── Figure4.Rmd
-│   │   └── Figure5.Rmd
-│   └── utils/
-│       ├── csv2fasta.sh
-│       ├── csv2tsv.sh
-│       ├── qiime2r.sh
-│       ├── install.R
-│       ├── plot_composition_v2.R
-│       ├── umap/
-│       │   ├── data.R
-│       │   ├── project.R
-│       │   ├── cluster-analysis.R
-│       │   └── run-all.R
-│       └── biomarkers/
-│           ├── data.R
-│           ├── feature-importance.R
-│           ├── sv-importance-patch.R
-│           ├── train-eval.R 
-│           └── run-all.R
-├── outputs/
-│   ├── qiime2/
+│   ├── lima/
+│   │   ├── barcodes.fasta
+│   │   ├── biosamples.csv
+│   │   └── manifest.txt
 │   └── r/
+│       └── metadata.csv
+│
+├── scripts/
+│   ├── lima/
+│   │   └── demux.sh
+│   ├── r/
+│   │   ├── 1-dada2.Rmd
+│   │   ├── 2-setup.Rmd
+│   │   ├── 3-variety.Rmd
+│   │   ├── 4-enrichment.Rmd
+│   │   ├── 5-tissue.Rmd
+│   │   ├── 6-cult.Rmd
+│   │   └── SM.Rmd
+│   └── utils/
+│       ├── 0-install.R 
+│       └── csv2fasta.sh
+│
+├── outputs/       
+│   ├── r/
+│   │   ├── 1-dada2/
+│   │   ├── 2-setup/
+│   │   ├── 3-variety/
+│   │   ├── 4-enrichment/
+│   │   ├── 5-tissue/
+│   │   ├── 6-cult/
+│   │   └── SM/
+│   └── galaxy/
+│
 ├── README.md
 └── LICENSE
 ```
@@ -95,6 +77,6 @@ project/
 - outputs/ contains qiime2 and r saved outputs.
    
 ### Further content
-The 16S rRNA gene amplicon raw FASTQ files were deposited at the European Nucleotide Archive (ENA; https://www.ebi.ac.uk/ena) under the accession number PRJXXXXXX.
+The 16S rRNA gene amplicon raw FASTQ files were deposited in [ENA](https://www.ebi.ac.uk/ena) under the accession number PRJXXXXXX.
 
 ### References
