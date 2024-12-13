@@ -8,27 +8,31 @@ Authors: Carolina Lobato, Ahmed Abdelfattah, Gabriele Berg & Tomislav Cernava
 ```text
 project/
 ├── data/
-│   ├── lima/
-│   │   ├── barcodes.fasta
+│   ├── metadata/
+│   │   ├── lima/
+│   │   │   └── metadata.csv
+│   │   ├── galaxy
+│   │   │   ├── bh-seq.fasta
+│   │   │   ├── bh-sub-seq.csv
 │   │   ├── biosamples.csv
-│   │   └── manifest.txt
-│   └── r/
-│       └── metadata.csv
+│   │   │   ├── biosamples.csv
+│   │   │   ├── biosamples.csv
+│   │   │ manifest.txt
+│   └── └── r/
+│           └── metadata.csv
 │
 ├── scripts/
-│   ├── lima/
-│   │   └── demux.sh
 │   ├── r/
 │   │   ├── 1-dada2.Rmd
 │   │   ├── 2-setup.Rmd
-│   │   ├── 3-variety.Rmd
-│   │   ├── 4-enrichment.Rmd
-│   │   ├── 5-tissue.Rmd
-│   │   ├── 6-cult.Rmd
-│   │   └── SM.Rmd
+│   │   ├── Fig_1.Rmd
+│   │   ├── Fig_2.Rmd
+│   │   ├── Fig_3.Rmd
+│   │   └── Fig_4.Rmd
 │   └── utils/
+│       ├── demux-lima.txt
 │       ├── 0-install.R 
-│       └── csv2fasta.sh
+│       └── flashweave.jl
 │
 ├── outputs/       
 │   ├── r/
