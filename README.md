@@ -8,18 +8,27 @@ Authors: Carolina Lobato, Ahmed Abdelfattah, Gabriele Berg & Tomislav Cernava
 ```text
 project/
 ├── data/
-│   ├── metadata/
-│   │   ├── lima/
-│   │   │   └── metadata.csv
-│   │   ├── galaxy
-│   │   │   ├── bh-seq.fasta
-│   │   │   ├── bh-sub-seq.csv
-│   │   ├── biosamples.csv
-│   │   │   ├── biosamples.csv
-│   │   │   ├── biosamples.csv
-│   │   │ manifest.txt
-│   └── └── r/
-│           └── metadata.csv
+│   ├── lima/
+│   │   ├── lima-bc.fasta
+│   │   └── biosamples.csv
+│   ├── r/
+│   │   └── metadata.csv
+│   ├── galaxy/
+│   │   ├── bh_amp.fasta
+│   │   └── bh_pb.fasta
+│   ├── megax/
+│   │   ├── bh_pb.fasta
+│   │   └── bh_pb.meg
+│   ├── itol/
+│   │   ├── bh_pb-asgn.csv
+│   │   ├── bh_pb-genus.csv
+│   │   └── bh_pb-class.csv
+│   ├── julia/
+│   │   ├── asv-table-fw.csv
+│   │   └── metadata-fw.csv
+│   └── cytoscape/
+│       ├── nodes-rel-rec.csv
+│       └── nodes-taxa.csv
 │
 ├── scripts/
 │   ├── r/
