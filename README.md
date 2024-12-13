@@ -74,7 +74,7 @@ project/
   - r/  This subdirectory contains:
       - sample information (metadata.csv).
   - galaxy/  This subdirectory contains:
-      - sequences from [Lobato et al., 2024](https://doi.org/10.1186/s40168-024-01951-5) used as query in [Galaxy](https://usegalaxy.org/) (bh_amp.fasta).
+      - sequences from [Lobato *et al*., 2024](https://doi.org/10.1186/s40168-024-01951-5) used as query in [Galaxy](https://usegalaxy.org/) (bh_amp.fasta).
       - sequences from cultured taxa used as a database in [Galaxy](https://usegalaxy.org/) (bh_pb.fasta)
   - megax/  This subdirectory contains:
       - aligned sequences from cultured taxa obtained from bh_pb.fasta and used for maximum likelyhood tree construction (bh_pb.meg)
