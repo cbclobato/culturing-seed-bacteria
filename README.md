@@ -1,4 +1,4 @@
-## Bridging the gap: Addressing the uncultured microbiota in *Cannabis* seeds
+## Bridging the gap: Defining the non-cultivable microbiota fraction in *Cannabis* seeds
 
 Authors: Carolina Lobato, Ahmed Abdelfattah, Gabriele Berg & Tomislav Cernava
 
