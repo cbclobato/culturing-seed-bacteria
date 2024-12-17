@@ -99,6 +99,6 @@ project/
 - outputs/ contains saved outputs.
    
 ### Further content
-The 16S Pacbio V1-V9 rRNA gene amplicon raw FASTQ files for *Cannabis* cultured seed endophytic bacterial taxa were deposited in [ENA](https://www.ebi.ac.uk/ena) under the accession number PRJXXXXXX.
+The 16S Pacbio V1-V9 rRNA gene amplicon raw FASTQ files for *Cannabis* cultured seed endophytic bacterial taxa were deposited in [ENA](https://www.ebi.ac.uk/ena) under the accession number PRJEB83654.
 
 ### References
