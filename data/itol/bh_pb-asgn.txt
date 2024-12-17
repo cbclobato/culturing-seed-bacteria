@@ -1,0 +1,494 @@
+DATASET_SIMPLEBAR
+#In simple bar charts, each ID is associated to a single numeric value which is displayed as a bar outside the tree.
+#lines starting with a hash are comments and ignored during parsing
+
+#=================================================================#
+#                    MANDATORY SETTINGS                           #
+#=================================================================#
+#select the separator which is used to delimit the data below (TAB,SPACE or COMMA).This separator must be used throughout this file.
+SEPARATOR TAB
+#SEPARATOR SPACE
+#SEPARATOR COMMA
+
+#label is used in the legend table (can be changed later)
+DATASET_LABEL	label 1
+
+#dataset color (can be changed later)
+COLOR	#563C5C
+
+#=================================================================#
+#                    OPTIONAL SETTINGS                            #
+#=================================================================#
+
+#=================================================================#
+#     all other optional settings can be set or changed later     #
+#           in the web interface (under 'Datasets' tab)           #
+#=================================================================#
+#dataset scale_you can simply set the values where the scale will be drawn
+#DATASET_SCALE,2000,10000,20000
+
+#or you can specify value, label, color, width, style and label size factor for each scale line (dash separated, format_VALUE-LABEL-COLOR-WIDTH-DASHED-LABEL_SCALE_FACTOR))
+#DATASET_SCALE,2000-2k line-#0000ff-5-1-1,10000-line at 10k-#ff0000-1-0-2,20000-3rd line-#00ff00-5-1-1
+
+#Each dataset can have a legend, which is defined using LEGEND_XXX fields below
+#For each row in the legend, there should be one shape, color and label.
+#Optionally, you can define an exact legend position using LEGEND_POSITION_X and LEGEND_POSITION_Y. To use automatic legend positioning, do NOT define these values
+#Optionally, shape scaling can be present (LEGEND_SHAPE_SCALES). For each shape, you can define a scaling factor between 0 and 1.
+#To order legend entries horizontally instead of vertically, set LEGEND_HORIZONTAL to 1
+#Shape should be a number between 1 and 6, or any protein domain shape definition.
+#1_square
+#2_circle
+#3_star
+#4_right pointing triangle
+#5_left pointing triangle
+#6_checkmark
+
+#LEGEND_TITLE,Dataset legend
+#LEGEND_SCALE,1
+#LEGEND_POSITION_X,100
+#LEGEND_POSITION_Y,100
+#LEGEND_HORIZONTAL,0
+#LEGEND_SHAPES,1,2,3
+#LEGEND_COLORS,#ff0000,#00ff00,#0000ff
+#LEGEND_LABELS,value1,value2,value3
+#LEGEND_SHAPE_SCALES,1,1,0.5
+
+
+#maximum width
+#WIDTH,1000
+
+#left margin, used to increase/decrease the spacing to the next dataset. Can be negative, causing datasets to overlap.
+#MARGIN,0
+
+#always show internal values; if set, values associated to internal nodes will be displayed even if these nodes are not collapsed. It could cause overlapping in the dataset display.
+#SHOW_INTERNAL,0
+
+#show dashed lines between leaf labels and the dataset
+#DASHED_LINES,1
+
+#bar height factor; Default bar height will be slightly less than the available space between leaves, but you can set a multiplication factor here to increase/decrease it (values from 0 to 1 will decrease it, values above 1 will increase it)
+#HEIGHT_FACTOR,1
+
+#Display individual values above the bars
+#SHOW_VALUE,0
+
+#Display custom bar labels, when defined. The label can be specified after the numeric value in the DATA section below.
+#SHOW_LABELS,0
+
+#Position of the value or custom label, relative to the bar (when SHOW_VALUE or SHOW_LABELS are set to 1)
+#can be one of_outside-right, outside-left, left, center, right
+#LABEL_POSITION,outside-right
+
+#shift all labels horizontally and/or vertically
+#LABEL_SHIFT_X,0
+#LABEL_SHIFT_Y,0
+
+#add a colored outline to the label font; useful when displaying labels over similarly colored boxes (e.g. black font on a dark box)
+#LABEL_OUTLINE_WIDTH,0
+#LABEL_OUTLINE_COLOR,#ffffff
+
+#multiply the size of all labels by this factor
+#LABEL_SIZE_FACTOR,1
+
+
+#Bars are aligned to the node lines by default. Using BAR_SHIFT, you can move them all up/down by a fixed amount
+#BAR_SHIFT,0
+
+#BAR_ZERO specifies which dataset value will be used as a starting point for drawing the bars. Dataset values smaller than BAR_ZERO will be displayed to the left (possibly overlapping the tree, unless MARGIN is increased)
+#BAR_ZERO,0
+
+#border width; if set above 0, a border of specified width (in pixels) will be drawn around the bars
+#BORDER_WIDTH,0
+
+#border color; used when BORDER_WIDTH is above 0
+#BORDER_COLOR,#0000ff
+
+#Internal tree nodes can be specified using IDs directly, or using the 'last common ancestor' method described in iTOL help pages
+#=================================================================#
+#       Actual data follows after the "DATA" keyword              #
+#=================================================================#
+#only numeric values are required for each ID, custom labels can be optionally provided as the second field (shown when SHOW_LABELS is set to 1) 
+DATA
+#ID1,value1,label1
+#ID2,value2,label2
+#9606,10000,Homo sapiens value
+#LEAF1|LEAF2,11000
+
+ASV100_Pantoea	0.60	4
+ASV102_Pantoea	1.28	19
+ASV103_Pseudomonas	0.95	9
+ASV104_Brevibacillus	0.70	5
+ASV106_Enterobacter	0.85	7
+ASV107_Pantoea	1.28	19
+ASV108_Bacillus	1.36	23
+ASV109_Pseudomonas	0.60	4
+ASV10_Escherichia-Shigella	0.78	6
+ASV112_Pantoea	1.28	19
+ASV113_Bacillus	1.36	23
+ASV114_Pseudomonas	0.95	9
+ASV116_Pseudomonas	0.00	1
+ASV117_Pantoea	1.28	19
+ASV118_Enterococcus	0.00	1
+ASV119_Pantoea	1.28	19
+ASV11_Pantoea	1.28	19
+ASV120_Pantoea	1.28	19
+ASV121_Bacillus	1.36	23
+ASV123_Bacillus	1.36	23
+ASV124_Bacillus	1.36	23
+ASV126_Bacillus	1.36	23
+ASV127_Pantoea	1.28	19
+ASV128_Methylobacterium	0.30	2
+ASV12_Rhizobium	0.48	3
+ASV130_Bacillus	0.78	6
+ASV131_Pseudomonas	1.30	20
+ASV132_Pantoea	1.28	19
+ASV133_Paenibacillus	0.00	1
+ASV134_Pseudomonas	0.60	4
+ASV135_Escherichia-Shigella	0.78	6
+ASV136_Bacillus	1.28	19
+ASV137_Paenibacillus	0.00	1
+ASV138_Pantoea	1.28	19
+ASV139_Pantoea	1.28	19
+ASV13_Brevundimonas	0.48	3
+ASV141_Enterococcus	0.00	1
+ASV142_Bacillus	0.60	4
+ASV144_Bacillus	1.36	23
+ASV145_Pseudomonas	0.95	9
+ASV146_Xanthomonas	0.30	2
+ASV147_Kocuria	0.95	9
+ASV148_Paenibacillus	0.00	1
+ASV149_Paenibacillus	0.00	1
+ASV14_Pantoea	1.28	19
+ASV150_Pantoea	1.28	19
+ASV151_Pseudomonas	0.60	4
+ASV152_Kocuria	0.95	9
+ASV153_Erwinia	0.85	7
+ASV154_Paenibacillus	0.00	1
+ASV155_Pseudomonas	0.60	4
+ASV156_Sphingomonas	0.48	3
+ASV157_Bacillus	1.36	23
+ASV158_Bacillus	0.60	4
+ASV159_Pantoea	1.28	19
+ASV15_Pantoea	1.28	19
+ASV161_Paenibacillus	0.00	1
+ASV162_Pantoea	1.28	19
+ASV163_Escherichia-Shigella	0.78	6
+ASV164_Bacillus	0.60	4
+ASV165_Enterococcus	0.00	1
+ASV166_Pseudomonas	0.30	2
+ASV167_Pseudomonas	1.30	20
+ASV168_Bacillus	1.36	23
+ASV169_Pedobacter	0.70	5
+ASV16_Curtobacterium	0.48	3
+ASV170_Brevibacterium	0.30	2
+ASV172_Pantoea	0.60	4
+ASV173_Paenibacillus	0.00	1
+ASV174_Pseudomonas	0.95	9
+ASV175_Bacillus	0.60	4
+ASV176_Pseudomonas	0.70	5
+ASV177_Pseudomonas	0.78	6
+ASV178_Pantoea	1.28	19
+ASV179_Pseudomonas	0.60	4
+ASV17_Enterobacter	0.85	7
+ASV181_Escherichia-Shigella	0.78	6
+ASV182_Stenotrophomonas	0.70	5
+ASV183_Pantoea	0.60	4
+ASV184_Escherichia-Shigella	0.78	6
+ASV185_Bacillus	0.60	4
+ASV187_Pantoea	1.28	19
+ASV188_Sphingobacterium	0.30	2
+ASV189_Sphingomonas	0.90	8
+ASV18_Pantoea	1.28	19
+ASV190_Pantoea	1.28	19
+ASV191_Methylobacterium	0.70	5
+ASV193_Pantoea	1.28	19
+ASV194_Escherichia-Shigella	0.78	6
+ASV195_Pantoea	1.28	19
+ASV196_Escherichia-Shigella	0.78	6
+ASV198_Pantoea	1.28	19
+ASV199_Bacillus	0.48	3
+ASV19_Erwinia	0.85	7
+ASV1_Pseudomonas	0.60	4
+ASV200_Enterobacter	0.85	7
+ASV201_Escherichia-Shigella	0.78	6
+ASV202_Pantoea	1.28	19
+ASV203_Pantoea	1.28	19
+ASV204_Pantoea	1.28	19
+ASV205_Pantoea	0.60	4
+ASV206_Pseudomonas	0.60	4
+ASV207_Methylobacterium	0.60	4
+ASV208_Pantoea	1.28	19
+ASV209_Pantoea	1.28	19
+ASV20_Escherichia-Shigella	0.78	6
+ASV210_Brevibacillus	0.70	5
+ASV211_Pseudomonas	0.70	5
+ASV212_Pantoea	1.28	19
+ASV214_Pantoea	1.28	19
+ASV215_Bacillus	0.48	3
+ASV216_Enterobacter	0.85	7
+ASV217_Pantoea	1.28	19
+ASV218_Pantoea	1.28	19
+ASV219_Pantoea	1.28	19
+ASV21_Escherichia-Shigella	0.78	6
+ASV220_Bacillus	0.60	4
+ASV221_Bacillus	0.60	4
+ASV222_Paenibacillus	0.00	1
+ASV223_Pseudomonas	1.23	17
+ASV224_Bacillus	0.60	4
+ASV225_Brevibacillus	0.70	5
+ASV226_Pantoea	1.28	19
+ASV228_Pseudomonas	0.00	1
+ASV229_Brevibacillus	0.70	5
+ASV22_Escherichia-Shigella	0.78	6
+ASV230_Pantoea	1.28	19
+ASV231_Pantoea	1.28	19
+ASV232_Pantoea	1.28	19
+ASV233_Paenibacillus	0.00	1
+ASV234_Pseudomonas	0.78	6
+ASV235_Pantoea	1.28	19
+ASV236_Pseudomonas	0.60	4
+ASV237_Pantoea	1.28	19
+ASV238_Enterobacter	0.85	7
+ASV239_Arthrobacter	0.70	5
+ASV23_Bacillus	1.36	23
+ASV240_Bacillus	0.60	4
+ASV241_Pseudomonas	0.48	3
+ASV242_Pseudomonas	0.60	4
+ASV243_Escherichia-Shigella	0.78	6
+ASV244_Rhizobium	0.70	5
+ASV245_Massilia	0.60	4
+ASV246_Pseudomonas	0.95	9
+ASV247_Pantoea	1.28	19
+ASV248_Bacillus	0.48	3
+ASV249_Escherichia-Shigella	0.78	6
+ASV24_Frigoribacterium	0.30	2
+ASV250_Escherichia-Shigella	0.78	6
+ASV251_Massilia	0.60	4
+ASV252_Bacillus	0.60	4
+ASV253_Brevibacillus	0.70	5
+ASV254_Pantoea	1.28	19
+ASV255_Sphingomonas	0.90	8
+ASV256_Paenibacillus	0.00	1
+ASV257_Bacillus	0.60	4
+ASV259_Pseudomonas	0.78	6
+ASV25_Escherichia-Shigella	0.78	6
+ASV260_Paenibacillus	0.00	1
+ASV261_Brevibacillus	0.70	5
+ASV262_Paenibacillus	0.00	1
+ASV263_Bacillus	0.60	4
+ASV264_Massilia	0.60	4
+ASV265_Pantoea	1.28	19
+ASV266_Pseudomonas	0.48	3
+ASV267_Pseudomonas	0.60	4
+ASV268_Pantoea	1.28	19
+ASV269_Paenibacillus	0.00	1
+ASV26_Escherichia-Shigella	0.78	6
+ASV270_Rathayibacter	1.68	48
+ASV271_Escherichia-Shigella	0.78	6
+ASV272_Bacillus	0.60	4
+ASV273_Bacillus	0.60	4
+ASV274_Pseudomonas	0.78	6
+ASV275_Pseudomonas	1.30	20
+ASV276_Pantoea	0.60	4
+ASV277_Pantoea	1.28	19
+ASV278_Massilia	0.60	4
+ASV279_Bacillus	0.60	4
+ASV27_Bacillus	1.36	23
+ASV281_Pantoea	1.28	19
+ASV283_Pseudomonas	0.00	1
+ASV284_Escherichia-Shigella	0.78	6
+ASV285_Pantoea	1.28	19
+ASV286_Escherichia-Shigella	0.78	6
+ASV287_Pantoea	1.28	19
+ASV288_Micrococcus	0.60	4
+ASV28_Bacillus	1.36	23
+ASV290_Micrococcus	0.60	4
+ASV291_Escherichia-Shigella	0.78	6
+ASV292_Pseudomonas	0.60	4
+ASV293_Escherichia-Shigella	0.78	6
+ASV294_Bacillus	0.60	4
+ASV295_Massilia	0.60	4
+ASV296_Escherichia-Shigella	0.78	6
+ASV297_Massilia	0.60	4
+ASV298_Pantoea	0.60	4
+ASV299_Pseudomonas	0.60	4
+ASV29_Bacillus	1.36	23
+ASV2_Bacillus	1.36	23
+ASV300_Pseudomonas	0.95	9
+ASV301_Escherichia-Shigella	0.78	6
+ASV302_Bacillus	0.30	2
+ASV304_Massilia	0.60	4
+ASV306_Pantoea	1.28	19
+ASV307_Pantoea	1.28	19
+ASV308_Escherichia-Shigella	0.78	6
+ASV30_Bacillus	1.36	23
+ASV312_Enhydrobacter	0.90	8
+ASV313_Kocuria	0.78	6
+ASV314_Pseudomonas	0.95	9
+ASV316_Enhydrobacter	0.90	8
+ASV317_Pantoea	1.28	19
+ASV318_Bradyrhizobium	0.48	3
+ASV31_Pseudomonas	0.60	4
+ASV320_Bacillus	0.48	3
+ASV321_Pantoea	1.28	19
+ASV322_Rhizobium	0.70	5
+ASV323_Pantoea	1.28	19
+ASV325_Pantoea	1.28	19
+ASV327_Klebsiella	0.85	7
+ASV328_Sphingomonas	0.90	8
+ASV32_Pantoea	1.28	19
+ASV330_Pantoea	0.60	4
+ASV331_Frigoribacterium	0.30	2
+ASV333_Bacillus	0.48	3
+ASV335_Bacillus	0.48	3
+ASV336_Pseudomonas	0.78	6
+ASV337_Pseudomonas	0.60	4
+ASV338_Pantoea	1.28	19
+ASV339_Pantoea	1.28	19
+ASV33_Pantoea	1.28	19
+ASV340_Escherichia-Shigella	0.78	6
+ASV341_Pseudomonas	0.60	4
+ASV343_Pantoea	1.28	19
+ASV344_Pantoea	1.28	19
+ASV345_Escherichia-Shigella	0.78	6
+ASV346_Escherichia-Shigella	0.78	6
+ASV347_Bacillus	0.48	3
+ASV349_Bacillus	0.48	3
+ASV34_Pantoea	1.28	19
+ASV350_Bacillus	0.48	3
+ASV351_Pantoea	0.60	4
+ASV352_Pseudomonas	0.60	4
+ASV354_Pseudomonas	0.60	4
+ASV356_Aeromicrobium	0.00	1
+ASV358_Enhydrobacter	0.90	8
+ASV359_Pantoea	1.28	19
+ASV35_Paracoccus	0.85	7
+ASV360_Enterobacter	0.85	7
+ASV361_Pseudomonas	0.60	4
+ASV362_Pseudomonas	0.60	4
+ASV364_Pantoea	1.28	19
+ASV365_Escherichia-Shigella	0.78	6
+ASV367_Pantoea	1.28	19
+ASV368_Pseudomonas	0.78	6
+ASV369_Pantoea	1.28	19
+ASV36_Escherichia-Shigella	0.78	6
+ASV370_Curtobacterium	0.48	3
+ASV372_Enterobacter	0.85	7
+ASV373_Enhydrobacter	0.90	8
+ASV374_Phyllobacterium	0.00	1
+ASV375_Klebsiella	0.85	7
+ASV376_Pseudomonas	0.60	4
+ASV377_Rhizobium	0.60	4
+ASV378_Klebsiella	0.85	7
+ASV379_Pantoea	1.28	19
+ASV37_Pantoea	1.28	19
+ASV380_Bacillus	0.30	2
+ASV381_Bacillus	0.30	2
+ASV382_Paenibacillus	0.78	6
+ASV383_Pseudomonas	0.60	4
+ASV386_Pseudomonas	0.60	4
+ASV387_Pseudomonas	1.23	17
+ASV388_Klebsiella	0.85	7
+ASV389_Escherichia-Shigella	0.78	6
+ASV38_Bacillus	1.04	11
+ASV390_Pantoea	1.28	19
+ASV392_Enterobacter	0.85	7
+ASV393_Pseudomonas	0.60	4
+ASV394_Pseudomonas	1.23	17
+ASV395_Klebsiella	0.85	7
+ASV396_Pantoea	0.60	4
+ASV397_Micrococcus	0.60	4
+ASV398_Pseudomonas	0.95	9
+ASV399_Pantoea	1.28	19
+ASV39_Pantoea	1.28	19
+ASV3_Bacillus	1.36	23
+ASV400_Kocuria	0.70	5
+ASV401_Klebsiella	0.85	7
+ASV402_Methylobacterium	0.48	3
+ASV405_Pantoea	1.28	19
+ASV407_Pantoea	1.28	19
+ASV40_Pantoea	1.28	19
+ASV410_Pantoea	1.28	19
+ASV411_Klebsiella	0.85	7
+ASV413_Klebsiella	0.85	7
+ASV415_Pantoea	0.60	4
+ASV416_Pantoea	0.60	4
+ASV417_Klebsiella	0.85	7
+ASV418_Pantoea	1.28	19
+ASV41_Bacillus	1.04	11
+ASV423_Pantoea	0.60	4
+ASV425_Pantoea	1.28	19
+ASV426_Sphingomonas	0.48	3
+ASV427_Rathayibacter	1.68	48
+ASV429_Paenibacillus	0.78	6
+ASV42_Pantoea	1.28	19
+ASV431_Enterobacter	0.85	7
+ASV432_Paenibacillus	0.78	6
+ASV433_Ralstonia	1.34	22
+ASV434_Methylobacterium	0.48	3
+ASV436_Bacillus	0.48	3
+ASV437_Pantoea	1.28	19
+ASV438_Paenibacillus	0.78	6
+ASV439_Pantoea	1.28	19
+ASV43_Bacillus	1.36	23
+ASV440_Methylobacterium	0.48	3
+ASV441_Methylobacterium	0.30	2
+ASV443_Agreia	0.00	1
+ASV444_Massilia	0.60	4
+ASV44_Bacillus	1.04	11
+ASV45_Escherichia-Shigella	0.78	6
+ASV46_Escherichia-Shigella	0.78	6
+ASV47_Pseudomonas	0.95	9
+ASV48_Bacillus	1.00	10
+ASV49_Pseudomonas	0.60	4
+ASV4_Stenotrophomonas	0.30	2
+ASV50_Bacillus	1.36	23
+ASV52_Bacillus	1.36	23
+ASV53_Enterobacter	0.85	7
+ASV54_Pantoea	1.28	19
+ASV55_Enterobacter	0.85	7
+ASV57_Bacillus	1.04	11
+ASV58_Bacillus	1.04	11
+ASV59_Enterococcus	0.00	1
+ASV5_Stenotrophomonas	0.30	2
+ASV60_Pantoea	1.28	19
+ASV61_Enterobacter	0.85	7
+ASV62_Enterobacter	0.85	7
+ASV64_Pantoea	1.28	19
+ASV65_Pantoea	1.28	19
+ASV66_Enterobacter	0.85	7
+ASV67_Pseudomonas	0.60	4
+ASV68_Enterobacter	0.85	7
+ASV69_Sphingobacterium	0.60	4
+ASV6_Pseudomonas	1.30	20
+ASV70_Bacillus	1.36	23
+ASV71_Pantoea	0.60	4
+ASV72_Paenibacillus	0.00	1
+ASV73_Pseudomonas	0.60	4
+ASV74_Pantoea	1.28	19
+ASV75_Pseudomonas	0.95	9
+ASV76_Pedobacter	0.70	5
+ASV77_Pantoea	1.28	19
+ASV78_Pantoea	0.60	4
+ASV79_Pantoea	1.28	19
+ASV7_Pantoea	1.28	19
+ASV80_Bacillus	1.28	19
+ASV81_Curtobacterium	0.48	3
+ASV82_Escherichia-Shigella	0.78	6
+ASV83_Enterobacter	0.85	7
+ASV84_Pantoea	1.28	19
+ASV85_Pantoea	0.60	4
+ASV87_Bacillus	1.36	23
+ASV88_Pseudomonas	0.60	4
+ASV89_Pantoea	0.60	4
+ASV8_Brevundimonas	1.04	11
+ASV90_Brevibacillus	0.70	5
+ASV91_Bacillus	1.36	23
+ASV92_Pantoea	0.60	4
+ASV93_Bacillus	0.60	4
+ASV95_Pantoea	0.60	4
+ASV96_Sphingobacterium	0.60	4
+ASV97_Pantoea	1.28	19
+ASV98_Curtobacterium	0.48	3
+ASV99_Pantoea	0.60	4
+ASV9_Bacillus	1.04	11

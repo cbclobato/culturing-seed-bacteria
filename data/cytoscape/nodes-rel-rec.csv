@@ -1,0 +1,104 @@
+q_amplicon,RA,recovered2,name2
+ASV495 Chitinophagaceae,0.0073492738904496,false,ASV 495 Chitinophagaceae
+ASV507 Chitinophagaceae,0.284626142123321,false,ASV 507 Chitinophagaceae
+ASV524 Chitinophagaceae,0.00428228718724319,false,ASV 524 Chitinophagaceae
+ASV543 0319-6G20,0.0092468452164041,false,ASV 543 0319-6G20
+ASV585 Lineage IV,0.0015089441495252,false,ASV 585 Lineage IV
+ASV614 P3OB-42,0.00574743878103021,false,ASV 614 P3OB-42
+ASV688 Polyangiaceae,0.00209316579568738,false,ASV 688 Polyangiaceae
+ASV702 Reyranella,0.00843427591328733,false,ASV 702 Reyranella
+ASV706 Reyranella,0.00385273070582462,false,ASV 706 Reyranella
+ASV717 Reyranella,0.00160708261157429,false,ASV 717 Reyranella
+ASV728 Reyranella,0.0221329367715568,false,ASV 728 Reyranella
+ASV811 Subgroup 2,0.0235952443803927,false,ASV 811 Subgroup 2
+ASV816 Subgroup 2,0.00372446963600297,false,ASV 816 Subgroup 2
+ASV820 Subgroup 2,0.0032811594801571,false,ASV 820 Subgroup 2
+ASV953 Micropepsaceae,0.00266029531622879,false,ASV 953 Micropepsaceae
+ASV969 Caulobacteraceae,0.0035789574805867,false,ASV 969 Caulobacteraceae
+ASV981 Caulobacter,0.0332592290911852,false,ASV 981 Caulobacter
+ASV991 Caulobacter,0.00463105038221699,false,ASV 991 Caulobacter
+ASV1045 Methylobacterium-Methylorubrum,0.340644464089736,true,ASV 1045 Methylobacterium
+ASV1063 Methylobacterium-Methylorubrum,0.851918424379469,true,ASV 1063 Methylobacterium
+ASV1074 Methylobacterium-Methylorubrum,0.00469181616893539,true,ASV 1074 Methylobacterium
+ASV1143 Novosphingobium,0.00119950054532898,false,ASV 1143 Novosphingobium
+ASV1161 Sphingomonas,0.0590628261510523,false,ASV 1161 Sphingomonas
+ASV1185 Sphingomonas sp.,0.0199618434749084,true,ASV 1185 Sphingomonas
+ASV1215 Sphingomonas,1.05523497645393,false,ASV 1215 Sphingomonas
+ASV1228 Sphingomonas,0.100425515902561,true,ASV 1228 Sphingomonas
+ASV1248 Paracoccus,0.0140471156368217,false,ASV 1248 Paracoccus
+ASV1273 Paracoccus,0.00673436306664912,true,ASV 1273 Paracoccus
+ASV1278 Paracoccus,0.0105589456107006,true,ASV 1278 Paracoccus
+ASV1286 Paracoccus,0.0453425277357978,false,ASV 1286 Paracoccus
+ASV1320 Beijerinckiaceae,0.00292142912535712,false,ASV 1320 Beijerinckiaceae
+ASV1388 Bradyrhizobium sp.,0.00544216461390194,false,ASV 1388 Bradyrhizobium
+ASV1389 Bradyrhizobium,0.00509789024701844,true,ASV 1389 Bradyrhizobium
+ASV1407 Bradyrhizobium sp.,0.00894541002635143,false,ASV 1407 Bradyrhizobium
+ASV1412 Afipia,0.0103434362118296,true,ASV 1412 Afipia
+ASV1449 Mesorhizobium sp.,0.0042823163010098,false,ASV 1449 Mesorhizobium
+ASV1627 KCM-B-112,0.00184211806301992,false,ASV 1627 KCM-B-112
+ASV1637 Gammaproteobacteria,0.00201704587072693,false,ASV 1637 Gammaproteobacteria
+ASV1682 Legionella,0.00369177561886542,false,ASV 1682 Legionella
+ASV1703 Gammaproteobacteria,0.0276227704199585,false,ASV 1703 Gammaproteobacteria
+ASV1720 Legionella,0.00174167201211159,false,ASV 1720 Legionella
+ASV1737 Legionella,0.0111814373773744,false,ASV 1737 Legionella
+ASV1775 Bryobacter,0.00402097705444289,false,ASV 1775 Bryobacter
+ASV1787 Paludibaculum,0.00241284367018728,false,ASV 1787 Paludibaculum
+ASV1944 Salinisphaera,0.00512512083270379,false,ASV 1944 Salinisphaera
+ASV2005 Stenotrophomonas,0.00433465117794312,false,ASV 2005 Stenotrophomonas
+ASV2062 Pelomonas,0.907134666126925,false,ASV 2062 Pelomonas
+ASV2094 Curvibacter,0.00492445186193943,false,ASV 2094 Curvibacter
+ASV2122 Variovorax,0.0715704120207385,false,ASV 2122 Variovorax
+ASV2136 Massilia,0.0169506329342725,true,ASV 2136 Massilia
+ASV2280 Ralstonia,16.9955156593495,true,ASV 2280 Ralstonia
+ASV2328 Ralstonia,10.6131327878344,true,ASV 2328 Ralstonia
+ASV2331 Cupriavidus,0.0271015089145237,false,ASV 2331 Cupriavidus
+ASV2360 Sulfuritalea,0.00336831943704514,false,ASV 2360 Sulfuritalea
+ASV2366 Rhodocyclaceae,0.00209476182090253,false,ASV 2366 Rhodocyclaceae
+ASV2373 Burkholderia-Caballeronia-Paraburkholderia,0.128304848154967,false,ASV 2373 BC-Paraburkholderia
+ASV2377 Burkholderia-Caballeronia-Paraburkholderia,0.125547245112291,false,ASV 2377 BC-Paraburkholderia
+ASV2379 Burkholderia-Caballeronia-Paraburkholderia,0.0734579195223701,false,ASV 2379 BC-Paraburkholderia
+ASV2381 Burkholderia-Caballeronia-Paraburkholderia,0.00948412299528478,false,ASV 2381 BC-Paraburkholderia
+ASV2384 Burkholderia sp.,0.0478344616045716,false,ASV 2384 Burkholderia
+ASV2389 Burkholderia sp.,0.456210417809467,false,ASV 2389 Burkholderia
+ASV2479 Frateuria aurantia,0.00289035877187692,false,ASV 2479 Frateuria aurantia
+ASV2490 Dyella,0.0120661191990873,false,ASV 2490 Dyella
+ASV2491 Dyella,0.0115716087256396,false,ASV 2491 Dyella
+ASV2505 Dyella,0.0336846689944041,false,ASV 2505 Dyella
+ASV2716 Oenococcus oeni,0.116227021581704,false,ASV 2716 Oenococcus oeni
+ASV2795 Lactococcus lactis,0.00193583461068445,false,ASV 2795 Lactococcus lactis
+ASV2804 Streptococcus salivarius,0.00178953132757936,false,ASV 2804 Streptococcus salivarius
+ASV2813 Streptococcus,0.0130586847073604,false,ASV 2813 Streptococcus
+ASV2970 Bacillus sp.,10.9447595865097,true,ASV 2970 Bacillus
+ASV2973 Bacillus,2.05065811246491,true,ASV 2973 Bacillus
+ASV3007 Bacillus,3.93664462308323,true,ASV 3007 Bacillus
+ASV3010 Bacillus,0.386784796431267,true,ASV 3010 Bacillus
+ASV3078 Staphylococcus,0.169119238557643,false,ASV 3078 Staphylococcus
+ASV3133 Pseudomonas,0.0873667238503659,true,ASV 3133 Pseudomonas
+ASV3136 Pseudomonas,0.998015332712028,true,ASV 3136 Pseudomonas
+ASV3140 Pseudomonas,0.172624772378877,true,ASV 3140 Pseudomonas
+ASV3151 Pseudomonas putida,0.0461766738202591,true,ASV 3151 Pseudomonas putida
+ASV3198 Pseudomonas sp.,9.41692916442831,true,ASV 3198 Pseudomonas
+ASV3225 Holophagaceae,0.00358778996885014,false,ASV 3225 Holophagaceae
+ASV3353 Pantoea agglomerans,19.2722535888133,true,ASV 3353 Pantoea agglomerans
+ASV3369 Kosakonia,3.94277031308438,true,ASV 3369 Kosakonia
+ASV3380 Enterobacter,2.36120405339138,true,ASV 3380 Enterobacter
+ASV3399 Yersiniaceae,0.139153148295586,false,ASV 3399 Yersiniaceae
+ASV3445 Halomonas,0.00407981203701683,false,ASV 3445 Halomonas
+ASV3464 Enhydrobacter,0.386997528501327,true,ASV 3464 Enhydrobacter
+ASV3511 Acinetobacter,0.0548539458084634,false,ASV 3511 Acinetobacter
+ASV3512 Acinetobacter,0.0028223558585189,false,ASV 3512 Acinetobacter
+ASV3528 Acinetobacter,0.00854947244920274,false,ASV 3528 Acinetobacter
+ASV3792 Lacunisphaera,0.00445867743284475,false,ASV 3792 Lacunisphaera
+ASV3816 BD7-11,0.00461600642867354,false,ASV 3816 BD7-11
+ASV3820 BD7-11,0.0281016192871406,false,ASV 3820 BD7-11
+ASV3859 Simkaniaceae,0.00452978720085962,false,ASV 3859 Simkaniaceae
+ASV3872 Simkaniaceae,0.00978271075341878,false,ASV 3872 Simkaniaceae
+ASV4036 Corynebacterium,0.0189330703744551,false,ASV 4036 Corynebacterium
+ASV4237 Micrococcus,0.0569335229826904,true,ASV 4237 Micrococcus
+ASV4544 Rhodococcus erythropolis,5.27714901915103,false,ASV 4544 Rhodococcus erythropolis
+ASV4601 Paenibacillus sp.,0.217041762512028,true,ASV 4601 Paenibacillus
+ASV4650 Brevibacillus,0.859162708115564,true,ASV 4650 Brevibacillus
+ASV4674 Paenibacillus,1.34434717976804,true,ASV 4674 Paenibacillus
+ASV4956 Gaiella,0.0021771078786385,false,ASV 4956 Gaiella
+ASV5043 Gaiellales,0.00214431044012902,false,ASV 5043 Gaiellales
+ASV5283 Obscuribacteraceae,0.00222993453016677,false,ASV 5283 Obscuribacteraceae

@@ -1,0 +1,212 @@
+---
+title: "DADA2-pipeline"
+author: "Carolina Lobato"
+date: "2023-05-29"
+output: html_document
+---
+
+# Load libraries
+```{r loadlib, include = F}
+library(dada2)
+library(Biostrings)
+library(ShortRead)
+library(reshape2)
+library(gridExtra)
+library(tidyverse)
+```
+
+# Load processed objects (in absence of input data)
+```{r}
+load("outputs/r/1_dada2/nops.RData")
+load("outputs/r/1_dada2/prim.RData")
+load("outputs/r/1_dada2/filts.RData")
+load("outputs/r/1_dada2/track.RData")
+```
+
+# Setup
+```{r}
+path <- "outputs/lima/lima-bc" 
+path.out <- "outputs/r/1_dada2"
+path.rds <- "outputs/r/1_dada2"
+fns <- list.files(path, 
+                  pattern = "fastq.gz", 
+                  full.names = T) # 26 empty samples out = 136 samples
+F27 <- "AGRGTTYGATYMTGGCTCAG" 
+R1492 <- "RGYTACCTTGTTACGACTT"
+rc <- dada2:::rc
+theme_set(theme_bw())
+```
+
+
+# Remove Primers and Filter
+```{r}
+nops <- file.path(path.out, 
+                  "1-noprimers", 
+                  basename(fns))
+prim <- removePrimers(fns, 
+                      nops, 
+                      primer.fwd = F27, 
+                      primer.rev = dada2:::rc(R1492), 
+                      orient = T,
+                      verbose = T,
+                      allow.indels = F) # ?
+                     
+# save(nops, file = "outputs/r/1_dada2/nops.RData")
+# save(prim, file = "outputs/r/1_dada2/prim.RData")
+```
+
+## Inspect length distribution
+```{r}
+lens.fn <- lapply(nops, function(fn) nchar(getSequences(fn)))
+lens <- do.call(c, lens.fn)
+hist(lens, 100)
+```
+
+# Filter
+```{r}
+filts <- file.path(path.out, 
+                   "2-filtered", 
+                   basename(fns))
+
+track <- filterAndTrim(nops,
+                       filts,
+                       minQ = 3,
+                       minLen = 1000,
+                       maxLen = 1600,
+                       maxN = 0,
+                       rm.phix = FALSE, 
+                       maxEE = 2)
+summary(track) 
+# 2 more empty samples outputted (07AS and 17AS)
+# Many low depth outliers
+# Average losses of 20% per sample
+
+# save(filts, file = "outputs/r/1_dada2/filts.RData")
+# save(track, file = "outputs/r/1_dada2/track.RData")
+```
+
+# Run DADA2
+
+## Dereplicate
+```{r}
+exists <- file.exists(filts)
+dereps <- derepFastq(filts[exists], verbose = TRUE)
+# names(dereps) <- sample.names[exists]
+```
+
+## Learn errors
+```{r}
+err <- learnErrors(dereps,
+                   errorEstimationFunction = PacBioErrfun, 
+                   BAND_SIZE = 32, 
+                   multithread = TRUE)
+
+# saveRDS(err, file.path(path.rds, "err.rds"))
+```
+
+## Inspect errors
+```{r}
+plotErrors(err)
+```
+
+## Denoise
+```{r}
+dd2 <- dada(dereps, 
+            err = err,
+            BAND_SIZE = 32,
+            multithread = TRUE)
+
+# saveRDS(dd2, file.path(path.rds, "dd2.rds"))
+```
+
+## Read tracking
+```{r}
+cbind(ccs = prim[,1],
+      primers = prim[,2],
+      filtered = track[,2],
+      denoised = sapply(dd2, function(x) sum(x$denoised)))
+```
+
+## Extract sample names from the filenames to the feature-table
+```{r}
+st <- makeSequenceTable(dd2); dim(st)
+
+sample.names <- sapply(strsplit(fns, "bc/"), 
+                       function(x) paste(x[2], sep = "bc/"))
+sample.names <- sapply(strsplit(sample.names, ".bc"), 
+                       function(x) paste(x[1], sep = ".bc"))
+# sample.names <- gsub(".fastq.gz",
+#                      "",
+#                      sample.names)
+rownames(st) <- sample.names #[-c(12, 38)]
+
+# ft <- sweep(st, 1, rowSums(st), "/") # this is converting to rel.abundance
+```
+
+## Check chimeras
+```{r}
+bim <- isBimeraDenovo(st, 
+                      minFoldParentOverAbundance = 3.5,
+                      multithread = TRUE) # does not run on windows
+table(bim) # 101/518
+sum(st[,bim])/sum(st) # 0.03400368
+```
+
+# Remove chimeras and get sequences
+```{r}
+st.nochim <- dada2::removeBimeraDenovo(st,
+                                method = "consensus",
+                                multithread = TRUE, 
+                                verbose = TRUE)
+# 69 bimeras out of 514 input sequences
+
+dim(st.nochim)
+
+sum(st.nochim)/sum(st) # 0.9860244
+
+#st.nochim <- t(st.nochim)
+
+sq <- dada2::getSequences(st.nochim)
+# write.table(sq, "outputs/r/1_dada2/phy-obj/dna-seq.csv")
+
+# save(st.nochim, file = "outputs/r/1_dada2/phy-obj/feature-table.RData")
+# save(sq, file = "outputs/r/1_dada2/phy-obj/dna-sequences.RData")
+```
+
+## Make a .fasta file
+```{bash}
+cat outputs/r/1_dada2/phy-obj/dna-seq.csv | sed 's/^seq/>seq/' | tr " " "\n" > outputs/r/1_dada2/phy-obj/dna-seq.fasta
+```
+
+## Taxonomy: done with st.nochim
+```{r}
+tax <- assignTaxonomy(st.nochim,
+                      "data/db/silva_nr_v128_train_set.fa.gz", 
+                      multithread = TRUE) # slowest part
+
+unique(tax[,"Genus"])
+head(unname(tax))
+
+
+write.table(tax,
+            sep = ";",
+            "outputs/r/1_dada2/phy-obj/tax-train-set.csv")
+# save(tax, file = "outputs/r/1_dada2/phy-obj/tax-table.RData")
+```
+
+# Sample metadata, feature table
+```{r}
+load("outputs/r/1_dada2/phy-obj/feature-table.RData") #st.nochim
+
+df <- read.table("data/r/metadata.csv",
+                 header = TRUE, 
+                 sep = ";", 
+                 stringsAsFactors = T)
+head(df)
+
+row.names(df) <- df[,"sample_name"]
+df <- df[sort(row.names(df)),] 
+df <- dplyr::filter(df, row.names(df) %in% row.names(st.nochim))
+
+# save(df, file = "outputs/r/1_dada2/phy-obj/metadata.RData")
+```

@@ -1,0 +1,602 @@
+---
+title: "Figure 3"
+author: "Carolina Lobato"
+date: "2024-08-10"
+output: html_document
+---
+
+# Load Libraries
+```{r loadlib, include = F}
+library(phyloseq)
+library(tidyverse)
+```
+
+# Import data
+```{r, echo = F}
+load("outputs/r/2_setup/bh-amp.RData") # 5297 taxa and 451 samples
+load("outputs/r/2_setup/taxo-amp.RData") # taxo.amp
+load("outputs/r/2_setup/c100-strat.RData") # c100_strat
+```
+
+## Prep
+```{r}
+asv <- otu_table(bh) %>% as.data.frame()
+asv.rel <- apply(vegan::decostand(x =asv, method = "total", MARGIN = 2), 1, mean)
+asv.rel <- as.data.frame(asv.rel * 100) %>% rownames_to_column()
+colnames(asv.rel) <- c("q_amplicon", "RA")
+
+asv.rel.taxo <- merge(asv.rel, taxo.amp, by = "q_amplicon")
+asv_sum <- summary(asv.rel.taxo); asv_sum
+
+color.levels <- c("#dbdddd","#c7b699","#b89b74","#d9af63",
+                  "#fdbf6f","#fdac4f","#ed8f47","#BF592A")
+```
+
+# Plot A: %RA Top 25
+## Class
+### LOW1
+```{r}
+asv.rel.taxo.total <- asv.rel.taxo %>%
+  group_by(Class) %>%
+  summarise(tRA = sum(RA)) %>%
+  top_n(25, tRA) %>%
+  filter(tRA < 0.5) %>%
+  filter(tRA > 0.1) %>%
+  arrange(-tRA)
+asv.rel.taxo.total$Class <- factor(asv.rel.taxo.total$Class, levels = asv.rel.taxo.total$Class)
+
+asv.rel.taxo.lvl <- left_join(asv.rel.taxo, c100_strat, by = c("q_amplicon")) %>%
+  group_by(Class, type) %>%
+  summarise(tRA = sum(RA))
+
+sel.taxo <- subset(asv.rel.taxo.lvl, Class %in% asv.rel.taxo.total$Class) %>% as.data.frame()
+sel.taxo$type <- as.character(sel.taxo$type)
+sel.taxo$type[is.na(sel.taxo$type)] <- "Uncultured"
+sel.taxo <- sel.taxo %>% 
+  mutate(type = factor(type, levels = rev(c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "[77.35, 85.93]","Uncultured"))),
+         Class = factor(Class, levels = asv.rel.taxo.total$Class)) %>%
+  arrange(type)
+
+breaks = c(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4)
+
+ra.class.l1 <- ggplot(sel.taxo,
+                   aes(x = Class,
+                       y = tRA,
+                       fill = type)) +
+  geom_bar(stat = "identity",
+           position = "stack") +
+  theme_classic() +
+  theme(
+    axis.text.x = element_text(size = 4,
+                               angle = 40,
+                               vjust = 1, 
+                               hjust = 1),
+    axis.text.y = element_text(size = 4, 
+                               vjust = 0.5, 
+                               hjust = 1),
+    axis.title = element_text(size = 4),
+    axis.ticks.x = element_blank(),
+    axis.line = element_blank(),
+    legend.position = "none",
+    plot.margin = margin(0,0,0,0, "cm")) +
+  scale_x_discrete(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0),
+                     breaks = breaks,
+                     labels = breaks,
+                     position = "left") +
+  scale_fill_manual(values = color.levels) +
+  labs(x = "", y = "Cumulative mean relative abundance [%]", 
+       fill = "Similarity"); ra.class.l1
+```
+
+
+### LOW2
+```{r}
+asv.rel.taxo.total <- asv.rel.taxo %>%
+  group_by(Class) %>%
+  summarise(tRA = sum(RA)) %>%
+  top_n(25, tRA) %>%
+  filter(tRA < 0.1) %>%
+  arrange(-tRA)
+asv.rel.taxo.total$Class <- factor(asv.rel.taxo.total$Class, levels = asv.rel.taxo.total$Class)
+
+asv.rel.taxo.lvl <- left_join(asv.rel.taxo, c100_strat, by = c("q_amplicon")) %>%
+  group_by(Class, type) %>%
+  summarise(tRA = sum(RA))
+
+sel.taxo <- subset(asv.rel.taxo.lvl, Class %in% asv.rel.taxo.total$Class) %>% as.data.frame()
+sel.taxo$type <- as.character(sel.taxo$type)
+sel.taxo$type[is.na(sel.taxo$type)] <- "Uncultured"
+sel.taxo <- sel.taxo %>% 
+  mutate(type = factor(type, levels = rev(c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "[77.35, 85.93]","Uncultured"))),
+         Class = factor(Class, levels = asv.rel.taxo.total$Class)) %>%
+  arrange(type)
+
+breaks = c(0, 0.005, 0.010, 0.015, 0.020, 0.025, 0.030, 0.035, 0.04, 0.045)
+
+ra.class.l2 <- ggplot(sel.taxo,
+                   aes(x = Class,
+                       y = tRA,
+                       fill = type)) +
+  geom_bar(stat = "identity",
+           position = "stack") +
+  theme_classic() +
+  theme(
+    axis.text.x = element_text(size = 4,
+                               angle = 40,
+                               vjust = 1, 
+                               hjust = 1),
+    axis.text.y = element_text(size = 4, 
+                               vjust = 0.5, 
+                               hjust = 1),
+    axis.title = element_text(size = 4),
+    axis.ticks.x = element_blank(),
+    axis.line = element_blank(),
+    legend.position = "none",
+    plot.margin = margin(0,0,0,0, "cm")) +
+  scale_x_discrete(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0),
+                     breaks = breaks,
+                     labels = breaks,
+                     position = "left") +
+  scale_fill_manual(values = color.levels) +
+  labs(x = "", y = "Cumulative mean relative abundance [%]", 
+       fill = "Similarity"); ra.class.l2
+```
+
+### ALL
+```{r}
+asv.rel.taxo.total <- asv.rel.taxo %>%
+  group_by(Class) %>%
+  summarise(tRA = sum(RA)) %>%
+  top_n(25, tRA) %>%
+  arrange(-tRA)
+asv.rel.taxo.total$Class <- factor(asv.rel.taxo.total$Class, levels = asv.rel.taxo.total$Class)
+
+asv.rel.taxo.lvl <- left_join(asv.rel.taxo, c100_strat, by = c("q_amplicon")) %>%
+  group_by(Class, type) %>%
+  summarise(RA = sum(RA))
+
+sel.taxo <- inner_join(asv.rel.taxo.lvl, asv.rel.taxo.total, by = "Class") %>% as.data.frame() %>% mutate(RA_per = RA*100/tRA) 
+sel.taxo$type <- as.character(sel.taxo$type)
+sel.taxo$type[is.na(sel.taxo$type)] <- "Uncultured"
+sel.taxo <- sel.taxo %>% 
+  mutate(type = factor(type, levels = rev(c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "[77.35, 85.93]","Uncultured"))),
+         Class = factor(Class, levels = asv.rel.taxo.total$Class)) %>%
+  arrange(type)
+
+breaks = c(0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70)
+
+ra.class <- ggplot(sel.taxo,
+                   aes(x = Class,
+                       y = RA,
+                       fill = type)) +
+  geom_bar(stat = "identity",
+           position = "stack") +
+  theme_classic() +
+  theme(
+    axis.text.x = element_text(size = 6,
+                               angle = 40,
+                               vjust = 1, 
+                               hjust = 1),
+    axis.text.y = element_text(size = 6, 
+                               vjust = 0.5, 
+                               hjust = 1),
+    axis.title = element_text(size = 6),
+    axis.ticks.x = element_blank(),
+    axis.line = element_blank(),
+    legend.position = c(0.8, 0.8),
+    legend.key.size = unit(0.3, "cm"),
+    legend.text = element_text(size = 6),
+    legend.title = element_blank(), #element_text(size = 6),
+    legend.box.margin = margin(0,0,0,0, "cm"),
+    legend.background = element_rect(fill = "transparent", color = "transparent"),
+    plot.margin = margin(0.3,0.5,0,1.35, "cm")) +
+  guides(fill = guide_legend(nrow = 4, reverse = T)) +
+  scale_x_discrete(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0),
+                     breaks = breaks,
+                     labels = breaks,
+                     position = "left") +
+  scale_fill_manual(values = color.levels) +
+  labs(x = "", y = "Cumulative mean relative abundance [%]", 
+       fill = "Similarity") +
+  annotation_custom(ggplotGrob(ra.class.l1),
+                    xmin = 3.12, xmax = 6,
+                    ymin = 8, ymax = 60) +
+  annotation_custom(ggplotGrob(ra.class.l2),
+                    xmin = 8, xmax = 25.5,
+                    ymin = 5, ymax = 60); ra.class
+
+# Tile plot
+pv.sel.taxo <- sel.taxo %>% pivot_wider(names_from = type, values_from = RA_per)
+
+tile.raclass <- ggplot(sel.taxo,
+                       aes(Class, type, fill = RA_per)) + 
+  geom_tile() +
+  theme_classic() +
+  theme(
+    axis.text.x = element_text(size = 6,
+                               angle = 40,
+                               vjust = 1, 
+                               hjust = 0),
+    axis.text.y = element_text(size = 6, 
+                               vjust = 1, 
+                               hjust = 1),
+    legend.position = "none",
+    axis.title = element_blank(),
+    axis.ticks = element_blank(),
+    axis.line = element_blank(),
+    plot.margin = margin(-3,0.75,-3,0, "cm")) +
+  scale_fill_gradient(low = "white", high = "#2abfa4") +
+  geom_text(aes(label = ifelse(RA_per >= 0.1, paste0(round(RA_per, 1), "%"), paste0(""))),
+            color = "black", size = 2) +
+  coord_fixed() +
+  scale_x_discrete(expand = c(0, 0),
+                   position = "top"); tile.raclass
+```
+
+## Genus
+### LOW
+```{r}
+asv.rel.taxo.total <- asv.rel.taxo %>%
+  group_by(Genus) %>%
+  summarise(tRA = sum(RA)) %>%
+  top_n(25, tRA) %>%
+  filter(tRA < 0.5) %>%
+  arrange(-tRA)
+asv.rel.taxo.total$Genus <- factor(asv.rel.taxo.total$Genus, levels = asv.rel.taxo.total$Genus)
+
+asv.rel.taxo.lvl <- left_join(asv.rel.taxo, c100_strat, by = c("q_amplicon")) %>%
+  group_by(Genus, type) %>%
+  summarise(tRA = sum(RA))
+
+sel.taxo <- subset(asv.rel.taxo.lvl, Genus %in% asv.rel.taxo.total$Genus) %>% as.data.frame()
+sel.taxo$type <- as.character(sel.taxo$type)
+sel.taxo$type[is.na(sel.taxo$type)] <- "Uncultured"
+sel.taxo <- sel.taxo %>% 
+  mutate(type = factor(type, levels = rev(c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "[77.35, 85.93]","Uncultured"))),
+         Genus = factor(Genus, levels = asv.rel.taxo.total$Genus)) %>%
+  arrange(type)
+
+
+breaks = c(0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.4)
+
+ra.genus.l <- ggplot(sel.taxo,
+                   aes(x = Genus,
+                       y = tRA,
+                       fill = type)) +
+  geom_bar(stat = "identity",
+           position = "stack") +
+  theme_classic() +
+  theme(
+    axis.text.x = element_text(size = 4,
+                               angle = 40,
+                               vjust = 1, 
+                               hjust = 1),
+    axis.text.y = element_text(size = 4, 
+                               vjust = 0.5, 
+                               hjust = 1),
+    axis.title = element_text(size = 4),
+    axis.ticks.x = element_blank(),
+    axis.line = element_blank(),
+    legend.position = "none",
+    plot.margin = margin(0,0,0,0, "cm")) +
+  scale_x_discrete(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0),
+                     breaks = breaks,
+                     labels = breaks,
+                     position = "left") +
+  scale_fill_manual(values = color.levels) +
+  labs(x = "", y = "Cumulative mean relative abundance [%]", 
+       fill = "Similarity") ; ra.genus.l
+```
+
+### ALL
+```{r} 
+asv.rel.taxo.total <- asv.rel.taxo %>%
+  group_by(Genus) %>%
+  summarise(tRA = sum(RA)) %>%
+  top_n(25, tRA) %>%
+  arrange(-tRA)
+asv.rel.taxo.total$Genus <- factor(asv.rel.taxo.total$Genus, levels = asv.rel.taxo.total$Genus)
+
+asv.rel.taxo.lvl <- left_join(asv.rel.taxo, c100_strat, by = c("q_amplicon")) %>%
+  group_by(Genus, type) %>%
+  summarise(RA = sum(RA))
+
+sel.taxo <- inner_join(asv.rel.taxo.lvl, asv.rel.taxo.total, by = "Genus") %>% as.data.frame() %>% mutate(RA_per = RA*100/tRA) 
+sel.taxo$type <- as.character(sel.taxo$type)
+sel.taxo$type[is.na(sel.taxo$type)] <- "Uncultured"
+sel.taxo <- sel.taxo %>% 
+  mutate(type = factor(type, levels = rev(c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "[77.35, 85.93]","Uncultured"))),
+         Genus = factor(Genus, levels = asv.rel.taxo.total$Genus)) %>%
+  arrange(type)
+
+breaks = c(0, 5, 10, 15, 20, 25, 30)
+
+ra.genus <- ggplot(sel.taxo,
+                   aes(x = Genus,
+                       y = RA,
+                       fill = type)) +
+  geom_bar(stat = "identity",
+           position = "stack") +
+  theme_classic() +
+  theme(
+    axis.text.x = element_text(size = 6,
+                               angle = 40,
+                               vjust = 1, 
+                               hjust = 1),
+    axis.text.y = element_text(size = 6, 
+                               vjust = 0.5, 
+                               hjust = 1),
+    axis.title = element_text(size = 6),
+    axis.ticks.x = element_blank(),
+    axis.line = element_blank(),
+    legend.position = "none",
+    plot.margin = margin(0.3,0.5,0,1.35, "cm")) +
+  scale_x_discrete(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0),
+                     breaks = breaks,
+                     labels = breaks,
+                     position = "left") +
+  scale_fill_manual(values = color.levels) +
+  labs(x = "", y = "Cumulative mean relative abundance [%]", 
+       fill = "Similarity") +
+  annotation_custom(ggplotGrob(ra.genus.l),
+                    xmin = 13.5, xmax = 25.5,
+                    ymin = 3, ymax = 25); ra.genus
+
+# Tile plot
+pv.sel.taxo <- sel.taxo %>% pivot_wider(names_from = type, values_from = RA_per)
+
+tile.ragenus <- ggplot(sel.taxo,
+                       aes(Genus, type, fill = RA_per)) + 
+  geom_tile() +
+  theme_classic() +
+  theme(
+    axis.text.x = element_text(size = 6,
+                               angle = 40,
+                               vjust = 1, 
+                               hjust = 0),
+    axis.text.y = element_text(size = 6, 
+                               vjust = 1, 
+                               hjust = 1),
+    legend.position = "none",
+    axis.title = element_blank(),
+    axis.ticks = element_blank(),
+    axis.line = element_blank(),
+    plot.margin = margin(-3,0.75,-3,0, "cm")) +
+  scale_fill_gradient(low = "white", high = "#2abfa4") +
+  geom_text(aes(label = ifelse(RA_per >= 0.1, paste0(round(RA_per, 1), "%"), paste0(""))),
+            color = "black", size = 2) +
+  coord_fixed() +
+  scale_x_discrete(expand = c(0, 0),
+                   position = "top"); tile.ragenus
+
+```
+
+# Plot B: % ASVs Top 25
+## Class
+
+```{r}
+asv.n.taxo.total <- asv.rel.taxo %>%
+  group_by(Class) %>%
+  summarise(Total_n = n()) %>%
+  top_n(25, Total_n) %>%
+  arrange(-Total_n)
+asv.n.taxo.total$Class <- factor(asv.n.taxo.total$Class, levels = asv.n.taxo.total$Class)
+
+asv.n.taxo.lvl <- left_join(asv.rel.taxo, c100_strat, by = c("q_amplicon")) %>%
+  group_by(Class, type) %>%
+  summarise(n = n()) %>%
+  group_by(Class) %>%
+  mutate(Total_n = sum(n),
+         per = n*100/Total_n)
+
+sel.taxo <- subset(asv.n.taxo.lvl, Class %in% asv.n.taxo.total$Class) %>% as.data.frame()
+sel.taxo$type <- as.character(sel.taxo$type)
+sel.taxo$type[is.na(sel.taxo$type)] <- "Uncultured"
+sel.taxo <- sel.taxo %>% 
+  mutate(Class = factor(Class, levels = asv.n.taxo.total$Class),
+         type = factor(type, levels = rev(c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "[77.35, 85.93]","Uncultured")))) %>%
+  arrange(type)
+
+breaks = c(0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
+
+n.class <- ggplot(sel.taxo,
+                   aes(x = Class,
+                       y = per,
+                       fill = type)) +
+  geom_bar(stat = "identity",
+           position = "stack") +
+  theme_classic() +
+  theme(
+    axis.text.x = element_text(size = 6,
+                               angle = 40,
+                               vjust = 1, 
+                               hjust = 1),
+    axis.text.y = element_text(size = 6, 
+                               vjust = 0.5, 
+                               hjust = 1),
+    axis.title = element_text(size = 6),
+    axis.ticks.x = element_blank(),
+    axis.line = element_blank(),
+    legend.position = "none",
+    plot.margin = margin(0.3,0.5,0,1.35, "cm")) +
+  scale_x_discrete(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0),
+                     breaks = breaks,
+                     labels = breaks,
+                     position = "left") +
+  scale_fill_manual(values = color.levels) +
+  labs(x = "", y = "Cumulative ASVs [%]", 
+       fill = "Similarity"); n.class
+
+
+# Tile plot
+pv.sel.taxo <- sel.taxo %>% pivot_wider(-c(n, Total_n), names_from = type, values_from = per)
+
+tile.nclass <- ggplot(sel.taxo,
+                      aes(Class, type, fill = per)) + 
+  geom_tile() +
+  theme_classic() +
+  theme(
+    axis.text.x = element_text(size = 6,
+                               angle = 40,
+                               vjust = 1, 
+                               hjust = 0),
+    axis.text.y = element_text(size = 6, 
+                               vjust = 1, 
+                               hjust = 1),
+    legend.position = "none",
+    axis.title = element_blank(),
+    axis.ticks = element_blank(),
+    axis.line = element_blank(),
+    plot.margin = margin(-3,1.2,-3,0, "cm")) +
+  scale_fill_gradient(low = "white", high = "#2abfa4") +
+  geom_text(aes(label = ifelse(per >= 0.1, paste0(round(per, 1), "%"), paste0(""))), color = "black", size = 2) +
+  coord_fixed() +
+  scale_x_discrete(expand = c(0, 0),
+                   position = "top"); tile.nclass
+```
+
+## Genus
+```{r} 
+asv.n.taxo.total <- asv.rel.taxo %>%
+  group_by(Genus) %>%
+  summarise(Total_n = n()) %>%
+  top_n(25, Total_n) %>%
+  arrange(-Total_n)
+asv.n.taxo.total$Genus <- factor(asv.n.taxo.total$Genus, levels = asv.n.taxo.total$Genus)
+
+asv.n.taxo.lvl <- left_join(asv.rel.taxo, c100_strat, by = c("q_amplicon")) %>%
+  group_by(Genus, type) %>%
+  summarise(n = n()) %>%
+  group_by(Genus) %>%
+  mutate(Total_n = sum(n),
+         per = n*100/Total_n)
+
+sel.taxo <- subset(asv.n.taxo.lvl, Genus %in% asv.n.taxo.total$Genus) %>% as.data.frame()
+sel.taxo$type <- as.character(sel.taxo$type)
+sel.taxo$type[is.na(sel.taxo$type)] <- "Uncultured"
+sel.taxo <- sel.taxo %>% 
+  mutate(Genus = factor(Genus, levels = asv.n.taxo.total$Genus),
+         type = factor(type, levels = rev(c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "[77.35, 85.93]","Uncultured")))) %>%
+  arrange(type)
+
+n.genus <- ggplot(sel.taxo,
+                   aes(x = Genus,
+                       y = per,
+                       fill = type)) +
+  geom_bar(stat = "identity",
+           position = "stack") +
+  theme_classic() +
+  theme(
+    axis.text.x = element_text(size = 6,
+                               angle = 40,
+                               vjust = 1, 
+                               hjust = 1),
+    axis.text.y = element_text(size = 6, 
+                               vjust = 0.5, 
+                               hjust = 1),
+    axis.title = element_text(size = 6),
+    axis.ticks.x = element_blank(),
+    axis.line = element_blank(),
+    legend.position = "none",
+    plot.margin = margin(0.3,0.5,0,1.35, "cm")) +
+  scale_x_discrete(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0),
+                     breaks = breaks,
+                     labels = breaks,
+                     position = "left") +
+  scale_fill_manual(values = color.levels) +
+  labs(x = "", y = "Cumulative ASVs [%]", 
+       fill = "Similarity"); n.genus
+
+# Tile plot
+pv.sel.taxo <- sel.taxo %>% pivot_wider(-c(n, Total_n), names_from = type, values_from = per)
+
+tile.ngenus <- ggplot(sel.taxo, 
+                      aes(Genus, type, fill = per)) + 
+  geom_tile() +
+  theme_classic() +
+  theme(
+    axis.text.x = element_text(size = 6,
+                               angle = 40,
+                               vjust = 1, 
+                               hjust = 0),
+    axis.text.y = element_text(size = 6, 
+                               vjust = 1, 
+                               hjust = 1),
+    legend.position = "none",
+    axis.title = element_blank(),
+    axis.ticks = element_blank(),
+    axis.line = element_blank(),
+    plot.margin = margin(-3,1.2,-3,0, "cm")) +
+  scale_fill_gradient(low = "white", high = "#2abfa4") +
+  geom_text(aes(label = ifelse(per >= 0.1, paste0(round(per, 1), "%"), paste0(""))), color = "black", size = 2) +
+  coord_fixed() +
+  scale_x_discrete(expand = c(0, 0),
+                   position = "top"); tile.ngenus
+```
+
+# Merge final
+```{r}
+Fig3 <- cowplot::plot_grid(ra.class, n.class,
+                           ra.genus, n.genus, 
+                           labels = c("A", "B", "C", "D"),
+                           label_size = 12,
+                           hjust = -2,
+                           greedy = T) +
+  theme(plot.margin = margin(0.5,-0.4,0,-0.4, "cm")); Fig3
+
+# cowplot::save_plot(
+#   plot = Fig3,
+#   "outputs/r/Fig_3/fig3-final.png",
+#   base_width = 20,
+#   base_height = 15,
+#   units = "cm",
+#   scale = 1,
+#   bg = "white",
+#   dpi = 600)
+```
+
+# SI
+```{r}
+FigS4 <- cowplot::plot_grid(tile.raclass, tile.nclass,
+                           labels = c("A", "B"),
+                           ncol = 1,
+                           label_size = 12,
+                           hjust = -2,
+                           greedy = T) +
+  theme(plot.margin = margin(0,1.25,0,0, "cm")); FigS4
+
+# cowplot::save_plot(
+#   plot = FigS4,
+#   "outputs/r/SI/figS4.png",
+#   base_width = 20,
+#   base_height = 15,
+#   units = "cm",
+#   scale = 1,
+#   bg = "white",
+#   dpi = 600)
+
+FigS5 <- cowplot::plot_grid(tile.ragenus, tile.ngenus, 
+                           labels = c("A", "B"),
+                           ncol = 1,
+                           label_size = 12,
+                           hjust = -2,
+                           greedy = T) +
+  theme(plot.margin = margin(0,1.25,0,0, "cm")); FigS5
+
+# cowplot::save_plot(
+#   plot = FigS5,
+#   "outputs/r/SI/figS5.png",
+#   base_width = 20,
+#   base_height = 15,
+#   units = "cm",
+#   scale = 1,
+#   bg = "white",
+#   dpi = 600)
+```

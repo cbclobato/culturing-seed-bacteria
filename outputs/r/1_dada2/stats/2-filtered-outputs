@@ -1,0 +1,8 @@
+Creating output directory: outputs/dada2/2-filtered
+    reads.in        reads.out     
+ Min.   :   5.0   Min.   :   4.0  
+ 1st Qu.: 443.8   1st Qu.: 363.2  
+ Median :1245.5   Median :1033.0  
+ Mean   :1954.3   Mean   :1549.8  
+ 3rd Qu.:2727.0   3rd Qu.:2216.2  
+ Max.   :9864.0   Max.   :7535.0  

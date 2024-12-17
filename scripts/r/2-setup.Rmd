@@ -1,0 +1,415 @@
+---
+title: "Setup"
+author: "Carolina Lobato"
+date: "2023-07-20"
+output: html_document
+---
+
+# Load Libraries
+```{r loadlib, include = F}
+library(phyloseq)
+library(microbiome)
+library(microbiomeutilities)
+library(tidyverse)
+library(ggvenn)
+library(RColorBrewer)
+```
+
+# Pacbio
+
+## Create Phyloseq
+```{r}
+load("outputs/r/1_dada2/phy-obj/metadata.RData") # df
+load("outputs/r/1_dada2/phy-obj/feature-table.RData") # st.nochim
+load("outputs/r/1_dada2/phy-obj/tax-table.RData") # tax
+
+asv_tab <- t(st.nochim)
+rownames(asv_tab) <- paste(
+  "ASV ", 1:length(rownames(asv_tab)),
+  ": ",
+  rownames(asv_tab),
+  sep = "")
+rownames(asv_tab)[1:5]
+rownames(asv_tab) <- sub(": [CAGT]+", "", rownames(asv_tab))
+rownames(asv_tab)[1:5]
+
+tax_tab <- as.data.frame(tax)
+rownames(tax_tab) <- paste(
+  "ASV ", 1:length(rownames(tax_tab)),
+  ": ",
+  rownames(tax_tab),
+  sep = "")
+rownames(tax_tab)[1:5]
+rownames(tax_tab) <- sub(": [CAGT]+", "", rownames(tax_tab))
+rownames(tax_tab)[1:5]
+tax_tab <- as.matrix(tax_tab)
+
+sq <- Biostrings::readDNAStringSet(
+  "outputs/r/1_dada2/phy-obj/dna-seq2.fasta",
+  format = "fasta",
+  nrec = -1L,
+  skip = 0L,
+  seek.first.rec = F,
+  use.names = T,
+  with.qualities = F)
+
+ps <- phyloseq(otu_table(asv_tab, 
+                         taxa_are_rows = T),
+               tax_table(tax_tab),
+               sample_data(df),
+               sq)
+
+ps # 445 taxa and 135 samples
+# save(ps, file = "outputs/r/2_setup/ps.RData")
+
+## Read stats ps
+ss <- sort(sample_sums(ps))
+ss <- as.matrix(ss)
+colSums(ss) # total reads = 204330
+summary(ss) # mean reads/sample = 1513.6; min = 4; max = 7315
+```
+
+## Check Contaminants
+```{r}
+load("outputs/r/2_setup/ps.RData") 
+
+ps_new <- subset_samples(ps, tissue == "") 
+ps_new <- prune_taxa(taxa_sums(ps_new) > 0, ps_new);ps_new # 25 taxa and 4 samples
+check <- ps_new@sam_data[["genotype"]];check # n = 4 
+
+contam.list <- c()
+metadata <- sample_data(ps_new)
+categories <- unique(na.omit(metadata[["genotype"]]))
+
+for (item in categories)
+{
+  print(paste0("Identifying Taxa for ", item))
+  ps.subset <- subset_samples(ps_new, genotype == item)
+  subset.list <- core_members(ps.subset, detection = 0 , prevalence = 0)
+  print(paste0("No. of Taxa in ", item, ": ", length(subset.list)))
+  contam.list[[item]] <- subset.list
+}
+print(contam.list)
+
+common.asv <- Reduce(intersect, contam.list); common.asv # n = 0
+all.asv <- Reduce(union, contam.list); all.asv # n = 25
+
+genotypes <- c("M")
+other_genotypes <- setdiff(names(contam.list), genotypes)
+set1 <- Reduce(intersect, contam.list[genotypes])
+set2 <- unique(unlist(contam.list[other_genotypes]))
+setdiff(set1, set2)
+
+# write.table(contam.list$M,
+#             sep = ";",
+#             "outputs/r/2_setup/mock-list.csv") # 23 taxa
+# 
+# write.table(contam.list$Ctl,
+#             sep = ";",
+#             "outputs/r/2_setup/ctl-list.csv") # 2 taxa
+
+
+## Plot
+mycolors <- colorRampPalette(brewer.pal(9, "Paired"))(9) # 9 Genera
+ps_rel <- microbiome::transform(ps_new, "compositional") # 25 ASVs
+
+FigS2 <- plot_bar(ps_rel, 
+         x = "sample_name", 
+         fill = "Genus") + 
+  labs(x = "", color = "") +
+  scale_color_manual(values = mycolors,
+                     aesthetics = "fill",
+                     na.translate = T) +
+  theme_classic() +
+  theme(
+    axis.text.x = element_text(size = 12, angle = 45, hjust = 1),
+    legend.position = "right",
+    legend.text = element_text(size = 12),
+    legend.title = element_text(size = 12, face = "bold"),
+    strip.background = element_blank()) +
+  guides(fill = guide_legend(ncol = 1)); FigS2
+
+# ggsave(
+#   "outputs/r/SI/figS2.png",
+#   width = 45,
+#   height = 31,
+#   units = "cm",
+#   scale = 1,
+#   dpi = 600)
+
+# Contaminants NC:
+# ASV 94: Sphingomonas
+# ASV 111: Sphingomonas
+
+# Mock:
+# Pseudomonas aeruginosa ASV 355
+# Escherichia coli ASV 329, ASV 408, ASV 420, ASV 428, ASV 435
+# Salmonella enterica ASV 258, ASV 430
+# Lactobacillus fermentum ASV 310, ASV 409, ASV 412, ASV 422, ASV 424
+# Enterococcus faecalis ASV 186
+# Staphylococcus aureus ASV 192, ASV 326, ASV 334
+# Listeria monocytogenes ASV 227, ASV 282, ASV 385
+# Bacillus subtilis: ASV 171, ASV 280, ASV 289
+```
+
+## Subset Controls, Assign New ASV Names and Clean
+```{r}
+load("outputs/r/2_setup/ps.RData") 
+
+ps_sub <- subset_samples(ps, tissue != "")
+ps_sub <- prune_samples(sample_sums(ps_sub) > 0, ps_sub)
+ps_sub <- prune_taxa(taxa_sums(ps_sub) > 0, ps_sub)
+ps_sub # 421 taxa and 131 samples
+
+## Read Stats ps_sub
+sb <- sort(sample_sums(ps_sub))
+sb <- as.matrix(sb)
+colSums(sb) # total reads = 202615
+summary(sb) # mean reads/sample = 1547
+
+# taxa_names(ps_sub) <- paste(
+#   "ASV ", 1:length(taxa_names(ps_sub)),
+#   ": ",
+#   taxa_names(ps_sub),
+#   sep = "")
+# taxa_names(ps_sub)[1:5]
+
+bh <- microbiomeutilities::format_to_besthit(ps_sub)
+taxa_names(bh) <- sub(":", ": ", taxa_names(bh))
+taxa_names(bh)[1:5]
+
+sample_data(bh)$total_reads <- sample_sums(bh)
+metadata_bh <- sample_data(bh)
+
+bh_pb <- subset_taxa(bh, rownames(tax_table(bh)) != c("ASV 94: Sphingomonas"))
+bh_pb <- prune_taxa(taxa_sums(bh_pb) > 0, bh_pb)
+bh_pb # 420 taxa and 131 samples
+
+bh_pb <- subset_taxa(bh_pb, rownames(tax_table(bh_pb)) != c("ASV 111: Sphingomonas"))
+bh_pb <- prune_taxa(taxa_sums(bh_pb) > 0, bh_pb)
+bh_pb # 419 taxa and 131 samples
+
+bh_pb <- subset_taxa(bh_pb, Domain != "Eukaryota")
+bh_pb <- prune_taxa(taxa_sums(bh_pb) > 0, bh_pb)
+bh_pb # 418 taxa and 131 samples
+
+tax_table(bh_pb)
+
+## Read Stats bh_pb
+sh <- sort(sample_sums(bh_pb))
+sh <- as.matrix(sh)
+colSums(sh) # total reads = 201701
+summary(sh) # mean reads/sample = 1540; min = 23; max = 7283
+sample_data(bh_pb)$total_reads <- sample_sums(bh_pb)
+metadata_bh_pb <- sample_data(bh_pb)
+
+final.reads <- sum(metadata_bh_pb$total_reads)
+
+# save(bh_pb, file = "outputs/r/2_setup/bh-pb.RData")
+
+# refseq(bh_pb) %>%
+#   Biostrings::writeXStringSet("outputs/r/2_setup/bh-pb-seq.fasta",
+#                               append = F,
+#                               compress = F,
+#                               compression_level = NA,
+#                               format = "fasta")
+
+# tax_table(bh_pb) %>% as.data.frame() %>%
+#   write_csv(file = "outputs/r/2_setup/bh-tax-train-set.txt")
+```
+
+## Check Samples
+```{r}
+load("outputs/r/2_setup/bh-pb.RData"); bh_pb # 418 taxa and 131 samples
+load("outputs/r/2_setup/bh-amp.RData"); bh # 5297 taxa and 451 samples
+
+# Check sample overlaps
+Community <- as.data.frame(unique(bh@sam_data[["genotype"]]))
+colnames(Community) <- c("Gen") 
+
+Culturing <- as.data.frame(unique(bh_pb@sam_data[["genotype"]]))
+colnames(Culturing) <- c("Gen") 
+
+test1 <- Community %>% mutate(testing = Gen %in% Culturing$Gen)
+test2 <- Culturing %>% mutate(testing = Gen %in% Community$Gen)
+
+sets <- list(Community = sort(as.character(unique(bh@sam_data[["genotype"]]))),
+             Culture =  sort(as.character(unique(bh_pb@sam_data[["genotype"]]))))
+
+FigS1 <- ggvenn(sets,
+                 fill_color = c("#0073C2FF", "#CD534CFF"),
+                 fill_alpha = 0.7, 
+                 show_stats = "c",
+                 stroke_size = 0.5, set_name_size = 5, text_size = 4); FigS1
+
+# ggsave(
+#   "outputs/r/SI/figS1.png",
+#   width = 15,
+#   height = 15,
+#   units = "cm",
+#   scale = 1,
+#   dpi = 600)
+
+# Check each sample
+bh_new <- subset_samples(bh_pb, genotype == "Afghani 1")
+bh_new <- prune_taxa(taxa_sums(bh_new) > 0, bh_new);bh_new
+check <- unique(bh_new@sam_data[["sample_name"]]); check
+
+mycolors <- colorRampPalette(brewer.pal(36, "Paired"))(36)
+bh_rel <- microbiome::transform(bh_pb, "compositional")
+
+plot_bar(bh_rel, 
+         x = "sample_name", 
+         fill = "Genus") + 
+  labs(x = "", color = "") +
+  scale_color_manual(values = mycolors,
+                     aesthetics = "fill",
+                     na.translate = T) +
+  theme_classic() +
+  theme(
+    axis.text.x = element_text(size = 12, angle = 45, hjust = 1),
+    legend.position = "right",
+    legend.text = element_text(size = 12),
+    legend.title = element_text(size = 12, face = "bold"),
+    strip.background = element_blank()) +
+      guides(fill = guide_legend(ncol = 1))
+```
+
+# Assignment
+
+## Import Data
+```{r}
+load("outputs/r/2_setup/bh-amp.RData"); bh # 5297 taxa and 451 samples
+load("outputs/r/2_setup/bh-pb.RData"); bh_pb # 418 taxa and 131 samples
+
+# Get taxonomic information
+taxo.amp <- tax_table(bh) %>% 
+  as.data.frame()
+
+taxo.amp$Species <- gsub("_sp.", "",as.character(taxo.amp$Species))
+
+taxo.amp <- taxo.amp %>%
+  select(c("Phylum", "Class", "Order", "Family", "Genus", "Species")) %>% 
+  rownames_to_column("q_amplicon") %>% 
+  mutate(Species = recode(Species,
+                          "Burkholderia-Caballeronia-Paraburkholderia" = "BC-Paraburkholderia",
+                          "Allorhizobium-Neorhizobium-Pararhizobium-Rhizobium" = "ANP-Rhizobium")) %>% 
+  mutate(Genus = recode(Genus,
+                        "Methylobacterium-Methylorubrum" = "Methylobacterium",
+                        "Burkholderia-Caballeronia-Paraburkholderia" = "BC-Paraburkholderia",
+                        "Allorhizobium-Neorhizobium-Pararhizobium-Rhizobium" = "ANP-Rhizobium")) %>% 
+  mutate(Order = recode(Order,
+                        "Enterobacterales" = "Enterobacteriales"))
+
+# save(taxo.amp, file = "outputs/r/2_setup/taxo-amp.RData")
+
+# taxo.pb <- as.data.frame(read_csv("outputs/r/2_setup/bh-tax-train-set-ncbi.txt"))
+    
+taxo.pb <- taxo.pb %>%
+  select(c("db_pb", "Phylum", "Class", "Order", "Family", "Genus", "Species")) %>% 
+  mutate(Species = recode(Species,
+                        "Esherichica/Shigella" = "Escherichia-Shigella")) %>%
+  mutate(Genus = recode(Genus,
+                        "Esherichica/Shigella" = "Escherichia-Shigella")) %>%
+  mutate(Family = recode(Family,
+                        "Methylobacteriaceae" = "Beijerinckiaceae",
+                        "Bradyrhizobiaceae" = "Xanthobacteraceae")) %>%
+  mutate(Family = ifelse(Genus == "Brevibacillus" & Family == "Paenibacillaceae", "Brevibacillaceae", Family)) %>%
+  mutate(Family = ifelse(Genus == "Pantoea" & Family == "Enterobacteriaceae", "Erwiniaceae", Family)) %>%
+  mutate(Family = ifelse(Genus == "Erwinia" & Family == "Enterobacteriaceae", "Erwiniaceae", Family)) %>%
+  mutate(Order = ifelse(Genus == "Brevibacillus" & Order == "Bacillales", "Brevibacillales", Order)) %>%
+  mutate(Order = ifelse(Genus == "Paenibacillus" & Order == "Bacillales", "Paenibacillales", Order)) %>%
+  mutate(Class = recode(Class,
+                        "Betaproteobacteria" = "Gammaproteobacteria",
+                        "Sphingobacteriia" = "Bacteroidia")) %>% 
+  mutate(Phylum = recode(Phylum,
+                        "Bacteroidetes" = "Bacteroidota",
+                        "Actinobacteria" = "Actinobacteriota"))
+
+# save(taxo.pb, file = "outputs/r/2_setup/taxo-pb.RData")
+
+# Get assignment tables
+c100 <- read.table(
+  "outputs/galaxy/mb-cov100.txt",
+  sep = "\t", quote = '', header = T, fill = T) #148754 assignments
+
+check_pb <- c100 %>% select(db_pb) %>% unique() #418 ASVs
+check_amp <- c100 %>% select(q_amplicon) %>% unique() #2513 ASVs
+
+c100_strat <- c100 %>% 
+  select(q_amplicon, id) %>% 
+  mutate(type = ifelse(id <= 85.93, "[77.35, 85.93]", 
+                       ifelse(id <= 87.95, "(85.93, 87.95]",
+                              ifelse(id <= 90.1, "(87.95, 90.1]",
+                                     ifelse(id <= 92.9, "(90.1, 92.9]",
+                                            ifelse(id <= 96.55, "(92.9, 96.55]",
+                                                   ifelse(id <= 99, "(96.55, 99]",
+                                                         "(99, 100]"))))))) %>%
+  mutate(type = factor(type, levels = c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]", 
+                                        "(87.95, 90.1]", "(85.93, 87.95]", "[77.35, 85.93]"))) %>%
+  arrange(type) %>%
+  distinct(q_amplicon, .keep_all = T) # 2513
+
+check_unique <- c100_strat %>% select(q_amplicon) %>% unique() # 2513
+check_type <- c100_strat  %>% group_by(type) %>% summarize(n = n_distinct(q_amplicon)); check_type
+sum(check_type$n) # 2513
+
+# save(c100, file = "outputs/r/2_setup/c100.RData")
+# save(c100_strat, file = "outputs/r/2_setup/c100-strat.RData")
+```
+
+
+### Check Data
+```{r}
+load("outputs/r/2_setup/taxo-amp.RData") # taxo.amp
+load("outputs/r/2_setup/taxo-pb.RData") # taxo.pb
+load("outputs/r/2_setup/c100.RData") # c100
+
+colnames(taxo.amp) <- c("q_amplicon", "Phylum_amp", "Class_amp",
+                        "Order_amp", "Family_amp", "Genus_amp", "Species_amp")
+colnames(taxo.pb) <- c("db_pb", "Phylum_pb", "Class_pb", 
+                       "Order_pb", "Family_pb", "Genus_pb", "Species_pb")
+
+# Check taxa number
+taxo.amp_species <- taxo.amp %>% select(Species_amp) %>% unique() #902
+taxo.amp_genus <- taxo.amp %>% select(Genus_amp) %>% unique() #813
+taxo.amp_family <- taxo.amp %>% select(Family_amp) %>% unique() #402
+taxo.amp_order <- taxo.amp %>% select(Order_amp) %>% unique() #242
+taxo.amp_class <- taxo.amp %>% select(Class_amp) %>% unique() #101
+taxo.amp_phy <- taxo.amp %>% select(Phylum_amp) %>% unique() #38
+
+taxo.pb_species <- taxo.pb %>% select(Species_pb) %>% unique() #102
+taxo.pb_genus <- taxo.pb %>% select(Genus_pb) %>% unique() #36
+taxo.pb_family <- taxo.pb %>% select(Family_pb) %>% unique() #23
+taxo.pb_order <- taxo.pb %>% select(Order_pb) %>% unique() #15
+taxo.pb_class <- taxo.pb %>% select(Class_pb) %>% unique() #5
+taxo.pb_phy <- taxo.pb %>% select(Phylum_pb) %>% unique() #4
+
+# Check how many ASVs were assigned in each dataset
+amp_trim <- c100 %>% select(q_amplicon) %>% unique() #2513
+pb_trim <- c100 %>% select(db_pb) %>% unique() #418
+
+# Check if the taxonomy assignment is the same in both datasets
+## At ASV level
+tax_check0 <- c100
+tax_check0$q_amplicon <- gsub("ASV [0-9]+: ", "",as.character(tax_check0$q_amplicon))
+tax_check0$q_amplicon <- gsub("_[a-zA-Z]+.", "",as.character(tax_check0$q_amplicon))
+tax_check0$q_amplicon <- gsub("_[a-zA-Z]+", "",as.character(tax_check0$q_amplicon))
+tax_check0$db_pb <- gsub("ASV [0-9]+: ", "",as.character(tax_check0$db_pb))
+
+tax_check0 <- tax_check0 %>% mutate(assignment = ifelse(q_amplicon %in% db_pb, T, F)) #370
+
+## Other taxonomic levels
+c100_amp_tax <- merge(c100, taxo.amp, by = "q_amplicon") #370
+c100_pb_tax <- merge(c100, taxo.pb, by = "db_pb") #370
+c100_all_tax <- right_join(c100_amp_tax, c100_pb_tax, by = c("q_amplicon", "db_pb")) #370
+
+tax_check_all <- c100_all_tax %>% 
+  mutate(Species = ifelse(Species_amp == Species_pb, TRUE, FALSE)) %>%
+  mutate(Genus = ifelse(Genus_amp == Genus_pb, TRUE, FALSE)) %>%
+  mutate(Fam = ifelse(Family_amp == Family_pb, TRUE, FALSE)) %>%
+  mutate(Order = ifelse(Order_amp == Order_pb, TRUE, FALSE)) %>%
+  mutate(Class = ifelse(Class_amp == Class_pb, TRUE, FALSE)) %>%
+  mutate(Phylum = ifelse(Phylum_amp == Phylum_pb, TRUE, FALSE))
+```
+

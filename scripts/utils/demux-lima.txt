@@ -1,0 +1,9 @@
+lima \
+--hifi-preset ASYMMETRIC \
+-j 8 \
+--output-missing-pairs \
+--split-named \
+--biosample-csv /data/metadata/lima/biosamples.csv  \
+/data/raw/Pacbio.fastq.gz \
+/data/lima/lima-bc.fasta \
+/outputs/lima/lima-bc/*.fastq.gz

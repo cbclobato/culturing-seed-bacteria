@@ -1,0 +1,272 @@
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/01AR.bc1005--bc1035.fastq.gz
+Encountered 730 unique sequences from 1512 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/01AS.bc1005--bc1033.fastq.gz
+Encountered 232 unique sequences from 447 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/01BR.bc1005--bc1045.fastq.gz
+Encountered 96 unique sequences from 217 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/01BS.bc1005--bc1044.fastq.gz
+Encountered 31 unique sequences from 55 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/02AR.bc1005--bc1056.fastq.gz
+Encountered 212 unique sequences from 574 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/02AS.bc1005--bc1054.fastq.gz
+Encountered 581 unique sequences from 1533 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/04AR.bc1005--bc1059.fastq.gz
+Encountered 745 unique sequences from 1621 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/04AS.bc1005--bc1057.fastq.gz
+Encountered 575 unique sequences from 1108 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/06AR.bc1005--bc1062.fastq.gz
+Encountered 393 unique sequences from 798 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/06AS.bc1005--bc1060.fastq.gz
+Encountered 36 unique sequences from 68 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/07AR.bc1005--bc1075.fastq.gz
+Encountered 788 unique sequences from 2003 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/07BR.bc1005--bc1082.fastq.gz
+Encountered 752 unique sequences from 1775 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/07BS.bc1005--bc1076.fastq.gz
+Encountered 256 unique sequences from 627 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/07CR.bc1005--bc1089.fastq.gz
+Encountered 96 unique sequences from 226 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/07CS.bc1005--bc1083.fastq.gz
+Encountered 202 unique sequences from 489 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/08AR.bc1005--bc1098.fastq.gz
+Encountered 49 unique sequences from 98 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/08AS.bc1005--bc1096.fastq.gz
+Encountered 172 unique sequences from 468 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/08BR.bc1005--bc1101.fastq.gz
+Encountered 688 unique sequences from 1493 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/08BS.bc1005--bc1100.fastq.gz
+Encountered 38 unique sequences from 42 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/09AR.bc1005--bc1107.fastq.gz
+Encountered 1230 unique sequences from 2431 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/09AS.bc1005--bc1105.fastq.gz
+Encountered 1199 unique sequences from 2279 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/09BR.bc1005--bc1112.fastq.gz
+Encountered 1393 unique sequences from 2770 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/09BS.bc1005--bc1110.fastq.gz
+Encountered 1561 unique sequences from 2683 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/09CR.bc1007--bc1035.fastq.gz
+Encountered 132 unique sequences from 324 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/09CS.bc1007--bc1033.fastq.gz
+Encountered 277 unique sequences from 654 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/10AR.bc1007--bc1045.fastq.gz
+Encountered 146 unique sequences from 387 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/10AS.bc1007--bc1044.fastq.gz
+Encountered 277 unique sequences from 796 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/11AR.bc1007--bc1056.fastq.gz
+Encountered 468 unique sequences from 1353 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/11AS.bc1007--bc1054.fastq.gz
+Encountered 527 unique sequences from 1517 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/13AR.bc1007--bc1059.fastq.gz
+Encountered 99 unique sequences from 279 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/13AS.bc1007--bc1057.fastq.gz
+Encountered 135 unique sequences from 400 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/14AR.bc1007--bc1062.fastq.gz
+Encountered 149 unique sequences from 324 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/14AS.bc1007--bc1060.fastq.gz
+Encountered 101 unique sequences from 221 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/16AR.bc1007--bc1075.fastq.gz
+Encountered 58 unique sequences from 99 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/16AS.bc1007--bc1065.fastq.gz
+Encountered 386 unique sequences from 876 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/17AR.bc1007--bc1082.fastq.gz
+Encountered 1120 unique sequences from 2259 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/17BR.bc1007--bc1089.fastq.gz
+Encountered 298 unique sequences from 833 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/17BS.bc1007--bc1083.fastq.gz
+Encountered 182 unique sequences from 460 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/17CR.bc1007--bc1098.fastq.gz
+Encountered 1576 unique sequences from 3033 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/17CS.bc1007--bc1096.fastq.gz
+Encountered 1004 unique sequences from 2079 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/18AR.bc1007--bc1101.fastq.gz
+Encountered 452 unique sequences from 965 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/18AS.bc1007--bc1100.fastq.gz
+Encountered 494 unique sequences from 1232 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/18BR.bc1007--bc1107.fastq.gz
+Encountered 189 unique sequences from 433 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/18BS.bc1007--bc1105.fastq.gz
+Encountered 699 unique sequences from 1506 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/19AR.bc1007--bc1112.fastq.gz
+Encountered 775 unique sequences from 2240 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/19AS.bc1007--bc1110.fastq.gz
+Encountered 974 unique sequences from 3017 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/20AR.bc1008--bc1035.fastq.gz
+Encountered 2058 unique sequences from 5786 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/20AS.bc1008--bc1033.fastq.gz
+Encountered 1352 unique sequences from 3779 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/20BR.bc1008--bc1044.fastq.gz
+Encountered 1410 unique sequences from 4162 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/20CS.bc1008--bc1045.fastq.gz
+Encountered 4089 unique sequences from 7535 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/21AR.bc1008--bc1056.fastq.gz
+Encountered 821 unique sequences from 2549 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/21AS.bc1008--bc1054.fastq.gz
+Encountered 1898 unique sequences from 6273 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/24AR.bc1008--bc1059.fastq.gz
+Encountered 771 unique sequences from 1758 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/24AS.bc1008--bc1057.fastq.gz
+Encountered 354 unique sequences from 834 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/26AR.bc1008--bc1062.fastq.gz
+Encountered 1101 unique sequences from 3673 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/26AS.bc1008--bc1060.fastq.gz
+Encountered 648 unique sequences from 2037 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/27AR.bc1008--bc1075.fastq.gz
+Encountered 1689 unique sequences from 4061 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/27AS.bc1008--bc1065.fastq.gz
+Encountered 3233 unique sequences from 6383 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/28AR.bc1008--bc1082.fastq.gz
+Encountered 479 unique sequences from 1088 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/28AS.bc1008--bc1076.fastq.gz
+Encountered 2449 unique sequences from 4338 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/29AR.bc1008--bc1089.fastq.gz
+Encountered 1466 unique sequences from 4394 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/30AR.bc1008--bc1098.fastq.gz
+Encountered 81 unique sequences from 170 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/30AS.bc1008--bc1096.fastq.gz
+Encountered 243 unique sequences from 668 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/31AR.bc1008--bc1100.fastq.gz
+Encountered 1486 unique sequences from 2446 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/31BS.bc1008--bc1101.fastq.gz
+Encountered 2069 unique sequences from 3672 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/32AR.bc1008--bc1107.fastq.gz
+Encountered 1420 unique sequences from 3999 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/32AS.bc1008--bc1105.fastq.gz
+Encountered 392 unique sequences from 936 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/33AS.bc1008--bc1110.fastq.gz
+Encountered 60 unique sequences from 146 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/37AR.bc1012--bc1033.fastq.gz
+Encountered 183 unique sequences from 466 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/37AS.bc1008--bc1112.fastq.gz
+Encountered 267 unique sequences from 631 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/37BR.bc1012--bc1044.fastq.gz
+Encountered 60 unique sequences from 128 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/37BS.bc1012--bc1035.fastq.gz
+Encountered 30 unique sequences from 71 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/38AR.bc1012--bc1054.fastq.gz
+Encountered 408 unique sequences from 1043 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/38AS.bc1012--bc1045.fastq.gz
+Encountered 553 unique sequences from 1255 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/38BR.bc1020--bc1060.fastq.gz
+Encountered 1444 unique sequences from 3691 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/38BS.bc1020--bc1059.fastq.gz
+Encountered 1817 unique sequences from 4466 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/44AR.bc1012--bc1057.fastq.gz
+Encountered 244 unique sequences from 523 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/44AS.bc1012--bc1056.fastq.gz
+Encountered 281 unique sequences from 599 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/44BR.bc1012--bc1060.fastq.gz
+Encountered 1277 unique sequences from 3625 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/44BS.bc1012--bc1059.fastq.gz
+Encountered 1490 unique sequences from 4614 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/46AR.bc1012--bc1065.fastq.gz
+Encountered 347 unique sequences from 755 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/46AS.bc1012--bc1062.fastq.gz
+Encountered 321 unique sequences from 671 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/49AR.bc1012--bc1076.fastq.gz
+Encountered 885 unique sequences from 2050 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/49AS.bc1012--bc1075.fastq.gz
+Encountered 537 unique sequences from 1199 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/50AR.bc1012--bc1083.fastq.gz
+Encountered 41 unique sequences from 94 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/50AS.bc1012--bc1082.fastq.gz
+Encountered 92 unique sequences from 241 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/52AR.bc1012--bc1096.fastq.gz
+Encountered 691 unique sequences from 2136 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/52AS.bc1012--bc1089.fastq.gz
+Encountered 93 unique sequences from 219 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/52BR.bc1012--bc1100.fastq.gz
+Encountered 101 unique sequences from 281 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/52BS.bc1012--bc1098.fastq.gz
+Encountered 41 unique sequences from 124 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/55AR.bc1012--bc1105.fastq.gz
+Encountered 59 unique sequences from 151 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/55AS.bc1012--bc1101.fastq.gz
+Encountered 67 unique sequences from 164 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/55BR.bc1012--bc1110.fastq.gz
+Encountered 314 unique sequences from 802 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/55BS.bc1012--bc1107.fastq.gz
+Encountered 142 unique sequences from 337 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/56AR.bc1012--bc1112.fastq.gz
+Encountered 171 unique sequences from 394 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/56AS.bc1015--bc1101.fastq.gz
+Encountered 128 unique sequences from 302 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/59AR.bc1015--bc1035.fastq.gz
+Encountered 134 unique sequences from 410 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/59AS.bc1015--bc1033.fastq.gz
+Encountered 1366 unique sequences from 4897 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/60AS.bc1015--bc1044.fastq.gz
+Encountered 61 unique sequences from 88 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/62AR.bc1015--bc1054.fastq.gz
+Encountered 406 unique sequences from 1183 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/62AS.bc1015--bc1045.fastq.gz
+Encountered 492 unique sequences from 1302 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/63AR.bc1015--bc1056.fastq.gz
+Encountered 76 unique sequences from 180 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/64AR.bc1015--bc1059.fastq.gz
+Encountered 2028 unique sequences from 4956 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/64AS.bc1015--bc1057.fastq.gz
+Encountered 650 unique sequences from 1687 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/65AR.bc1015--bc1062.fastq.gz
+Encountered 776 unique sequences from 1875 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/65AS.bc1015--bc1060.fastq.gz
+Encountered 65 unique sequences from 163 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/66AR.bc1015--bc1075.fastq.gz
+Encountered 900 unique sequences from 2209 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/66AS.bc1015--bc1065.fastq.gz
+Encountered 722 unique sequences from 1741 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/67AR.bc1015--bc1082.fastq.gz
+Encountered 1054 unique sequences from 2482 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/67AS.bc1015--bc1076.fastq.gz
+Encountered 923 unique sequences from 2238 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/67BR.bc1015--bc1089.fastq.gz
+Encountered 1544 unique sequences from 3768 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/67BS.bc1015--bc1083.fastq.gz
+Encountered 1467 unique sequences from 3838 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/69AR.bc1015--bc1098.fastq.gz
+Encountered 97 unique sequences from 213 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/69AS.bc1015--bc1096.fastq.gz
+Encountered 81 unique sequences from 170 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/71AS.bc1015--bc1100.fastq.gz
+Encountered 138 unique sequences from 372 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/72AR.bc1015--bc1107.fastq.gz
+Encountered 2984 unique sequences from 5107 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/72AS.bc1015--bc1105.fastq.gz
+Encountered 2490 unique sequences from 4401 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/73AR.bc1015--bc1112.fastq.gz
+Encountered 405 unique sequences from 1057 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/73AS.bc1015--bc1110.fastq.gz
+Encountered 285 unique sequences from 726 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/74AR.bc1020--bc1035.fastq.gz
+Encountered 245 unique sequences from 535 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/74AS.bc1020--bc1033.fastq.gz
+Encountered 391 unique sequences from 1023 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/75AR.bc1020--bc1045.fastq.gz
+Encountered 734 unique sequences from 1757 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/75AS.bc1020--bc1044.fastq.gz
+Encountered 916 unique sequences from 2104 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/83AR.bc1020--bc1056.fastq.gz
+Encountered 42 unique sequences from 62 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/84AR.bc1020--bc1057.fastq.gz
+Encountered 467 unique sequences from 1119 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/85AS.bc1020--bc1054.fastq.gz
+Encountered 199 unique sequences from 420 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/87AR.bc1020--bc1065.fastq.gz
+Encountered 571 unique sequences from 1258 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/87AS.bc1020--bc1062.fastq.gz
+Encountered 722 unique sequences from 1593 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/89AR.bc1020--bc1076.fastq.gz
+Encountered 77 unique sequences from 134 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/89AS.bc1020--bc1075.fastq.gz
+Encountered 377 unique sequences from 1052 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/90AR.bc1020--bc1083.fastq.gz
+Encountered 152 unique sequences from 429 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/90AS.bc1020--bc1082.fastq.gz
+Encountered 80 unique sequences from 141 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/MOCK1.bc1020--bc1089.fastq.gz
+Encountered 190 unique sequences from 432 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/MOCK28.bc1020--bc1096.fastq.gz
+Encountered 586 unique sequences from 1302 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/NC15.bc1022--bc1062.fastq.gz
+Encountered 2 unique sequences from 4 total sequences read.
+Dereplicating sequence entries in Fastq file: outputs/dada2/2-filtered/NC28.bc1022--bc1033.fastq.gz
+Encountered 11 unique sequences from 20 total sequences read.

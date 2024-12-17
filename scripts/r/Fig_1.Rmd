@@ -1,0 +1,175 @@
+---
+title: "Figure 1"
+author: "Carolina Lobato"
+date: "2024-08-10"
+output: html_document
+---
+
+# Load Libraries
+```{r loadlib, include = F}
+library(phyloseq)
+library(tidyverse)
+```
+
+# Import data
+```{r}
+load("outputs/r/2_setup/bh-pb.RData") # 418 taxa and 131 samples
+load("outputs/r/2_setup/taxo-pb.RData") # taxo.pb
+load("outputs/r/2_setup/c100.RData") # c100
+```
+
+# Plot A: Itol
+## Get data
+```{r}
+# Get PB sequences
+ref_seq_pb <- refseq(bh_pb)
+asv_ids_pb <- taxa_names(bh_pb)
+asv_seq_pb <- data.frame(
+    db_pb = asv_ids_pb,
+    Sequence = as.character(ref_seq_pb[asv_ids_pb]),
+    Length = Biostrings::width(ref_seq_pb[asv_ids_pb]))
+
+asv_seq_pb_taxo <- merge(asv_seq_pb, taxo.pb, by = "db_pb") %>% 
+  select(db_pb, Sequence) %>% 
+  write_csv("data/megax/bh_pb.fasta")
+
+# Get PB taxonomy
+write.csv(taxo.pb, file = "data/itol/bh_pb/bh_pb-tax.csv")
+
+# c100_99_all <- c100 %>% filter(id > 99) %>% # 378
+#   group_by(db_pb) %>% summarize(count = n())
+
+# Get matches >99%
+c100_pb <- c100 %>% 
+  select(q_amplicon, db_pb, id) %>% 
+  mutate(type = ifelse(id <= 85.93, "[77.35, 85.93]", 
+                       ifelse(id <= 87.95, "(85.93, 87.95]",
+                              ifelse(id <= 90.1, "(87.95, 90.1]",
+                                     ifelse(id <= 92.9, "(90.1, 92.9]",
+                                            ifelse(id <= 96.55, "(92.9, 96.55]",
+                                                   ifelse(id <= 99, "(96.55, 99]",
+                                                         "(99, 100]"))))))) %>%
+  mutate(type = factor(type, levels = rev(c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "[77.35, 85.93]")))) %>%
+  group_by(db_pb) %>%
+  slice_max(n = 1, order_by = type, with_ties = T) %>%
+  ungroup() # 3798 assignments
+
+unique_pb <- c100_pb %>% select(db_pb) %>% unique() # 418 pb ASVs
+unique_amp <- c100_pb %>% select(q_amplicon) %>% unique() # 348 amplicon ASVs
+
+unique_amp_type <- c100_pb %>% group_by(type) %>% summarize(n = n_distinct(q_amplicon)); unique_amp_type
+sum(unique_amp_type$n) # 359
+
+unique_pb_type <- c100_pb %>% group_by(type) %>% summarize(n = n_distinct(db_pb)); unique_amp_type
+sum(unique_pb_type$n) # 418
+
+# How many amplicon ASVs per Pb ASV
+c100_99 <- c100_pb %>% filter(id > 99) %>% #filter(type == ">99") %>% #
+  group_by(db_pb) %>% summarize(count = n()) # 378
+%>% write_csv("data/itol/bh_pb/bh_pb-asgn.csv")
+
+c100_99_all == c100_99
+
+sum(c100_99$count) # 3701 assignments
+unique_pb99 <- c100_99 %>% select(db_pb) %>% unique() #378 ASVs
+
+# How many Pb ASVs per amplicon ASV
+unique_amp99 <- c100_pb %>% filter(id > 99) %>%  #filter(type == ">99") %>% #
+  group_by(q_amplicon) %>% summarize(count = n()) #335
+
+# Get Genus
+genus.pb <- taxo.pb %>% select(Genus) %>% unique() %>% write_csv("data/itol/bh_pb/bh_pb-genus.csv")
+
+genus.stat <- taxo.pb %>% group_by(Genus) %>% summarize(count = n())
+class.stat <- taxo.pb %>% group_by(Class) %>% summarize(count = n())
+```
+
+## Import tree and anotate
+```{r}
+# Fig1 <- grid::rasterGrob(png::readPNG("outputs/Fig_1/pb_tree.png"), interpolate = T)
+
+# Add legend
+Class <- c("Actinobacteria", "Alphaproteobacteria", "Bacilli", "Bacteroidia", "Gammaproteobacteria")
+color.class <- rev(c("#98cc90","#563C5C","#5197c5","#d8cd99","#8A4D30"))
+
+legend <- cowplot::get_legend(
+  ggplot(data.frame(x = factor(1:5), y = 1:5)) +
+  geom_tile(aes(x = x, y = y, fill = x)) +
+  scale_fill_manual(name = "Class", values = color.class, 
+                    labels = Class) +
+  theme_classic() +
+  theme(legend.direction = "horizontal",
+        legend.text = element_text(size = 6),
+        legend.title = element_text(size = 8),
+        legend.key.size = unit(0.25, "cm"),
+        legend.key.spacing.x = unit(1, "lines"),
+        legend.box.margin = margin(0,0,0,0, "cm"),
+        legend.box.spacing = unit(0, "lines"),
+        legend.spacing = unit(0, "lines"),
+        legend.background = element_rect(fill = "transparent", color = "transparent")))
+
+Fig1l <- cowplot::plot_grid(Fig1, ncol = 1) + 
+  theme(plot.margin = margin(0.25, -5, 1, -5, "cm")) +
+  annotation_custom(legend, 
+                    xmin = 0, xmax = 1,
+                    ymin = -0.06, ymax = -0.06); Fig1l
+
+# save(Fig1l, file = "outputs/r/Fig_1/pb_tree_lg.RData")
+
+load("outputs/r/Fig_1/pb_tree_lg.RData") #Fig1l
+
+# Add Genera
+pos.x <- c(0.042, 0.045, 0.055, 0.064, #1
+           0.064, 0.069, 0.076, 0.097, #2
+           0.098, 0.109, 0.114, 0.124, #3
+           0.130, 0.144, 0.151, 0.154, #4
+           0.1665, 0.175, 0.195, 0.198, #5
+           0.370, 0.456, 0.484, 0.494, #6
+           0.569, 0.619, 0.625, 0.614, #7
+           0.611, 0.579, 0.481, 0.460, #8
+           0.432, 0.390, 0.290, 0.172, #9
+           0.040)
+
+pos.y <- c(0.779, 0.791, 0.800, 0.814, #1
+           0.826, 0.835, 0.852, 0.873, #2
+           0.883, 0.891, 0.899, 0.906, #3
+           0.913, 0.919, 0.927, 0.936, #4
+           0.945, 0.952, 0.9585, 0.966, #5
+           0.982, 0.940, 0.920, 0.910, #6
+           0.774, 0.564, 0.549, 0.537, #7
+           0.513, 0.320, 0.170, 0.160, #8
+           0.138, 0.117, 0.104, 0.144, #9
+           0.335)
+
+label <- c("Sphingomonas", "Phyllobacterium", "Paracoccus", "Rhizobium", #1
+           "Brevundimonas", "Bradyrhizobium", "Methylobacterium", "Pedobacter",#2
+           "Sphingobacterium", "Aeromicrobium", "Brevibacterium", "Arthrobacter", #3
+           "Micrococcus", "Rothia", "Kocuria", "Curtobacterium", #4
+           "Rathayibacter", "Frigobacterium", "Agreia", "Microbacterium", #5
+           "Paenibacillus", "Brevibacillus", "Oceanobacillus", "Enterococcus", #6
+           "Bacillus", "Xanthomonas", "Stenotrophomonas", "Ralstonia", #7
+           "Massilia", "Pseudomonas", "Enhydrobacter", "Erwinia", #8
+           "Pantoea", "Klebsiella", "Escherichia-Shingella", "Enterobacter", #9
+           "Pantoea")
+
+Fig1lg <- cowplot::plot_grid(Fig1l, 
+                             label_size = 12,
+                             greedy = T,
+                             nrow = 1) + 
+  geom_text(aes(x = pos.x * 0.88 + 0.225,
+                y = pos.y * 1.075 - 0.065),
+            label = label,
+            fontface = "italic",
+            size = 1.5) + 
+  theme(plot.margin = margin(0, -3, 0.25, -3, "cm")); Fig1lg
+
+# cowplot::save_plot(
+#   plot = Fig1lg,
+#   "outputs/r/Fig_1/fig1-final.png",
+#   base_width = 27,
+#   base_height = 18,
+#   units = "cm",
+#   bg =  "white",
+#   scale = 1,
+#   dpi = 600)
+```

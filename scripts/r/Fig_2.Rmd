@@ -1,0 +1,546 @@
+---
+title: "Figure 2"
+author: "Carolina Lobato"
+date: "2024-08-10"
+output: html_document
+---
+
+# Load Libraries
+```{r loadlib, include = F}
+library(phyloseq)
+library(tidyverse)
+```
+
+# Import data
+```{r}
+load("outputs/r/2_setup/bh-amp.RData") # bh, 5297 taxa and 451 samples
+load("outputs/r/2_setup/taxo-amp.RData") # taxo.amp
+load("outputs/r/2_setup/c100-strat.RData") # c100_strat
+```
+
+# Plot A: Summary ASV & RA%
+## Prep
+```{r}
+asv <- otu_table(bh)
+asv.rel <- apply(vegan::decostand(x = asv, method = "total", MARGIN = 2), 1, mean)
+asv.rel <- as.data.frame(asv.rel*100) %>% rownames_to_column()
+colnames(asv.rel) <- c("q_amplicon", "RA")
+
+df <- c100_strat %>%
+  merge(x = asv.rel, y = .,  by = "q_amplicon", all.x = T)
+df$type <- as.character(df$type)
+df[is.na(df$id), "type"] <- "Uncultured"
+
+df1 <- df %>% mutate(type = factor(type, levels = c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "[77.35, 85.93]", "Uncultured")))
+
+# %ASVs
+asv.strat <- df1 %>%
+  group_by(type) %>%
+  summarize(n = n()) %>%
+  mutate(per = n*100/5297,
+         cum_n = cumsum(n),
+         cum_per = (cum_n*100/5297))
+
+# %RA
+rel.strat <- df1 %>%
+  group_by(type) %>%
+  summarise(gRA = sum(RA)) %>%
+  mutate(cum_gRA = cumsum(gRA))
+rel.sum <- summary(rel.strat); rel.sum
+
+# Merge datsets
+mer.strat <- merge(asv.strat, rel.strat, by = c("type")) %>%
+  arrange(type) %>% 
+  mutate(group = rep("all"))
+
+# Plot parameters
+sorting.tax <- ordered(mer.strat$type,
+                       levels = c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "[77.35, 85.93]", "Uncultured"))
+sorting.idx <- order(sorting.tax, decreasing = T, na.last = NA)
+
+color.levels <- c("#dbdddd","#c7b699","#b89b74","#d9af63","#fdbf6f","#fdac4f","#ed8f47","#BF592A")  
+```
+
+### Plot %ASV
+```{r}
+breaks = c(0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 100)
+asv.matches <- ggplot(mer.strat,
+                   aes(x = group, 
+                       y = per,
+                       fill = fct_reorder(as.factor(type), sorting.idx))) +
+  geom_bar(stat = "identity",
+           position = "stack") +
+  theme_classic() +
+  theme(
+    axis.text.x = element_blank(),
+    axis.text.y = element_text(size = 6, 
+                               vjust = 0.5, 
+                               hjust = 1),
+    axis.title = element_text(size = 8),
+    axis.ticks.x = element_blank(),
+    axis.line.x = element_blank(),
+    legend.position = "none",
+    plot.margin = unit(c(0,0.1,0,0), "cm")) +
+  scale_x_discrete(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0),
+                     breaks = breaks,
+                     labels = breaks,
+                     position = "left",
+                     limits = c(0, 100)) +
+  scale_fill_manual(values = color.levels) +
+  labs(x = "", y = "Cumulative ASVs [%]", fill = "Similarity"); asv.matches
+```
+
+### Plot %RA
+```{r}
+breaks = c(0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100)
+
+ra.matches <- ggplot(mer.strat,
+                   aes(x = group, 
+                       y = gRA,
+                       fill = fct_reorder(as.factor(type), sorting.idx))) +
+  geom_bar(stat = "identity",
+           position = "stack") +
+  theme_classic() +
+  theme(
+    axis.text.x = element_blank(),
+    axis.text.y = element_text(size = 6, 
+                               vjust = 0.5, 
+                               hjust = 1),
+    axis.title = element_text(size = 8),
+    axis.ticks.x = element_blank(),
+    axis.line.x = element_blank(),
+    legend.position = "none",
+    legend.text = element_text(size = 6),
+    legend.title = element_text(size = 8),
+    legend.key.size = unit(0.5, "cm"),
+    legend.key.spacing.x = unit(1.3, "lines"),
+    legend.box.margin = margin(0,0,0,0, "cm"),
+    legend.box.spacing = unit(0, "lines"),
+    legend.spacing = unit(0, "lines"),
+    legend.key.spacing = unit(0, "lines"),
+    legend.background = element_rect(fill = "transparent", color = "transparent"),
+    plot.margin = unit(c(0,0,0,0.1), "cm")) +
+  scale_x_discrete(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0),
+                     breaks = breaks,
+                     labels = breaks,
+                     position = "left",
+                     limits = c(0, 100)) +
+  scale_fill_manual(values = color.levels) +
+  labs(x = "", y = "Cumulative mean relative abundance [%]", fill = "Similarity"); ra.matches
+```
+
+#### Merge A
+```{r}
+Fig2A <- cowplot::plot_grid(asv.matches, ra.matches,
+                           labels = c("", "", ""),
+                           nrow = 1,
+                           greedy = T,
+                           rel_widths = c(1, 1, 0.5),
+                           align = "h") + 
+  theme(plot.margin = unit(c(0.5,0.1,0,0.5), "cm")); Fig2A
+
+# save(Fig2A, file = "outputs/r/Fig_2/pb_sim.RData")
+```
+
+
+# Plot B: Summary Tax
+## Prep
+```{r}
+spe <- c100_strat  %>% filter(type == "(99, 100]") # 335 ASVs
+spe.tax <- merge(spe, taxo.amp, by = "q_amplicon"); spe.tax 
+
+tasv <- taxo.amp %>% unique() %>% summarise(count = n()) #5297 ASVs
+spe.nasv <- spe.tax %>% select(q_amplicon) %>% unique() %>% summarise(count = n()) #335 ASVs
+
+# % of Genera
+tgen <- taxo.amp %>% select(Genus) %>% unique() %>% summarise(count = n()) #813 Genera
+spe.ngen <- spe.tax %>% select(Genus) %>% unique() %>% summarise(count = n()) #37 Genera
+data.g <- rbind(spe.ngen, tgen-spe.ngen) %>% mutate(Type = c("Cultured", "Uncultured"))
+data.g$fraction <- data.g$count / sum(data.g$count)
+data.g$ymax <- cumsum(data.g$fraction)
+data.g$ymin <- c(0, head(data.g$ymax, n = -1))
+data.g$labelPosition <- (data.g$ymax + data.g$ymin) / 2
+data.g$label <- paste0(round(data.g$fraction*100, 1))
+
+# % of Families
+tfam <- taxo.amp %>% select(Family) %>% unique() %>% summarise(count = n()) #402 Families
+spe.nfam <- spe.tax %>% select(Family) %>% unique() %>% summarise(count = n()) #22 Families
+data.f <- rbind(spe.nfam, tfam-spe.nfam) %>% mutate(Type = c("Cultured", "Uncultured"))
+data.f$fraction <- data.f$count / sum(data.f$count)
+data.f$ymax <- cumsum(data.f$fraction)
+data.f$ymin <- c(0, head(data.f$ymax, n = -1))
+data.f$labelPosition <- (data.f$ymax + data.f$ymin) / 2
+data.f$label <- paste0(round(data.f$fraction*100, 1))
+
+# % of Orders
+tord <- taxo.amp %>% select(Order) %>% unique() %>% summarise(count = n()) #242 Orders
+spe.nord <- spe.tax %>% select(Order) %>% unique() %>% summarise(count = n()) #15 Orders
+data.o <- rbind(spe.nord, tord-spe.nord) %>% mutate(Type = c("Cultured", "Uncultured"))
+data.o$fraction <- data.o$count / sum(data.o$count)
+data.o$ymax <- cumsum(data.o$fraction)
+data.o$ymin <- c(0, head(data.o$ymax, n = -1))
+data.o$labelPosition <- (data.o$ymax + data.o$ymin) / 2
+data.o$label <- paste0(round(data.o$fraction*100, 1))
+
+# % of Classes
+tcla <- taxo.amp %>% select(Class) %>% unique() %>% summarise(count = n()) #101 Classes
+spe.ncla <- spe.tax %>% select(Class) %>% unique() %>% summarise(count = n()) #5 Classes
+data.c <- rbind(spe.ncla, tcla-spe.ncla) %>% mutate(Type = c("Cultured", "Uncultured"))
+data.c$fraction <- data.c$count / sum(data.c$count)
+data.c$ymax <- cumsum(data.c$fraction)
+data.c$ymin <- c(0, head(data.c$ymax, n = -1))
+data.c$labelPosition <- (data.c$ymax + data.c$ymin) / 2
+data.c$label <- paste0(round(data.c$fraction*100, 1))
+
+# % of Phyla
+tphy <- taxo.amp %>% select(Phylum) %>% unique() %>% summarise(count = n()) #38 Phyla
+spe.nphy <- spe.tax %>% select(Phylum) %>% unique() %>% summarise(count = n()) #4 Phyla
+data.p <- rbind(spe.nphy, tphy-spe.nphy) %>% mutate(Type = c("Cultured", "Uncultured"))
+data.p$fraction <- data.p$count / sum(data.p$count)
+data.p$ymax <- cumsum(data.p$fraction)
+data.p$ymin <- c(0, head(data.p$ymax, n = -1))
+data.p$labelPosition <- (data.p$ymax + data.p$ymin) / 2
+data.p$label <- paste0(round(data.p$fraction*100, 1))
+```
+
+### Plot
+```{r}
+# Circular plots with total and cultivated genera, family, order, class, phy
+color.levels <- c("#BF592A","#dbdddd")
+
+# % of Genera
+p.genus <- ggplot(data.g, 
+  aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = Type)) +
+  geom_rect() +
+  geom_text(x = 3.5,
+            aes(y = labelPosition,
+                label = paste0(label, "%")),
+            color = c("white","#BF592A"),
+            size = 2.5) +
+  scale_fill_manual(values = color.levels) +
+  coord_polar(theta = "y", start = 1) +
+  xlim(c(2, 5)) +
+  theme_classic() +
+  theme(axis.line = element_blank(), 
+        axis.ticks = element_blank(),
+        axis.text = element_blank(),
+        axis.title = element_blank(),
+        panel.grid = element_blank(),
+        legend.position = "none",
+        panel.background = element_rect(fill = "transparent"),
+        plot.background = element_rect(fill = "transparent", color = NA),
+        plot.margin = unit(c(-1,-1,-1,-1), "cm")); p.genus
+
+# % of Families
+p.family <- ggplot(data.f, 
+  aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = Type)) +
+  geom_rect() +
+ geom_text(x = 3.5,
+            aes(y = labelPosition,
+                label = paste0(label, "%")),
+            color = c("white","#BF592A"),
+            size = 2.5) +
+  scale_fill_manual(values = color.levels) +
+  coord_polar(theta = "y", start = 1) +
+  xlim(c(2, 5)) +
+  theme_classic() +
+  theme(axis.line = element_blank(), 
+        axis.ticks = element_blank(),
+        axis.text = element_blank(),
+        axis.title = element_blank(),
+        panel.grid = element_blank(),
+        legend.position = "none",
+        panel.background = element_rect(fill = "transparent"),
+        plot.background = element_rect(fill = "transparent", color = NA),
+        plot.margin = unit(c(-1,-1,-1,-1), "cm")); p.family
+
+# % of Orders
+p.order <- ggplot(data.o, 
+  aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = Type)) +
+  geom_rect() +
+  geom_text(x = 3.5,
+            aes(y = labelPosition,
+                label = paste0(label, "%")),
+            color = c("white","#BF592A"),
+            size = 2.5) +
+  scale_fill_manual(values = color.levels) +
+  coord_polar(theta = "y", start = 1) +
+  xlim(c(2, 5)) +
+  theme_classic() +
+  theme(axis.line = element_blank(), 
+        axis.ticks = element_blank(),
+        axis.text = element_blank(),
+        axis.title = element_blank(),
+        panel.grid = element_blank(),
+        legend.position = "none",
+        panel.background = element_rect(fill = "transparent"),
+        plot.background = element_rect(fill = "transparent", color = NA),
+        plot.margin = unit(c(-1,-1,-1,-1), "cm")); p.order
+
+# % of Classes
+p.class <- ggplot(data.c, 
+  aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = Type)) +
+  geom_rect() +
+  geom_text(x = 3.5,
+            aes(y = labelPosition,
+                label = paste0(label, "%")),
+            color = c("white","#BF592A"),
+            size = 2.5) +
+  scale_fill_manual(values = color.levels) +
+  coord_polar(theta = "y", start = 1) +
+  xlim(c(2, 5)) +
+  theme_classic() +
+  theme(axis.line = element_blank(), 
+        axis.ticks = element_blank(),
+        axis.text = element_blank(),
+        axis.title = element_blank(),
+        panel.grid = element_blank(),
+        legend.position = "none",
+        panel.background = element_rect(fill = "transparent"),
+        plot.background = element_rect(fill = "transparent", color = NA),
+        plot.margin = unit(c(-1,-1,-1,-1), "cm")); p.class
+
+# % of Phyla
+p.phylum <- ggplot(data.p, 
+  aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = Type)) +
+  geom_rect() +
+  geom_text(x = 3.5,
+            aes(y = labelPosition,
+                label = paste0(label, "%")),
+            color = c("white","#BF592A"),
+            size = 2.5) +
+  scale_fill_manual(values = color.levels) +
+  coord_polar(theta = "y", start = 1) +
+  xlim(c(2, 5)) +
+  theme_classic() +
+  theme(axis.line = element_blank(), 
+        axis.ticks = element_blank(),
+        axis.text = element_blank(),
+        axis.title = element_blank(),
+        panel.grid = element_blank(),
+        legend.position = "none",
+        panel.background = element_rect(fill = "transparent"),
+        plot.background = element_rect(fill = "transparent", color = NA),
+        plot.margin = unit(c(-1,-1,-1,-1), "cm")); p.phylum
+```
+
+#### Merge B
+```{r}
+Fig2B1 <- cowplot::plot_grid(p.genus, p.family, p.order,
+                            greedy = T,
+                            rel_widths = c(1, 1, 1),
+                            align = "hv",
+                            nrow = 1) + 
+  theme(plot.margin = margin(0,0,0,0, "cm")); Fig2B1
+
+Fig2B2 <- cowplot::plot_grid(p.class, p.phylum,
+                            greedy = T,
+                            rel_widths = c(1, 1),
+                            align = "hv",
+                            nrow = 1) + 
+  theme(plot.margin = margin(0,0,0,0, "cm")); Fig2B2
+
+Fig2B <- cowplot::plot_grid(Fig2B1, Fig2B2,
+                            greedy = T,
+                            rel_widths = c(1, 1),
+                            align = "hv",
+                            ncol = 1) + 
+  theme(plot.margin = margin(0,0,0,0, "cm")); Fig2B
+
+# save(Fig2B, file = "outputsr/r/Fig_2/pb_polar.RData")
+```
+
+# Plot C: ASV Distribution
+## Prep
+```{r}
+# Diversity/RA Community
+asv <- otu_table(bh)
+asv.rel <- apply(vegan::decostand(x = asv, method = "total", MARGIN = 2), 1, mean)
+asv.rel <- as.data.frame(asv.rel*100) %>% rownames_to_column()
+colnames(asv.rel) <- c("q_amplicon", "RA")
+pv.amp <- asv.rel %>% mutate(type = "Community") %>% select(type, RA)
+
+# Diversity/RA Pacbio
+df <- c100_strat %>%
+  merge(x = asv.rel, y = .,  by = "q_amplicon", all.x = T)
+df$type <- as.character(df$type)
+df[is.na(df$id), "type"] <- "Uncultured"
+
+color.levels <- c("#dbdddd","#c7b699","#b89b74","#d9af63","#fdbf6f","#fdac4f","#ed8f47","#BF592A")  
+levels <- rev(c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]", "(87.95, 90.1]", "(85.93, 87.95]", "[77.35, 85.93]", "Uncultured"))
+```
+
+### Stats
+```{r}
+# Is the RA of cultured taxa significantly different from the RA of the uncultured?
+test <- df %>% filter(type == "(99, 100]" | type == "[77.35, 85.93]")
+shapiro.test(test$RA) # < 2.2e-16
+mwu <- wilcox.test(RA ~ type, test); mwu 
+
+# species vs uncult < 2.2e-16 SIG
+# genus vc uncult < 2.2e-16 SIG
+# family vc uncult < 0.0004246 SIG
+# order vc uncult < 0.0829 NS
+# class vc uncult < 0.2229 NS
+# phylum vc uncult < 0.0015 SIG
+# other vc uncult < 0.1985 NS
+
+# species vs genus 3.279e-05 SIG
+# species vs family < 2.2e-16 SIG
+# species vs order < 2.2e-16 SIG
+# species vs class < 2.2e-16 SIG
+# species vs phylum 8.752e-12 SIG
+# species vs other < 2.2e-16 SIG
+```
+
+### Inset plot 
+```{r}
+medcom <- quantile(pv.amp$RA); medcom
+
+Fig2Cins <- ggplot(df) +
+  geom_boxplot(aes(x = RA, y = fct_relevel(type, rev(levels)), fill = fct_relevel(type, levels)), alpha = 1) +
+  theme_classic() +
+  theme(
+    axis.text.y = element_blank(),
+    axis.text.x = element_text(size = 6),
+    axis.title = element_text(size = 6),
+    axis.ticks.y = element_blank(),
+    axis.line = element_blank(),
+    legend.position = "none",
+    plot.margin = margin(0.1,0,0,0, "cm")) +
+  geom_vline(xintercept = c(5.5, 0.29),
+             color = "red", linetype = "dotted", size = 0.5, alpha = 0.5) +
+  geom_vline(xintercept = c(0.0000095, 0.00003, 0.0001),
+             color = "#808588", linetype = "dashed", size = 0.5, alpha = 0.7) +
+  scale_x_log10(
+    breaks = c(0, 0.000001,0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10),
+    labels = c("0", "1e-6", "1e-5", "1e-4", "0.001", "0.01", "0.1", "1", "10")) +
+  scale_y_discrete() +
+  scale_fill_manual(values = color.levels) +
+  labs(x = "Mean relative abundace [%]",
+       y = ""); Fig2Cins
+```
+
+### Plot
+```{r}
+breaks = c(0, 25, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400, 425, 450, 475, 500, 525, 550, 575, 600, 625, 650, 675, 700, 725)
+
+stat <- "bin"
+Fig2C <- ggplot(df, aes(x = RA, fill = fct_relevel(type, levels))) +
+  geom_density(data = pv.amp, aes(x = RA, color = type), 
+               stat = stat, alpha = 1, size = .8, linetype = "dashed") + 
+  geom_area(stat = stat, alpha = 1) +
+  scale_x_log10(
+    breaks = c(0, 0.000001,0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10),
+    labels = c("0", "1e-6", "1e-5", "1e-4", "0.001", "0.01", "0.1", "1", "10")) +
+  scale_y_continuous(name = "Number of ASVs",
+                     expand = c(0, 0),
+                     breaks = breaks) +
+  labs(x = "Mean relative abundance [%]") +
+  theme_classic() +
+  theme(
+    axis.text = element_text(size = 6, 
+                             vjust = 0.5, 
+                             hjust = 1),
+    axis.title = element_text(size = 8),
+    legend.position = c(0.75, 0.75),
+    legend.box = "horizontal",
+    legend.key.size = unit(0.5, "cm"),
+    legend.text = element_text(size = 8),
+    legend.title = element_blank(),
+    plot.margin = margin(0,0,0,0, "cm")) +
+  scale_color_manual(values = c("Community" = "#808588")) +
+  scale_fill_manual(values = c("(99, 100]" = "#BF592A",
+                               "(96.55, 99]" = "#ed8f47",
+                               "(92.9, 96.55]" = "#fdac4f",
+                               "(90.1, 92.9]" = "#fdbf6f",
+                               "(87.95, 90.1]" = "#d9af63",
+                               "(85.93, 87.95]" = "#b89b74",
+                               "[77.35, 85.93]" = "#c7b699",
+                               "Uncultured" = "#dbdddd")) +
+  annotation_custom(ggplotGrob(Fig2Cins),
+                    xmin = -2.25,
+                    xmax = 1.5,
+                    ymin = 50, 
+                    ymax = 320); Fig2C
+
+# save(Fig2C, file = "outputs/r/Fig_2/pb_hist.RData")
+```
+
+# Merge final
+```{r}
+load("outputs/r/Fig_2/pb_sim.RData") # Fig2A
+load("outputs/r/Fig_2/pb_polar.RData") # Fig2B
+load("outputs/r/Fig_2/pb_hist.RData") # Fig2C
+
+Fig2 <- cowplot::plot_grid(Fig2B, Fig2C, 
+                           labels = c("B", "C"),
+                           label_size = 12,
+                           vjust = c(0.5, -0.5),
+                           ncol = 1,
+                           byrow = F,
+                           align = "hv") +
+  theme(plot.margin = margin(0,0,0,0, "cm")); Fig2
+
+Fig2_final <- cowplot::plot_grid(Fig2A, Fig2, 
+                            labels = c("A", ""),
+                            label_size = 12,
+                            vjust = 2,
+                            ncol = 2,
+                            rel_widths = c(0.7, 1.5),
+                            align = "hv") + 
+  geom_text(aes(x = c(0.475, 0.668, 0.863, 0.525, 0.813)),
+                y = c(rep(0.97, 3), rep(0.74, 2)),  
+            label = c("Genera", "Families", "Orders", "Classes", "Phyla"),
+            fontface = "bold",
+            size = 3); Fig2_final
+
+# cowplot::save_plot(
+#   plot = Fig2_final,
+#   "outputs/r/Fig_2/fig2-final.png",
+#   base_width = 25,
+#   base_height = 20,
+#   units = "cm",
+#   scale = 1,
+#   bg = "white",
+#   dpi = 600)
+```
+
+# SI
+```{r}
+total <- c("#808588")  
+df2 <- df %>% filter(type != "Uncultured") %>% mutate(cult = "true")
+
+medasgn <- quantile(df2$id); medasgn
+
+FigS3 <- ggplot(df2, aes(x = id, y = cult, color = cult)) +
+  geom_boxplot(alpha = 1,
+               color = "black",
+               size = 1) +
+  geom_jitter(size = .5,
+              width = 0.2) +
+  theme_classic() +
+  theme(
+    axis.text.y = element_blank(),
+    axis.text.x = element_text(size = 10),
+    axis.title = element_text(size = 10),
+    axis.ticks.y = element_blank(),
+    axis.line.y = element_blank(),
+    legend.position = "none",
+    plot.margin = margin(0.1,0.5,0.1,0.1, "cm")) +
+  scale_y_discrete() +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_color_manual(values = total) +
+  labs(x = "Similarity to cultured ASVs [%]",
+       y = ""); FigS3
+
+# ggsave(
+#   "outputs/r/SI/figS3.png",
+#   width = 15,
+#   height = 15,
+#   units = "cm",
+#   scale = 1,
+#   dpi = 600)
+```
