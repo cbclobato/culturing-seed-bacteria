@@ -397,6 +397,7 @@ ASV407_Pantoea,#98cc90
 ASV410_Pantoea,#98cc90
 ASV411_Klebsiella,#98cc90
 ASV413_Klebsiella,#98cc90
+ASV414_Pantoea,#98cc90
 ASV415_Pantoea,#98cc90
 ASV416_Pantoea,#98cc90
 ASV417_Klebsiella,#98cc90

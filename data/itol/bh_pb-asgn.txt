@@ -14,7 +14,7 @@ SEPARATOR TAB
 DATASET_LABEL	label 1
 
 #dataset color (can be changed later)
-COLOR	#563C5C
+COLOR	#BF592A
 
 #=================================================================#
 #                    OPTIONAL SETTINGS                            #
@@ -126,9 +126,9 @@ ASV10_Escherichia-Shigella	0.78	6
 ASV112_Pantoea	1.28	19
 ASV113_Bacillus	1.36	23
 ASV114_Pseudomonas	0.95	9
-ASV116_Pseudomonas	0.00	1
+ASV116_Pseudomonas	0.15	1
 ASV117_Pantoea	1.28	19
-ASV118_Enterococcus	0.00	1
+ASV118_Enterococcus	0.15	1
 ASV119_Pantoea	1.28	19
 ASV11_Pantoea	1.28	19
 ASV120_Pantoea	1.28	19
@@ -142,39 +142,39 @@ ASV12_Rhizobium	0.48	3
 ASV130_Bacillus	0.78	6
 ASV131_Pseudomonas	1.30	20
 ASV132_Pantoea	1.28	19
-ASV133_Paenibacillus	0.00	1
+ASV133_Paenibacillus	0.15	1
 ASV134_Pseudomonas	0.60	4
 ASV135_Escherichia-Shigella	0.78	6
 ASV136_Bacillus	1.28	19
-ASV137_Paenibacillus	0.00	1
+ASV137_Paenibacillus	0.15	1
 ASV138_Pantoea	1.28	19
 ASV139_Pantoea	1.28	19
 ASV13_Brevundimonas	0.48	3
-ASV141_Enterococcus	0.00	1
+ASV141_Enterococcus	0.15	1
 ASV142_Bacillus	0.60	4
 ASV144_Bacillus	1.36	23
 ASV145_Pseudomonas	0.95	9
 ASV146_Xanthomonas	0.30	2
 ASV147_Kocuria	0.95	9
-ASV148_Paenibacillus	0.00	1
-ASV149_Paenibacillus	0.00	1
+ASV148_Paenibacillus	0.15	1
+ASV149_Paenibacillus	0.15	1
 ASV14_Pantoea	1.28	19
 ASV150_Pantoea	1.28	19
 ASV151_Pseudomonas	0.60	4
 ASV152_Kocuria	0.95	9
 ASV153_Erwinia	0.85	7
-ASV154_Paenibacillus	0.00	1
+ASV154_Paenibacillus	0.15	1
 ASV155_Pseudomonas	0.60	4
 ASV156_Sphingomonas	0.48	3
 ASV157_Bacillus	1.36	23
 ASV158_Bacillus	0.60	4
 ASV159_Pantoea	1.28	19
 ASV15_Pantoea	1.28	19
-ASV161_Paenibacillus	0.00	1
+ASV161_Paenibacillus	0.15	1
 ASV162_Pantoea	1.28	19
 ASV163_Escherichia-Shigella	0.78	6
 ASV164_Bacillus	0.60	4
-ASV165_Enterococcus	0.00	1
+ASV165_Enterococcus	0.15	1
 ASV166_Pseudomonas	0.30	2
 ASV167_Pseudomonas	1.30	20
 ASV168_Bacillus	1.36	23
@@ -182,7 +182,7 @@ ASV169_Pedobacter	0.70	5
 ASV16_Curtobacterium	0.48	3
 ASV170_Brevibacterium	0.30	2
 ASV172_Pantoea	0.60	4
-ASV173_Paenibacillus	0.00	1
+ASV173_Paenibacillus	0.15	1
 ASV174_Pseudomonas	0.95	9
 ASV175_Bacillus	0.60	4
 ASV176_Pseudomonas	0.70	5
@@ -232,18 +232,18 @@ ASV219_Pantoea	1.28	19
 ASV21_Escherichia-Shigella	0.78	6
 ASV220_Bacillus	0.60	4
 ASV221_Bacillus	0.60	4
-ASV222_Paenibacillus	0.00	1
+ASV222_Paenibacillus	0.15	1
 ASV223_Pseudomonas	1.23	17
 ASV224_Bacillus	0.60	4
 ASV225_Brevibacillus	0.70	5
 ASV226_Pantoea	1.28	19
-ASV228_Pseudomonas	0.00	1
+ASV228_Pseudomonas	0.15	1
 ASV229_Brevibacillus	0.70	5
 ASV22_Escherichia-Shigella	0.78	6
 ASV230_Pantoea	1.28	19
 ASV231_Pantoea	1.28	19
 ASV232_Pantoea	1.28	19
-ASV233_Paenibacillus	0.00	1
+ASV233_Paenibacillus	0.15	1
 ASV234_Pseudomonas	0.78	6
 ASV235_Pantoea	1.28	19
 ASV236_Pseudomonas	0.60	4
@@ -268,20 +268,20 @@ ASV252_Bacillus	0.60	4
 ASV253_Brevibacillus	0.70	5
 ASV254_Pantoea	1.28	19
 ASV255_Sphingomonas	0.90	8
-ASV256_Paenibacillus	0.00	1
+ASV256_Paenibacillus	0.15	1
 ASV257_Bacillus	0.60	4
 ASV259_Pseudomonas	0.78	6
 ASV25_Escherichia-Shigella	0.78	6
-ASV260_Paenibacillus	0.00	1
+ASV260_Paenibacillus	0.15	1
 ASV261_Brevibacillus	0.70	5
-ASV262_Paenibacillus	0.00	1
+ASV262_Paenibacillus	0.15	1
 ASV263_Bacillus	0.60	4
 ASV264_Massilia	0.60	4
 ASV265_Pantoea	1.28	19
 ASV266_Pseudomonas	0.48	3
 ASV267_Pseudomonas	0.60	4
 ASV268_Pantoea	1.28	19
-ASV269_Paenibacillus	0.00	1
+ASV269_Paenibacillus	0.15	1
 ASV26_Escherichia-Shigella	0.78	6
 ASV270_Rathayibacter	1.68	48
 ASV271_Escherichia-Shigella	0.78	6
@@ -295,7 +295,7 @@ ASV278_Massilia	0.60	4
 ASV279_Bacillus	0.60	4
 ASV27_Bacillus	1.36	23
 ASV281_Pantoea	1.28	19
-ASV283_Pseudomonas	0.00	1
+ASV283_Pseudomonas	0.15	1
 ASV284_Escherichia-Shigella	0.78	6
 ASV285_Pantoea	1.28	19
 ASV286_Escherichia-Shigella	0.78	6
@@ -359,7 +359,7 @@ ASV350_Bacillus	0.48	3
 ASV351_Pantoea	0.60	4
 ASV352_Pseudomonas	0.60	4
 ASV354_Pseudomonas	0.60	4
-ASV356_Aeromicrobium	0.00	1
+ASV356_Aeromicrobium	0.15	1
 ASV358_Enhydrobacter	0.90	8
 ASV359_Pantoea	1.28	19
 ASV35_Paracoccus	0.85	7
@@ -375,7 +375,7 @@ ASV36_Escherichia-Shigella	0.78	6
 ASV370_Curtobacterium	0.48	3
 ASV372_Enterobacter	0.85	7
 ASV373_Enhydrobacter	0.90	8
-ASV374_Phyllobacterium	0.00	1
+ASV374_Phyllobacterium	0.15	1
 ASV375_Klebsiella	0.85	7
 ASV376_Pseudomonas	0.60	4
 ASV377_Rhizobium	0.60	4
@@ -411,6 +411,7 @@ ASV40_Pantoea	1.28	19
 ASV410_Pantoea	1.28	19
 ASV411_Klebsiella	0.85	7
 ASV413_Klebsiella	0.85	7
+ASV414_Pantoea	1.28	19
 ASV415_Pantoea	0.60	4
 ASV416_Pantoea	0.60	4
 ASV417_Klebsiella	0.85	7
@@ -433,7 +434,7 @@ ASV439_Pantoea	1.28	19
 ASV43_Bacillus	1.36	23
 ASV440_Methylobacterium	0.48	3
 ASV441_Methylobacterium	0.30	2
-ASV443_Agreia	0.00	1
+ASV443_Agreia	0.15	1
 ASV444_Massilia	0.60	4
 ASV44_Bacillus	1.04	11
 ASV45_Escherichia-Shigella	0.78	6
@@ -449,7 +450,7 @@ ASV54_Pantoea	1.28	19
 ASV55_Enterobacter	0.85	7
 ASV57_Bacillus	1.04	11
 ASV58_Bacillus	1.04	11
-ASV59_Enterococcus	0.00	1
+ASV59_Enterococcus	0.15	1
 ASV5_Stenotrophomonas	0.30	2
 ASV60_Pantoea	1.28	19
 ASV61_Enterobacter	0.85	7
@@ -463,7 +464,7 @@ ASV69_Sphingobacterium	0.60	4
 ASV6_Pseudomonas	1.30	20
 ASV70_Bacillus	1.36	23
 ASV71_Pantoea	0.60	4
-ASV72_Paenibacillus	0.00	1
+ASV72_Paenibacillus	0.15	1
 ASV73_Pseudomonas	0.60	4
 ASV74_Pantoea	1.28	19
 ASV75_Pseudomonas	0.95	9

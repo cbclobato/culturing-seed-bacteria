@@ -13,7 +13,7 @@ library(tidyverse)
 
 # Import data
 ```{r}
-load("outputs/r/2_setup/bh-pb.RData") # 418 taxa and 131 samples
+load("outputs/r/2_setup/bh-pb.RData") # 419 taxa and 132 samples
 load("outputs/r/2_setup/taxo-pb.RData") # taxo.pb
 load("outputs/r/2_setup/c100.RData") # c100
 ```
@@ -29,8 +29,8 @@ asv_seq_pb <- data.frame(
     Sequence = as.character(ref_seq_pb[asv_ids_pb]),
     Length = Biostrings::width(ref_seq_pb[asv_ids_pb]))
 
-asv_seq_pb_taxo <- merge(asv_seq_pb, taxo.pb, by = "db_pb") %>% 
-  select(db_pb, Sequence) %>% 
+asv_seq_pb_taxo <- merge(asv_seq_pb, taxo.pb, by = "db_pb") %>%
+  select(db_pb, Sequence) %>%
   write_csv("data/megax/bh_pb.fasta")
 
 # Get PB taxonomy
@@ -52,21 +52,21 @@ c100_pb <- c100 %>%
   mutate(type = factor(type, levels = rev(c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "[77.35, 85.93]")))) %>%
   group_by(db_pb) %>%
   slice_max(n = 1, order_by = type, with_ties = T) %>%
-  ungroup() # 3798 assignments
+  ungroup() # 3817 assignments
 
-unique_pb <- c100_pb %>% select(db_pb) %>% unique() # 418 pb ASVs
+unique_pb <- c100_pb %>% select(db_pb) %>% unique() # 419 pb ASVs
 unique_amp <- c100_pb %>% select(q_amplicon) %>% unique() # 348 amplicon ASVs
 
 unique_amp_type <- c100_pb %>% group_by(type) %>% summarize(n = n_distinct(q_amplicon)); unique_amp_type
 sum(unique_amp_type$n) # 359
 
 unique_pb_type <- c100_pb %>% group_by(type) %>% summarize(n = n_distinct(db_pb)); unique_amp_type
-sum(unique_pb_type$n) # 418
+sum(unique_pb_type$n) # 419
 
 # How many amplicon ASVs per Pb ASV
-c100_99 <- c100_pb %>% filter(id > 99) %>% #filter(type == ">99") %>% #
-  group_by(db_pb) %>% summarize(count = n()) # 378
-%>% write_csv("data/itol/bh_pb/bh_pb-asgn.csv")
+c100_99 <- c100_pb %>% filter(id > 99) %>% 
+  group_by(db_pb) %>% summarize(count = n()) %>% 
+  write_csv("data/itol/bh_pb-asgn.csv") # 379
 
 c100_99_all == c100_99
 
@@ -86,7 +86,7 @@ class.stat <- taxo.pb %>% group_by(Class) %>% summarize(count = n())
 
 ## Import tree and anotate
 ```{r}
-# Fig1 <- grid::rasterGrob(png::readPNG("outputs/Fig_1/pb_tree.png"), interpolate = T)
+Fig1 <- grid::rasterGrob(png::readPNG("outputs/r/Fig_1/pb_tree.png"), interpolate = T)
 
 # Add legend
 Class <- c("Actinobacteria", "Alphaproteobacteria", "Bacilli", "Bacteroidia", "Gammaproteobacteria")
@@ -165,7 +165,7 @@ Fig1lg <- cowplot::plot_grid(Fig1l,
 
 # cowplot::save_plot(
 #   plot = Fig1lg,
-#   "outputs/r/Fig_1/fig1-final.png",
+#   "outputs/r/Fig_1/fig1-final2.png",
 #   base_width = 27,
 #   base_height = 18,
 #   units = "cm",

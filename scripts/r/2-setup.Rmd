@@ -249,7 +249,7 @@ FigS1 <- ggvenn(sets,
 ## Import Data
 ```{r}
 load("outputs/r/2_setup/bh-amp.RData"); bh # 5297 taxa and 451 samples
-load("outputs/r/2_setup/bh-pb.RData"); bh_pb # 418 taxa and 131 samples
+load("outputs/r/2_setup/bh-pb.RData"); bh_pb # 419 taxa and 132 samples
 
 # Get taxonomic information
 taxo.amp <- tax_table(bh) %>% 
@@ -300,9 +300,9 @@ taxo.pb <- taxo.pb %>%
 # Get assignment tables
 c100 <- read.table(
   "outputs/galaxy/mb-cov100.txt",
-  sep = "\t", quote = '', header = T, fill = T) #148754 assignments
+  sep = "\t", quote = '', header = T, fill = T) #149314 assignments
 
-check_pb <- c100 %>% select(db_pb) %>% unique() #418 ASVs
+check_pb <- c100 %>% select(db_pb) %>% unique() #419 ASVs
 check_amp <- c100 %>% select(q_amplicon) %>% unique() #2513 ASVs
 
 c100_strat <- c100 %>% 
@@ -326,59 +326,3 @@ sum(check_type$n) # 2513
 # save(c100, file = "outputs/r/2_setup/c100.RData")
 # save(c100_strat, file = "outputs/r/2_setup/c100-strat.RData")
 ```
-
-
-### Check Data
-```{r}
-load("outputs/r/2_setup/taxo-amp.RData") # taxo.amp
-load("outputs/r/2_setup/taxo-pb.RData") # taxo.pb
-load("outputs/r/2_setup/c100.RData") # c100
-
-colnames(taxo.amp) <- c("q_amplicon", "Phylum_amp", "Class_amp",
-                        "Order_amp", "Family_amp", "Genus_amp", "Species_amp")
-colnames(taxo.pb) <- c("db_pb", "Phylum_pb", "Class_pb", 
-                       "Order_pb", "Family_pb", "Genus_pb", "Species_pb")
-
-# Check taxa number
-taxo.amp_species <- taxo.amp %>% select(Species_amp) %>% unique() #902
-taxo.amp_genus <- taxo.amp %>% select(Genus_amp) %>% unique() #813
-taxo.amp_family <- taxo.amp %>% select(Family_amp) %>% unique() #402
-taxo.amp_order <- taxo.amp %>% select(Order_amp) %>% unique() #242
-taxo.amp_class <- taxo.amp %>% select(Class_amp) %>% unique() #101
-taxo.amp_phy <- taxo.amp %>% select(Phylum_amp) %>% unique() #38
-
-taxo.pb_species <- taxo.pb %>% select(Species_pb) %>% unique() #102
-taxo.pb_genus <- taxo.pb %>% select(Genus_pb) %>% unique() #36
-taxo.pb_family <- taxo.pb %>% select(Family_pb) %>% unique() #23
-taxo.pb_order <- taxo.pb %>% select(Order_pb) %>% unique() #15
-taxo.pb_class <- taxo.pb %>% select(Class_pb) %>% unique() #5
-taxo.pb_phy <- taxo.pb %>% select(Phylum_pb) %>% unique() #4
-
-# Check how many ASVs were assigned in each dataset
-amp_trim <- c100 %>% select(q_amplicon) %>% unique() #2513
-pb_trim <- c100 %>% select(db_pb) %>% unique() #418
-
-# Check if the taxonomy assignment is the same in both datasets
-## At ASV level
-tax_check0 <- c100
-tax_check0$q_amplicon <- gsub("ASV [0-9]+: ", "",as.character(tax_check0$q_amplicon))
-tax_check0$q_amplicon <- gsub("_[a-zA-Z]+.", "",as.character(tax_check0$q_amplicon))
-tax_check0$q_amplicon <- gsub("_[a-zA-Z]+", "",as.character(tax_check0$q_amplicon))
-tax_check0$db_pb <- gsub("ASV [0-9]+: ", "",as.character(tax_check0$db_pb))
-
-tax_check0 <- tax_check0 %>% mutate(assignment = ifelse(q_amplicon %in% db_pb, T, F)) #370
-
-## Other taxonomic levels
-c100_amp_tax <- merge(c100, taxo.amp, by = "q_amplicon") #370
-c100_pb_tax <- merge(c100, taxo.pb, by = "db_pb") #370
-c100_all_tax <- right_join(c100_amp_tax, c100_pb_tax, by = c("q_amplicon", "db_pb")) #370
-
-tax_check_all <- c100_all_tax %>% 
-  mutate(Species = ifelse(Species_amp == Species_pb, TRUE, FALSE)) %>%
-  mutate(Genus = ifelse(Genus_amp == Genus_pb, TRUE, FALSE)) %>%
-  mutate(Fam = ifelse(Family_amp == Family_pb, TRUE, FALSE)) %>%
-  mutate(Order = ifelse(Order_amp == Order_pb, TRUE, FALSE)) %>%
-  mutate(Class = ifelse(Class_amp == Class_pb, TRUE, FALSE)) %>%
-  mutate(Phylum = ifelse(Phylum_amp == Phylum_pb, TRUE, FALSE))
-```
-
