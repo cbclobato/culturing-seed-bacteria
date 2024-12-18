@@ -1,136 +1,137 @@
-sample_name;genotype;tissue;metabc;time_stamp;chemotype;accession;provider
-01AR;Fedora 17;Radicle;M;04.05.21;LC;;Hanfland
-01AS;Fedora 17;Shoot;M;04.05.21;LC;;Hanfland
-01BR;Fedora 17;Radicle;M;02.03.22;LC;;Hanfland
-01BS;Fedora 17;Shoot;M;02.03.22;LC;;Hanfland
-02AR;Silvana x Manitoba P.;Radicle;M;29.03.21;THC-rich;;KFU Botanical Garden
-02AS;Silvana x Manitoba P.;Shoot;M;29.03.21;THC-rich;;KFU Botanical Garden
-04AR;Dolnoslaskie;Radicle;;05.11.21;LC;166502;Plant Breeding and Acclimatization Institute
-04AS;Dolnoslaskie;Shoot;;05.11.21;LC;166502;Plant Breeding and Acclimatization Institute
-06AR;NA Poland;Radicle;;04.06.21;;166504;Plant Breeding and Acclimatization Institute
-06AS;NA Poland;Shoot;;04.06.21;;166504;Plant Breeding and Acclimatization Institute
-07AR;Litzap 12 119;Radicle;;14.07.21;;166507;Plant Breeding and Acclimatization Institute
-07BR;Litzap 12 119;Radicle;;26.11.21;;166507;Plant Breeding and Acclimatization Institute
-07BS;Litzap 12 119;Shoot;;26.11.21;;166507;Plant Breeding and Acclimatization Institute
-07CR;Litzap 12 119;Radicle;;01.12.21;;166507;Plant Breeding and Acclimatization Institute
-07CS;Litzap 12 119;Shoot;;01.12.21;;166507;Plant Breeding and Acclimatization Institute
-08AR;Carmagnola;Radicle;M;30.04.21;LC;;Hanfama
-08AS;Carmagnola;Shoot;M;30.04.21;LC;;Hanfama
-08BR;Carmagnola;Radicle;M;23.11.21;LC;;Hanfama
-08BS;Carmagnola;Shoot;M;23.11.21;LC;;Hanfama
-09AR;Santhica 27;Radicle;M;15.07.21;LC;;Hanfama
-09AS;Santhica 27;Shoot;M;15.07.21;LC;;Hanfama
-09BR;Santhica 27;Radicle;M;27.07.21;LC;;Hanfama
-09BS;Santhica 27;Shoot;M;27.07.21;LC;;Hanfama
-09CR;Santhica 27;Radicle;M;23.11.21;LC;;Hanfama
-09CS;Santhica 27;Shoot;M;23.11.21;LC;;Hanfama
-10AR;RV Slovakia 77;Radicle;M;01.04.21;LC;CAN 16;IPK
-10AS;RV Slovakia 77;Shoot;M;01.04.21;LC;CAN 16;IPK
-11AR;NA BG Hungary;Radicle;M;07.04.21;LC;CAN 17;IPK
-11AS;NA BG Hungary;Shoot;M;07.04.21;LC;CAN 17;IPK
-13AR;RV Italy 88;Radicle;M;15.11.21;LC;CAN 19;IPK
-13AS;RV Italy 88;Shoot;M;15.11.21;LC;CAN 19;IPK
-14AR;RV Korea 85;Radicle;;31.05.21;;CAN 20;IPK
-14AS;RV Korea 85;Shoot;;31.05.21;;CAN 20;IPK
-16AR;RV Georgia 86;Radicle;M;14.05.21;LC;CAN 22;IPK
-16AS;RV Georgia 86;Shoot;M;14.05.21;LC;CAN 22;IPK
-17AR;RV Korea 87;Radicle;M;14.05.21;LC;CAN 23;IPK
-17BR;RV Korea 87;Radicle;M;20.07.21;LC;CAN 23;IPK
-17BS;RV Korea 87;Shoot;M;20.07.21;LC;CAN 23;IPK
-17CR;RV Korea 87;Radicle;M;30.11.21;LC;CAN 23;IPK
-17CS;RV Korea 87;Shoot;M;30.11.21;LC;CAN 23;IPK
-18AR;RV Italy 84;Radicle;M;18.05.21;LC;CAN 24;IPK
-18AS;RV Italy 84;Shoot;M;18.05.21;LC;CAN 24;IPK
-18BR;RV Italy 84;Radicle;M;14.06.21;LC;CAN 24;IPK
-18BS;RV Italy 84;Shoot;M;14.06.21;LC;CAN 24;IPK
-19AR;NS Turkey;Radicle;;07.06.21;;CAN 26;IPK
-19AS;NS Turkey;Shoot;;07.06.21;;CAN 26;IPK
-20AR;NA Hungary;Radicle;;07.06.21;;CAN 27;IPK
-20AS;NA Hungary;Shoot;;07.06.21;;CAN 27;IPK
-20BR;NA Hungary;Radicle;;20.07.21;;CAN 27;IPK
-20CS;NA Hungary;Shoot;;27.07.21;;CAN 27;IPK
-21AR;Forose;Radicle;;22.04.21;;CAN 28;IPK
-21AS;Forose;Shoot;;22.04.21;;CAN 28;IPK
-24AR;Cunepa;Radicle;;22.06.21;;CAN 31;IPK
-24AS;Cunepa;Shoot;;22.06.21;;CAN 31;IPK
-26AR;Cinepa1;Radicle;;10.12.21;;CAN 33;IPK
-26AS;Cinepa1;Shoot;;10.12.21;;CAN 33;IPK
-27AR;Cinepa2;Radicle;;26.11.21;;CAN 34;IPK
-27AS;Cinepa2;Shoot;;26.11.21;;CAN 34;IPK
-28AR;Cinepa;Radicle;M;29.11.21;;CAN 35;IPK
-28AS;Cinepa;Shoot;M;29.11.21;;CAN 35;IPK
-29AR;NA Germany;Radicle;;02.12.21;;CAN 36;IPK
-30AR;NA France;Radicle;M;20.07.21;;CAN 37;IPK
-30AS;NA France;Shoot;M;20.07.21;;CAN 37;IPK
-31AR;Cinepa3;Radicle;;29.11.21;;CAN 38;IPK
-31BS;Cinepa3;Shoot;;06.12.21;;CAN 38;IPK
-32AR;NA BG China;Radicle;M;19.07.21;;CAN 39;IPK
-32AS;NA BG China;Shoot;M;19.07.21;;CAN 39;IPK
-33AS;NA BG Italy;Shoot;M;07.12.21;;CAN 40;IPK
-37AR;Fibrimon;Radicle;M;26.07.21;LC;CAN 44;IPK
-37AS;Fibrimon;Shoot;M;26.07.21;LC;CAN 44;IPK
-37BR;Fibrimon;Radicle;M;07.12.21;LC;CAN 44;IPK
-37BS;Fibrimon;Shoot;M;07.12.21;LC;CAN 44;IPK
-38AR;Krasnoyarskaya;Radicle;M;04.08.21;LC;CAN 45;IPK
-38AS;Krasnoyarskaya;Shoot;M;04.08.21;LC;CAN 45;IPK
-38BR;Krasnoyarskaya;Radicle;M;02.12.21;LC;CAN 45;IPK
-38BS;Krasnoyarskaya;Shoot;M;02.12.21;LC;CAN 45;IPK
-44AR;Fibridia;Radicle;M;01.04.21;LC;CAN 52;IPK
-44AS;Fibridia;Shoot;M;01.04.21;LC;CAN 52;IPK
-44BR;Fibridia;Radicle;M;23.02.22;LC;CAN 52;IPK
-44BS;Fibridia;Shoot;M;23.02.22;LC;CAN 52;IPK
-46AR;Fibrimon 21;Radicle;;15.12.21;LC;CAN 54;IPK
-46AS;Fibrimon 21;Shoot;;15.12.21;LC;CAN 54;IPK
-49AR;NA Syria;Radicle;M;16.12.21;;CAN 57;IPK
-49AS;NA Syria;Shoot;M;16.12.21;;CAN 57;IPK
-50AR;Kongo Hemp;Radicle;;15.12.21;;CAN 58;IPK
-50AS;Kongo Hemp;Shoot;;15.12.21;;CAN 58;IPK
-52AR;Schurig;Radicle;M;16.08.21;LC;CAN 60;IPK
-52AS;Schurig;Shoot;M;16.08.21;LC;CAN 60;IPK
-52BR;Schurig;Radicle;M;15.12.21;LC;CAN 60;IPK
-52BS;Schurig;Shoot;M;15.12.21;LC;CAN 60;IPK
-55AR;Ramo;Radicle;M;16.08.21;LC;CAN 63;IPK
-55AS;Ramo;Shoot;M;16.08.21;LC;CAN 63;IPK
-55BR;Ramo;Radicle;M;25.08.21;LC;CAN 63;IPK
-55BS;Ramo;Shoot;M;25.08.21;LC;CAN 63;IPK
-56AR;NA Turkey;Radicle;M;16.12.21;LC;CAN 64;IPK
-56AS;NA Turkey;Shoot;M;16.12.21;LC;CAN 64;IPK
-59AR;Fasamo;Radicle;M;15.12.21;LC;CAN 67;IPK
-59AS;Fasamo;Shoot;M;15.12.21;LC;CAN 67;IPK
-60AS;Kompolti 1;Shoot;;16.12.21;LC;CAN 68;IPK
-62AR;Kompolti;Radicle;M;06.09.21;LC;CAN 70;IPK
-62AS;Kompolti;Shoot;M;06.09.21;LC;CAN 70;IPK
-63AR;Gelb;Radicle;;17.09.21;;CAN 100;IPK
-64AR;Bialobrzeskie;Radicle;;07.04.21;LC;1500002;CRI
-64AS;Bialobrzeskie;Shoot;;07.04.21;LC;1500002;CRI
-65AR;Beniko;Radicle;M;06.04.21;LC;1500003;CRI
-65AS;Beniko;Shoot;M;06.04.21;LC;1500003;CRI
-66AR;Fedora;Radicle;;06.04.21;LC;1500011;CRI
-66AS;Fedora;Shoot;;06.04.21;LC;1500011;CRI
-67AR;Finola;Radicle;M;01.04.21;LC;1500019;CRI
-67AS;Finola;Shoot;M;01.04.21;LC;1500019;CRI
-67BR;Finola;Radicle;M;21.02.22;LC;1500019;CRI
-67BS;Finola;Shoot;M;21.02.22;LC;1500019;CRI
-69AR;Vietejas;Radicle;;13.09.21;;LVA02701;LVMI Silava
-69AS;Vietejas;Shoot;;13.09.21;;LVA02701;LVMI Silava
-71AS;Superfibra;Shoot;;15.09.21;;CAN 49;IPK
-72AR;Ferimon;Radicle;M;10.09.21;LC;;Hanfama
-72AS;Ferimon;Shoot;M;10.09.21;LC;;Hanfama
-73AR;Felina 32;Radicle;M;13.09.21;LC;;Hanfama
-73AS;Felina 32;Shoot;M;13.09.21;LC;;Hanfama
-74AR;Futura 75;Radicle;M;15.09.21;LC;;Hanfama
-74AS;Futura 75;Shoot;M;15.09.21;LC;;Hanfama
-75AR;Orion 33;Radicle;M;24.09.21;LC;;Hanfama
-75AS;Orion 33;Shoot;M;24.09.21;LC;;Hanfama
-83AR;Bernburskie;Radicle;;08.11.21;;501000;Plant Breeding and Acclimatization Institute
-84AR;Futura 77;Radicle;;05.11.21;LC;501002;Plant Breeding and Acclimatization Institute
-87AR;Afghani 1;Radicle;M;21.01.22;THC-rich;1500010;Sensi Seeds
-87AS;Afghani 1;Shoot;M;21.01.22;THC-rich;1500010;Sensi Seeds
-89AR;Ruderalis Indica;Radicle;M;02.03.22;CBD-rich;1500034;Sensi Seeds
-89AS;Ruderalis Indica;Shoot;M;02.03.22;CBD-rich;1500034;Sensi Seeds
-90AR;Mexican Sativa;Radicle;M;02.03.22;THC-rich;1500038;Sensi Seeds
-90AS;Mexican Sativa;Shoot;M;02.03.22;THC-rich;1500038;Sensi Seeds
-MOCK1;M;;;;;;
-MOCK28;M;;;;;;
-NC15;Ctl;;;;;;
-NC28;Ctl;;;;;;
+sample_name,genotype,tissue,metabc,time_stamp,chemotype,accession,provider
+01AR,Fedora 17,Radicle,M,04.05.21,LC,,Hanfland
+01AS,Fedora 17,Shoot,M,04.05.21,LC,,Hanfland
+01BR,Fedora 17,Radicle,M,02.03.22,LC,,Hanfland
+01BS,Fedora 17,Shoot,M,02.03.22,LC,,Hanfland
+02AR,Silvana x Manitoba P.,Radicle,M,29.03.21,THC-rich,,KFU Botanical Garden
+02AS,Silvana x Manitoba P.,Shoot,M,29.03.21,THC-rich,,KFU Botanical Garden
+04AR,Dolnoslaskie,Radicle,,05.11.21,LC,166502,Plant Breeding and Acclimatization Institute
+04AS,Dolnoslaskie,Shoot,,05.11.21,LC,166502,Plant Breeding and Acclimatization Institute
+06AR,NA Poland,Radicle,,04.06.21,,166504,Plant Breeding and Acclimatization Institute
+06AS,NA Poland,Shoot,,04.06.21,,166504,Plant Breeding and Acclimatization Institute
+07AR,Litzap 12 119,Radicle,,14.07.21,,166507,Plant Breeding and Acclimatization Institute
+07BR,Litzap 12 119,Radicle,,26.11.21,,166507,Plant Breeding and Acclimatization Institute
+07BS,Litzap 12 119,Shoot,,26.11.21,,166507,Plant Breeding and Acclimatization Institute
+07CR,Litzap 12 119,Radicle,,01.12.21,,166507,Plant Breeding and Acclimatization Institute
+07CS,Litzap 12 119,Shoot,,01.12.21,,166507,Plant Breeding and Acclimatization Institute
+08AR,Carmagnola,Radicle,M,30.04.21,LC,,Hanfama
+08AS,Carmagnola,Shoot,M,30.04.21,LC,,Hanfama
+08BR,Carmagnola,Radicle,M,23.11.21,LC,,Hanfama
+08BS,Carmagnola,Shoot,M,23.11.21,LC,,Hanfama
+09AR,Santhica 27,Radicle,M,15.07.21,LC,,Hanfama
+09AS,Santhica 27,Shoot,M,15.07.21,LC,,Hanfama
+09BR,Santhica 27,Radicle,M,27.07.21,LC,,Hanfama
+09BS,Santhica 27,Shoot,M,27.07.21,LC,,Hanfama
+09CR,Santhica 27,Radicle,M,23.11.21,LC,,Hanfama
+09CS,Santhica 27,Shoot,M,23.11.21,LC,,Hanfama
+10AR,RV Slovakia 77,Radicle,M,01.04.21,LC,CAN 16,IPK
+10AS,RV Slovakia 77,Shoot,M,01.04.21,LC,CAN 16,IPK
+11AR,NA BG Hungary,Radicle,M,07.04.21,LC,CAN 17,IPK
+11AS,NA BG Hungary,Shoot,M,07.04.21,LC,CAN 17,IPK
+13AR,RV Italy 88,Radicle,M,15.11.21,LC,CAN 19,IPK
+13AS,RV Italy 88,Shoot,M,15.11.21,LC,CAN 19,IPK
+14AR,RV Korea 85,Radicle,,31.05.21,,CAN 20,IPK
+14AS,RV Korea 85,Shoot,,31.05.21,,CAN 20,IPK
+16AR,RV Georgia 86,Radicle,M,14.05.21,LC,CAN 22,IPK
+16AS,RV Georgia 86,Shoot,M,14.05.21,LC,CAN 22,IPK
+17AR,RV Korea 87,Radicle,M,14.05.21,LC,CAN 23,IPK
+17BR,RV Korea 87,Radicle,M,20.07.21,LC,CAN 23,IPK
+17BS,RV Korea 87,Shoot,M,20.07.21,LC,CAN 23,IPK
+17CR,RV Korea 87,Radicle,M,30.11.21,LC,CAN 23,IPK
+17CS,RV Korea 87,Shoot,M,30.11.21,LC,CAN 23,IPK
+18AR,RV Italy 84,Radicle,M,18.05.21,LC,CAN 24,IPK
+18AS,RV Italy 84,Shoot,M,18.05.21,LC,CAN 24,IPK
+18BR,RV Italy 84,Radicle,M,14.06.21,LC,CAN 24,IPK
+18BS,RV Italy 84,Shoot,M,14.06.21,LC,CAN 24,IPK
+19AR,NS Turkey,Radicle,,07.06.21,,CAN 26,IPK
+19AS,NS Turkey,Shoot,,07.06.21,,CAN 26,IPK
+20AR,NA Vacratot,Radicle,,07.06.21,,CAN 27,IPK
+20AS,NA Vacratot,Shoot,,07.06.21,,CAN 27,IPK
+20BR,NA Vacratot,Radicle,,20.07.21,,CAN 27,IPK
+20CS,NA Vacratot,Shoot,,27.07.21,,CAN 27,IPK
+21AR,Forose,Radicle,,22.04.21,,CAN 28,IPK
+21AS,Forose,Shoot,,22.04.21,,CAN 28,IPK
+24AR,RV Romania 94_120,Radicle,,22.06.21,,CAN 31,IPK
+24AS,RV Romania 94_120,Shoot,,22.06.21,,CAN 31,IPK
+26AR,RV Romania 94_226,Radicle,,10.12.21,,CAN 33,IPK
+26AS,RV Romania 94_226,Shoot,,10.12.21,,CAN 33,IPK
+27AR,RV Romania 94_239,Radicle,,26.11.21,,CAN 34,IPK
+27AS,RV Romania 94_239,Shoot,,26.11.21,,CAN 34,IPK
+28AR,RV Romania 94_265,Radicle,M,29.11.21,,CAN 35,IPK
+28AS,RV Romania 94_265,Shoot,M,29.11.21,,CAN 35,IPK
+29AR,NA Germany,Radicle,,02.12.21,,CAN 36,IPK
+30AR,NA France,Radicle,M,20.07.21,,CAN 37,IPK
+30AS,NA France,Shoot,M,20.07.21,,CAN 37,IPK
+31AR,RV Romania 94_115,Radicle,,29.11.21,,CAN 38,IPK
+31BS,RV Romania 94_115,Shoot,,06.12.21,,CAN 38,IPK
+32AR,NA BG China,Radicle,M,19.07.21,,CAN 39,IPK
+32AS,NA BG China,Shoot,M,19.07.21,,CAN 39,IPK
+33AS,NA BG Italy,Shoot,M,07.12.21,,CAN 40,IPK
+37AR,Fibrimon,Radicle,M,26.07.21,LC,CAN 44,IPK
+37AS,Fibrimon,Shoot,M,26.07.21,LC,CAN 44,IPK
+37BR,Fibrimon,Radicle,M,07.12.21,LC,CAN 44,IPK
+37BS,Fibrimon,Shoot,M,07.12.21,LC,CAN 44,IPK
+38AR,Krasnoyarskaya,Radicle,M,04.08.21,LC,CAN 45,IPK
+38AS,Krasnoyarskaya,Shoot,M,04.08.21,LC,CAN 45,IPK
+38BR,Krasnoyarskaya,Radicle,M,02.12.21,LC,CAN 45,IPK
+38BS,Krasnoyarskaya,Shoot,M,02.12.21,LC,CAN 45,IPK
+44AR,Fibridia,Radicle,M,01.04.21,LC,CAN 52,IPK
+44AS,Fibridia,Shoot,M,01.04.21,LC,CAN 52,IPK
+44BR,Fibridia,Radicle,M,23.02.22,LC,CAN 52,IPK
+44BS,Fibridia,Shoot,M,23.02.22,LC,CAN 52,IPK
+46AR,Fibrimon 21,Radicle,,15.12.21,LC,CAN 54,IPK
+46AS,Fibrimon 21,Shoot,,15.12.21,LC,CAN 54,IPK
+49AR,NA Syria,Radicle,M,16.12.21,,CAN 57,IPK
+49AS,NA Syria,Shoot,M,16.12.21,,CAN 57,IPK
+50AR,Kongo Hemp,Radicle,,15.12.21,,CAN 58,IPK
+50AS,Kongo Hemp,Shoot,,15.12.21,,CAN 58,IPK
+52AR,Schurig,Radicle,M,16.08.21,LC,CAN 60,IPK
+52AS,Schurig,Shoot,M,16.08.21,LC,CAN 60,IPK
+52BR,Schurig,Radicle,M,15.12.21,LC,CAN 60,IPK
+52BS,Schurig,Shoot,M,15.12.21,LC,CAN 60,IPK
+55AR,Ramo,Radicle,M,16.08.21,LC,CAN 63,IPK
+55AS,Ramo,Shoot,M,16.08.21,LC,CAN 63,IPK
+55BR,Ramo,Radicle,M,25.08.21,LC,CAN 63,IPK
+55BS,Ramo,Shoot,M,25.08.21,LC,CAN 63,IPK
+56AR,NA Turkey,Radicle,M,16.12.21,LC,CAN 64,IPK
+56AS,NA Turkey,Shoot,M,16.12.21,LC,CAN 64,IPK
+59AR,Fasamo,Radicle,M,15.12.21,LC,CAN 67,IPK
+59AS,Fasamo,Shoot,M,15.12.21,LC,CAN 67,IPK
+60AS,Kompolti 1,Shoot,,16.12.21,LC,CAN 68,IPK
+62AR,Kompolti,Radicle,M,06.09.21,LC,CAN 70,IPK
+62AS,Kompolti,Shoot,M,06.09.21,LC,CAN 70,IPK
+63AR,Gelb,Radicle,,17.09.21,,CAN 100,IPK
+64AR,Bialobrzeskie,Radicle,,07.04.21,LC,1500002,CRI
+64AS,Bialobrzeskie,Shoot,,07.04.21,LC,1500002,CRI
+65AR,Beniko,Radicle,M,06.04.21,LC,1500003,CRI
+65AS,Beniko,Shoot,M,06.04.21,LC,1500003,CRI
+66AR,Fedora,Radicle,,06.04.21,LC,1500011,CRI
+66AS,Fedora,Shoot,,06.04.21,LC,1500011,CRI
+67AR,Finola,Radicle,M,01.04.21,LC,1500019,CRI
+67AS,Finola,Shoot,M,01.04.21,LC,1500019,CRI
+67BR,Finola,Radicle,M,21.02.22,LC,1500019,CRI
+67BS,Finola,Shoot,M,21.02.22,LC,1500019,CRI
+69AR,Vietejas,Radicle,,13.09.21,,LVA02701,LVMI Silava
+69AS,Vietejas,Shoot,,13.09.21,,LVA02701,LVMI Silava
+71AS,Superfibra,Shoot,,15.09.21,,CAN 49,IPK
+72AR,Ferimon,Radicle,M,10.09.21,LC,,Hanfama
+72AS,Ferimon,Shoot,M,10.09.21,LC,,Hanfama
+73AR,Felina 32,Radicle,M,13.09.21,LC,,Hanfama
+73AS,Felina 32,Shoot,M,13.09.21,LC,,Hanfama
+74AR,Futura 75,Radicle,M,15.09.21,LC,,Hanfama
+74AS,Futura 75,Shoot,M,15.09.21,LC,,Hanfama
+75AR,Orion 33,Radicle,M,24.09.21,LC,,Hanfama
+75AS,Orion 33,Shoot,M,24.09.21,LC,,Hanfama
+83AR,Bernburskie,Radicle,,08.11.21,,501000,Plant Breeding and Acclimatization Institute
+83AS,Bernburskie,Shoot,,08.11.21,,501000,Plant Breeding and Acclimatization Institute
+84AR,Futura 77,Radicle,,05.11.21,LC,501002,Plant Breeding and Acclimatization Institute
+87AR,Afghani 1,Radicle,M,21.01.22,THC-rich,1500010,Sensi Seeds
+87AS,Afghani 1,Shoot,M,21.01.22,THC-rich,1500010,Sensi Seeds
+89AR,Ruderalis Indica,Radicle,M,02.03.22,CBD-rich,1500034,Sensi Seeds
+89AS,Ruderalis Indica,Shoot,M,02.03.22,CBD-rich,1500034,Sensi Seeds
+90AR,Mexican Sativa,Radicle,M,02.03.22,THC-rich,1500038,Sensi Seeds
+90AS,Mexican Sativa,Shoot,M,02.03.22,THC-rich,1500038,Sensi Seeds
+MOCK1,M,,,,,,
+MOCK28,M,,,,,,
+NC15,Ctl,,,,,,
+NC28,Ctl,,,,,,

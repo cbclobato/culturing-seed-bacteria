@@ -169,7 +169,11 @@ sum(st.nochim)/sum(st) # 0.9860244
 sq <- dada2::getSequences(st.nochim)
 # write.table(sq, "outputs/r/1_dada2/phy-obj/dna-seq.csv")
 
+st.nochim.corr <- st.nochim %>% as.data.frame() %>% rownames_to_column("Sample") %>%
+  mutate(Sample = recode(Sample, "85AS" = "83AS")) %>% column_to_rownames("Sample") %>% as.matrix()
+
 # save(st.nochim, file = "outputs/r/1_dada2/phy-obj/feature-table.RData")
+# save(st.nochim.corr, file = "outputs/r/1_dada2/phy-obj/feature-table-corr.RData")
 # save(sq, file = "outputs/r/1_dada2/phy-obj/dna-sequences.RData")
 ```
 
@@ -196,17 +200,18 @@ write.table(tax,
 
 # Sample metadata, feature table
 ```{r}
-load("outputs/r/1_dada2/phy-obj/feature-table.RData") #st.nochim
+load("outputs/r/1_dada2/phy-obj/feature-table-corr.RData") #st.nochim.corr
+
 
 df <- read.table("data/r/metadata.csv",
                  header = TRUE, 
-                 sep = ";", 
+                 sep = ",", 
                  stringsAsFactors = T)
 head(df)
 
 row.names(df) <- df[,"sample_name"]
 df <- df[sort(row.names(df)),] 
-df <- dplyr::filter(df, row.names(df) %in% row.names(st.nochim))
+df <- dplyr::filter(df, row.names(df) %in% row.names(st.nochim.corr))
 
 # save(df, file = "outputs/r/1_dada2/phy-obj/metadata.RData")
 ```

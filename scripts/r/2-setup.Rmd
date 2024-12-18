@@ -20,10 +20,10 @@ library(RColorBrewer)
 ## Create Phyloseq
 ```{r}
 load("outputs/r/1_dada2/phy-obj/metadata.RData") # df
-load("outputs/r/1_dada2/phy-obj/feature-table.RData") # st.nochim
+load("outputs/r/1_dada2/phy-obj/feature-table-corr.RData") # st.nochim.corr
 load("outputs/r/1_dada2/phy-obj/tax-table.RData") # tax
 
-asv_tab <- t(st.nochim)
+asv_tab <- t(st.nochim.corr)
 rownames(asv_tab) <- paste(
   "ASV ", 1:length(rownames(asv_tab)),
   ": ",
@@ -59,14 +59,14 @@ ps <- phyloseq(otu_table(asv_tab,
                sample_data(df),
                sq)
 
-ps # 445 taxa and 135 samples
+ps # 445 taxa and 136 samples
 # save(ps, file = "outputs/r/2_setup/ps.RData")
 
 ## Read stats ps
 ss <- sort(sample_sums(ps))
 ss <- as.matrix(ss)
-colSums(ss) # total reads = 204330
-summary(ss) # mean reads/sample = 1513.6; min = 4; max = 7315
+colSums(ss) # total reads = 204746
+summary(ss) # mean reads/sample = 1505.5; min = 4; max = 7315
 ```
 
 ## Check Contaminants
@@ -159,20 +159,13 @@ load("outputs/r/2_setup/ps.RData")
 ps_sub <- subset_samples(ps, tissue != "")
 ps_sub <- prune_samples(sample_sums(ps_sub) > 0, ps_sub)
 ps_sub <- prune_taxa(taxa_sums(ps_sub) > 0, ps_sub)
-ps_sub # 421 taxa and 131 samples
+ps_sub # 422 taxa and 132 samples
 
 ## Read Stats ps_sub
 sb <- sort(sample_sums(ps_sub))
 sb <- as.matrix(sb)
-colSums(sb) # total reads = 202615
-summary(sb) # mean reads/sample = 1547
-
-# taxa_names(ps_sub) <- paste(
-#   "ASV ", 1:length(taxa_names(ps_sub)),
-#   ": ",
-#   taxa_names(ps_sub),
-#   sep = "")
-# taxa_names(ps_sub)[1:5]
+colSums(sb) # total reads = 203031
+summary(sb) # mean reads/sample = 1538.1
 
 bh <- microbiomeutilities::format_to_besthit(ps_sub)
 taxa_names(bh) <- sub(":", ": ", taxa_names(bh))
@@ -183,23 +176,23 @@ metadata_bh <- sample_data(bh)
 
 bh_pb <- subset_taxa(bh, rownames(tax_table(bh)) != c("ASV 94: Sphingomonas"))
 bh_pb <- prune_taxa(taxa_sums(bh_pb) > 0, bh_pb)
-bh_pb # 420 taxa and 131 samples
+bh_pb # 421 taxa and 132 samples
 
 bh_pb <- subset_taxa(bh_pb, rownames(tax_table(bh_pb)) != c("ASV 111: Sphingomonas"))
 bh_pb <- prune_taxa(taxa_sums(bh_pb) > 0, bh_pb)
-bh_pb # 419 taxa and 131 samples
+bh_pb # 420 taxa and 132 samples
 
 bh_pb <- subset_taxa(bh_pb, Domain != "Eukaryota")
 bh_pb <- prune_taxa(taxa_sums(bh_pb) > 0, bh_pb)
-bh_pb # 418 taxa and 131 samples
+bh_pb # 419 taxa and 132 samples
 
 tax_table(bh_pb)
 
 ## Read Stats bh_pb
 sh <- sort(sample_sums(bh_pb))
 sh <- as.matrix(sh)
-colSums(sh) # total reads = 201701
-summary(sh) # mean reads/sample = 1540; min = 23; max = 7283
+colSums(sh) # total reads = 202111
+summary(sh) # mean reads/sample = 1531.1; min = 23; max = 7283
 sample_data(bh_pb)$total_reads <- sample_sums(bh_pb)
 metadata_bh_pb <- sample_data(bh_pb)
 
@@ -215,12 +208,12 @@ final.reads <- sum(metadata_bh_pb$total_reads)
 #                               format = "fasta")
 
 # tax_table(bh_pb) %>% as.data.frame() %>%
-#   write_csv(file = "outputs/r/2_setup/bh-tax-train-set.txt")
+#   write_csv(file = "outputs/r/2_setup/bh-tax-train-set.csv")
 ```
 
 ## Check Samples
 ```{r}
-load("outputs/r/2_setup/bh-pb.RData"); bh_pb # 418 taxa and 131 samples
+load("outputs/r/2_setup/bh-pb.RData"); bh_pb # 419 taxa and 132 samples
 load("outputs/r/2_setup/bh-amp.RData"); bh # 5297 taxa and 451 samples
 
 # Check sample overlaps
@@ -239,7 +232,7 @@ sets <- list(Community = sort(as.character(unique(bh@sam_data[["genotype"]]))),
 FigS1 <- ggvenn(sets,
                  fill_color = c("#0073C2FF", "#CD534CFF"),
                  fill_alpha = 0.7, 
-                 show_stats = "c",
+                 show_percentage = F,
                  stroke_size = 0.5, set_name_size = 5, text_size = 4); FigS1
 
 # ggsave(
@@ -249,30 +242,6 @@ FigS1 <- ggvenn(sets,
 #   units = "cm",
 #   scale = 1,
 #   dpi = 600)
-
-# Check each sample
-bh_new <- subset_samples(bh_pb, genotype == "Afghani 1")
-bh_new <- prune_taxa(taxa_sums(bh_new) > 0, bh_new);bh_new
-check <- unique(bh_new@sam_data[["sample_name"]]); check
-
-mycolors <- colorRampPalette(brewer.pal(36, "Paired"))(36)
-bh_rel <- microbiome::transform(bh_pb, "compositional")
-
-plot_bar(bh_rel, 
-         x = "sample_name", 
-         fill = "Genus") + 
-  labs(x = "", color = "") +
-  scale_color_manual(values = mycolors,
-                     aesthetics = "fill",
-                     na.translate = T) +
-  theme_classic() +
-  theme(
-    axis.text.x = element_text(size = 12, angle = 45, hjust = 1),
-    legend.position = "right",
-    legend.text = element_text(size = 12),
-    legend.title = element_text(size = 12, face = "bold"),
-    strip.background = element_blank()) +
-      guides(fill = guide_legend(ncol = 1))
 ```
 
 # Assignment
@@ -303,8 +272,8 @@ taxo.amp <- taxo.amp %>%
 
 # save(taxo.amp, file = "outputs/r/2_setup/taxo-amp.RData")
 
-# taxo.pb <- as.data.frame(read_csv("outputs/r/2_setup/bh-tax-train-set-ncbi.txt"))
-    
+# taxo.pb <- as.data.frame(read_csv("outputs/r/2_setup/bh-tax-train-set-ncbi.csv"))
+
 taxo.pb <- taxo.pb %>%
   select(c("db_pb", "Phylum", "Class", "Order", "Family", "Genus", "Species")) %>% 
   mutate(Species = recode(Species,
