@@ -22,7 +22,7 @@ CONTAINS==Sphingobacterium,#dbdddd
 CONTAINS==Pedobacter,#808588
 CONTAINS==Brevibacillus,#dbdddd
 CONTAINS==Methylobacterium,#3d4041
-CONTAINS==Xanthomonas,#343637
+CONTAINS==Xanthomonas,#73787b
 CONTAINS==Kocuria,#505456
 CONTAINS==Sphingomonas,#5a5e60
 CONTAINS==Brevibacterium,#63676a
