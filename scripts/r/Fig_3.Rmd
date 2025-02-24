@@ -28,8 +28,7 @@ colnames(asv.rel) <- c("q_amplicon", "RA")
 asv.rel.taxo <- merge(asv.rel, taxo.amp, by = "q_amplicon")
 asv_sum <- summary(asv.rel.taxo); asv_sum
 
-color.levels <- c("#dbdddd","#c7b699","#b89b74","#d9af63",
-                  "#fdbf6f","#fdac4f","#ed8f47","#BF592A")
+color.levels <- c("#dbdddd","#b89b74","#d9af63","#fdbf6f","#fdac4f","#ed8f47","#BF592A") # "#c7b699"
 ```
 
 # Plot A: %RA Top 25
@@ -53,7 +52,7 @@ sel.taxo <- subset(asv.rel.taxo.lvl, Class %in% asv.rel.taxo.total$Class) %>% as
 sel.taxo$type <- as.character(sel.taxo$type)
 sel.taxo$type[is.na(sel.taxo$type)] <- "Uncultured"
 sel.taxo <- sel.taxo %>% 
-  mutate(type = factor(type, levels = rev(c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "[77.35, 85.93]","Uncultured"))),
+  mutate(type = factor(type, levels = rev(c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]","Uncultured"))), #"[77.35, 85.93]"
          Class = factor(Class, levels = asv.rel.taxo.total$Class)) %>%
   arrange(type)
 
@@ -108,7 +107,7 @@ sel.taxo <- subset(asv.rel.taxo.lvl, Class %in% asv.rel.taxo.total$Class) %>% as
 sel.taxo$type <- as.character(sel.taxo$type)
 sel.taxo$type[is.na(sel.taxo$type)] <- "Uncultured"
 sel.taxo <- sel.taxo %>% 
-  mutate(type = factor(type, levels = rev(c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "[77.35, 85.93]","Uncultured"))),
+  mutate(type = factor(type, levels = rev(c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "Uncultured"))), #"[77.35, 85.93]",
          Class = factor(Class, levels = asv.rel.taxo.total$Class)) %>%
   arrange(type)
 
@@ -161,7 +160,7 @@ sel.taxo <- inner_join(asv.rel.taxo.lvl, asv.rel.taxo.total, by = "Class") %>% a
 sel.taxo$type <- as.character(sel.taxo$type)
 sel.taxo$type[is.na(sel.taxo$type)] <- "Uncultured"
 sel.taxo <- sel.taxo %>% 
-  mutate(type = factor(type, levels = rev(c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "[77.35, 85.93]","Uncultured"))),
+  mutate(type = factor(type, levels = rev(c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "Uncultured"))), #"[77.35, 85.93]",
          Class = factor(Class, levels = asv.rel.taxo.total$Class)) %>%
   arrange(type)
 
@@ -188,7 +187,7 @@ ra.class <- ggplot(sel.taxo,
     legend.position = c(0.8, 0.8),
     legend.key.size = unit(0.3, "cm"),
     legend.text = element_text(size = 6),
-    legend.title = element_blank(), #element_text(size = 6),
+    legend.title = element_text(size = 6),
     legend.box.margin = margin(0,0,0,0, "cm"),
     legend.background = element_rect(fill = "transparent", color = "transparent"),
     plot.margin = margin(0.3,0.5,0,1.35, "cm")) +
@@ -200,7 +199,7 @@ ra.class <- ggplot(sel.taxo,
                      position = "left") +
   scale_fill_manual(values = color.levels) +
   labs(x = "", y = "Cumulative mean relative abundance [%]", 
-       fill = "Similarity") +
+       fill = "Similarity bins") +
   annotation_custom(ggplotGrob(ra.class.l1),
                     xmin = 3.12, xmax = 6,
                     ymin = 8, ymax = 60) +
@@ -232,6 +231,7 @@ tile.raclass <- ggplot(sel.taxo,
   geom_text(aes(label = ifelse(RA_per >= 0.1, paste0(round(RA_per, 1), "%"), paste0(""))),
             color = "black", size = 2) +
   coord_fixed() +
+  labs(x = "Class", y = "Similarity bins") +
   scale_x_discrete(expand = c(0, 0),
                    position = "top"); tile.raclass
 ```
@@ -255,7 +255,7 @@ sel.taxo <- subset(asv.rel.taxo.lvl, Genus %in% asv.rel.taxo.total$Genus) %>% as
 sel.taxo$type <- as.character(sel.taxo$type)
 sel.taxo$type[is.na(sel.taxo$type)] <- "Uncultured"
 sel.taxo <- sel.taxo %>% 
-  mutate(type = factor(type, levels = rev(c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "[77.35, 85.93]","Uncultured"))),
+  mutate(type = factor(type, levels = rev(c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "Uncultured"))), #"[77.35, 85.93]",
          Genus = factor(Genus, levels = asv.rel.taxo.total$Genus)) %>%
   arrange(type)
 
@@ -289,7 +289,7 @@ ra.genus.l <- ggplot(sel.taxo,
                      position = "left") +
   scale_fill_manual(values = color.levels) +
   labs(x = "", y = "Cumulative mean relative abundance [%]", 
-       fill = "Similarity") ; ra.genus.l
+       fill = "Similarity bins") ; ra.genus.l
 ```
 
 ### ALL
@@ -309,7 +309,7 @@ sel.taxo <- inner_join(asv.rel.taxo.lvl, asv.rel.taxo.total, by = "Genus") %>% a
 sel.taxo$type <- as.character(sel.taxo$type)
 sel.taxo$type[is.na(sel.taxo$type)] <- "Uncultured"
 sel.taxo <- sel.taxo %>% 
-  mutate(type = factor(type, levels = rev(c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "[77.35, 85.93]","Uncultured"))),
+  mutate(type = factor(type, levels = rev(c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "Uncultured"))), #"[77.35, 85.93]",
          Genus = factor(Genus, levels = asv.rel.taxo.total$Genus)) %>%
   arrange(type)
 
@@ -342,7 +342,7 @@ ra.genus <- ggplot(sel.taxo,
                      position = "left") +
   scale_fill_manual(values = color.levels) +
   labs(x = "", y = "Cumulative mean relative abundance [%]", 
-       fill = "Similarity") +
+       fill = "Similarity bins") +
   annotation_custom(ggplotGrob(ra.genus.l),
                     xmin = 13.5, xmax = 25.5,
                     ymin = 3, ymax = 25); ra.genus
@@ -371,6 +371,7 @@ tile.ragenus <- ggplot(sel.taxo,
   geom_text(aes(label = ifelse(RA_per >= 0.1, paste0(round(RA_per, 1), "%"), paste0(""))),
             color = "black", size = 2) +
   coord_fixed() +
+  labs(x = "Genus", y = "Similarity bins") +
   scale_x_discrete(expand = c(0, 0),
                    position = "top"); tile.ragenus
 
@@ -399,7 +400,7 @@ sel.taxo$type <- as.character(sel.taxo$type)
 sel.taxo$type[is.na(sel.taxo$type)] <- "Uncultured"
 sel.taxo <- sel.taxo %>% 
   mutate(Class = factor(Class, levels = asv.n.taxo.total$Class),
-         type = factor(type, levels = rev(c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "[77.35, 85.93]","Uncultured")))) %>%
+         type = factor(type, levels = rev(c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "Uncultured")))) %>% #"[77.35, 85.93]",
   arrange(type)
 
 breaks = c(0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
@@ -431,7 +432,7 @@ n.class <- ggplot(sel.taxo,
                      position = "left") +
   scale_fill_manual(values = color.levels) +
   labs(x = "", y = "Cumulative ASVs [%]", 
-       fill = "Similarity"); n.class
+       fill = "Similarity bins"); n.class
 
 
 # Tile plot
@@ -457,6 +458,7 @@ tile.nclass <- ggplot(sel.taxo,
   scale_fill_gradient(low = "white", high = "#2abfa4") +
   geom_text(aes(label = ifelse(per >= 0.1, paste0(round(per, 1), "%"), paste0(""))), color = "black", size = 2) +
   coord_fixed() +
+  labs(x = "Class", y = "Similarity bins") +
   scale_x_discrete(expand = c(0, 0),
                    position = "top"); tile.nclass
 ```
@@ -482,7 +484,7 @@ sel.taxo$type <- as.character(sel.taxo$type)
 sel.taxo$type[is.na(sel.taxo$type)] <- "Uncultured"
 sel.taxo <- sel.taxo %>% 
   mutate(Genus = factor(Genus, levels = asv.n.taxo.total$Genus),
-         type = factor(type, levels = rev(c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "[77.35, 85.93]","Uncultured")))) %>%
+         type = factor(type, levels = rev(c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "Uncultured")))) %>% #"[77.35, 85.93]",
   arrange(type)
 
 n.genus <- ggplot(sel.taxo,
@@ -512,7 +514,7 @@ n.genus <- ggplot(sel.taxo,
                      position = "left") +
   scale_fill_manual(values = color.levels) +
   labs(x = "", y = "Cumulative ASVs [%]", 
-       fill = "Similarity"); n.genus
+       fill = "Similarity bins"); n.genus
 
 # Tile plot
 pv.sel.taxo <- sel.taxo %>% pivot_wider(-c(n, Total_n), names_from = type, values_from = per)
@@ -537,6 +539,7 @@ tile.ngenus <- ggplot(sel.taxo,
   scale_fill_gradient(low = "white", high = "#2abfa4") +
   geom_text(aes(label = ifelse(per >= 0.1, paste0(round(per, 1), "%"), paste0(""))), color = "black", size = 2) +
   coord_fixed() +
+  labs(x = "Genus", y = "Similarity bins") +
   scale_x_discrete(expand = c(0, 0),
                    position = "top"); tile.ngenus
 ```

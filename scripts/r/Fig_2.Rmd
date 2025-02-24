@@ -31,7 +31,7 @@ df <- c100_strat %>%
 df$type <- as.character(df$type)
 df[is.na(df$id), "type"] <- "Uncultured"
 
-df1 <- df %>% mutate(type = factor(type, levels = c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "[77.35, 85.93]", "Uncultured")))
+df1 <- df %>% mutate(type = factor(type, levels = c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "Uncultured"))) # "[77.35, 85.93]"
 
 # %ASVs
 asv.strat <- df1 %>%
@@ -55,10 +55,10 @@ mer.strat <- merge(asv.strat, rel.strat, by = c("type")) %>%
 
 # Plot parameters
 sorting.tax <- ordered(mer.strat$type,
-                       levels = c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "[77.35, 85.93]", "Uncultured"))
+                       levels = c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]",                                          "(87.95, 90.1]", "(85.93, 87.95]", "Uncultured")) # "[77.35, 85.93]"
 sorting.idx <- order(sorting.tax, decreasing = T, na.last = NA)
 
-color.levels <- c("#dbdddd","#c7b699","#b89b74","#d9af63","#fdbf6f","#fdac4f","#ed8f47","#BF592A")  
+color.levels <- c("#dbdddd","#b89b74","#d9af63","#fdbf6f","#fdac4f","#ed8f47","#BF592A")# "#c7b699",
 ```
 
 ### Plot %ASV
@@ -149,15 +149,45 @@ Fig2A <- cowplot::plot_grid(asv.matches, ra.matches,
 ## Prep
 ```{r}
 spe <- c100_strat  %>% filter(type == "(99, 100]") # 335 ASVs
-spe.tax <- merge(spe, taxo.amp, by = "q_amplicon"); spe.tax 
+gen <- c100_strat  %>% filter(type == "(96.55, 99]") # 337 ASVs
+fam <- c100_strat  %>% filter(type == "(92.9, 96.55]") # 501 ASVs
+ord <- c100_strat  %>% filter(type == "(90.1, 92.9]") # 495 ASVs
+cla <- c100_strat  %>% filter(type == "(87.95, 90.1]") # 309 ASVs
+phy <- c100_strat  %>% filter(type == "(85.93, 87.95]") # 162 ASVs
+
+spe.tax <- merge(spe, taxo.amp, by = "q_amplicon"); spe.tax
+gen.tax <- merge(gen, taxo.amp, by = "q_amplicon"); gen.tax 
+fam.tax <- merge(fam, taxo.amp, by = "q_amplicon"); fam.tax 
+ord.tax <- merge(ord, taxo.amp, by = "q_amplicon"); ord.tax 
+cla.tax <- merge(cla, taxo.amp, by = "q_amplicon"); cla.tax 
+phy.tax <- merge(phy, taxo.amp, by = "q_amplicon"); phy.tax 
 
 tasv <- taxo.amp %>% unique() %>% summarise(count = n()) #5297 ASVs
 spe.nasv <- spe.tax %>% select(q_amplicon) %>% unique() %>% summarise(count = n()) #335 ASVs
 
 # % of Genera
-tgen <- taxo.amp %>% select(Genus) %>% unique() %>% summarise(count = n()) #813 Genera
-spe.ngen <- spe.tax %>% select(Genus) %>% unique() %>% summarise(count = n()) #37 Genera
-data.g <- rbind(spe.ngen, tgen-spe.ngen) %>% mutate(Type = c("Cultured", "Uncultured"))
+tgen <- taxo.amp %>% select(Genus) %>% unique() #813 Genera
+spe.ngen <- spe.tax %>% select(Genus) %>% unique() #37 Genera
+gen.ngen <- gen.tax %>% select(Genus) %>% unique() #69 Genera
+fam.ngen <- fam.tax %>% select(Genus) %>% unique() #126 Genera
+ord.ngen <- ord.tax %>% select(Genus) %>% unique() #172 Genera
+cla.ngen <- cla.tax %>% select(Genus) %>% unique() #126 Genera
+phy.ngen <- phy.tax %>% select(Genus) %>% unique() #69 Genera
+
+tgen.c <- taxo.amp %>% select(Genus) %>% unique() %>% summarise(count = n()) #813 Genera
+spe.ngen.c <- spe.tax %>% select(Genus) %>% unique() %>% summarise(count = n()) #37 Genera
+# gen.ngen.c <- setdiff(gen.ngen$Genus, spe.ngen$Genus) %>% as.data.frame() %>% summarise(count = n()) #41 new Genera
+# gen.nsg <- rbind(spe.ngen, gen.ngen) %>% unique() #78
+# fam.ngen.c <- setdiff(fam.ngen$Genus, gen.nsg$Genus) %>% as.data.frame() %>% summarise(count = n()) #83 new Genera
+# gen.nsgf <- rbind(gen.nsg, fam.ngen) %>% unique() #161
+# ord.ngen.c <- setdiff(ord.ngen$Genus, gen.nsgf$Genus) %>% as.data.frame() %>% summarise(count = n()) #112 new Genera
+# gen.nsgfo <- rbind(gen.nsgf, ord.ngen) %>% unique() #273
+# cla.ngen.c <- setdiff(cla.ngen$Genus, gen.nsgfo$Genus) %>% as.data.frame() %>% summarise(count = n()) #54 new Genera
+# gen.nsgfoc <- rbind(gen.nsgfo, cla.ngen) %>% unique() #327
+# phy.ngen.c <- setdiff(phy.ngen$Genus, gen.nsgfoc$Genus) %>% as.data.frame() %>% summarise(count = n()) #20 new Genera
+# gen.nsgfocp <- rbind(gen.nsgfoc, phy.ngen) %>% unique() #347
+
+data.g <- rbind(spe.ngen.c, tgen.c-spe.ngen.c) %>% mutate(Type = c("Cultured", "Uncultured"))
 data.g$fraction <- data.g$count / sum(data.g$count)
 data.g$ymax <- cumsum(data.g$fraction)
 data.g$ymin <- c(0, head(data.g$ymax, n = -1))
@@ -368,31 +398,29 @@ df <- c100_strat %>%
 df$type <- as.character(df$type)
 df[is.na(df$id), "type"] <- "Uncultured"
 
-color.levels <- c("#dbdddd","#c7b699","#b89b74","#d9af63","#fdbf6f","#fdac4f","#ed8f47","#BF592A")  
-levels <- rev(c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]", "(87.95, 90.1]", "(85.93, 87.95]", "[77.35, 85.93]", "Uncultured"))
+color.levels <- c("#dbdddd","#b89b74","#d9af63","#fdbf6f","#fdac4f","#ed8f47","#BF592A") # "#c7b699", 
+levels <- rev(c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]", "(87.95, 90.1]", "(85.93, 87.95]", "Uncultured")) #"[77.35, 85.93]"
 ```
 
 ### Stats
 ```{r}
 # Is the RA of cultured taxa significantly different from the RA of the uncultured?
-test <- df %>% filter(type == "(99, 100]" | type == "[77.35, 85.93]")
+test <- df %>% filter(type == "(85.93, 87.95]" | type == "Uncultured")
 shapiro.test(test$RA) # < 2.2e-16
 mwu <- wilcox.test(RA ~ type, test); mwu 
 
 # species vs uncult < 2.2e-16 SIG
 # genus vc uncult < 2.2e-16 SIG
-# family vc uncult < 0.0004246 SIG
-# order vc uncult < 0.0829 NS
-# class vc uncult < 0.2229 NS
-# phylum vc uncult < 0.0015 SIG
-# other vc uncult < 0.1985 NS
+# family vc uncult < 0.00019 SIG
+# order vc uncult < 0.05558 NS
+# class vc uncult < 0.1724 NS
+# phylum vc uncult < 0.001163 SIG
 
 # species vs genus 3.279e-05 SIG
 # species vs family < 2.2e-16 SIG
 # species vs order < 2.2e-16 SIG
 # species vs class < 2.2e-16 SIG
 # species vs phylum 8.752e-12 SIG
-# species vs other < 2.2e-16 SIG
 ```
 
 ### Inset plot 
@@ -438,7 +466,6 @@ Fig2C <- ggplot(df, aes(x = RA, fill = fct_relevel(type, levels))) +
   scale_y_continuous(name = "Number of ASVs",
                      expand = c(0, 0),
                      breaks = breaks) +
-  labs(x = "Mean relative abundance [%]") +
   theme_classic() +
   theme(
     axis.text = element_text(size = 6, 
@@ -449,7 +476,7 @@ Fig2C <- ggplot(df, aes(x = RA, fill = fct_relevel(type, levels))) +
     legend.box = "horizontal",
     legend.key.size = unit(0.5, "cm"),
     legend.text = element_text(size = 8),
-    legend.title = element_blank(),
+    legend.title = element_text(size = 10),
     plot.margin = margin(0,0,0,0, "cm")) +
   scale_color_manual(values = c("Community" = "#808588")) +
   scale_fill_manual(values = c("(99, 100]" = "#BF592A",
@@ -458,8 +485,9 @@ Fig2C <- ggplot(df, aes(x = RA, fill = fct_relevel(type, levels))) +
                                "(90.1, 92.9]" = "#fdbf6f",
                                "(87.95, 90.1]" = "#d9af63",
                                "(85.93, 87.95]" = "#b89b74",
-                               "[77.35, 85.93]" = "#c7b699",
+                               # "[77.35, 85.93]" = "#c7b699",
                                "Uncultured" = "#dbdddd")) +
+  labs(x = "Mean relative abundance [%]", fill = "Similarity bins", color = "") +
   annotation_custom(ggplotGrob(Fig2Cins),
                     xmin = -2.25,
                     xmax = 1.5,
@@ -511,7 +539,9 @@ Fig2_final <- cowplot::plot_grid(Fig2A, Fig2,
 # SI
 ```{r}
 total <- c("#808588")  
-df2 <- df %>% filter(type != "Uncultured") %>% mutate(cult = "true")
+df2 <- df %>% 
+  # filter(type != "Uncultured") %>% 
+  mutate(cult = "true")
 
 medasgn <- quantile(df2$id); medasgn
 

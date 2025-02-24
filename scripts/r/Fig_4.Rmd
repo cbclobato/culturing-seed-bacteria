@@ -195,7 +195,7 @@ legend5 <- cowplot::get_legend(
         legend.spacing = unit(0, "lines"),
         legend.background = element_rect(fill = "transparent", color = "transparent"))); legend5
 
-Fig4A <- cowplot::plot_grid(Nw, ncol = 1, labels = c("A"), label_size = 12, vjust = 3, hjust = -20) + 
+Fig4A <- cowplot::plot_grid(Nw, ncol = 1, labels = c("A"), label_size = 12, vjust = 3, hjust = -18) + 
   theme(plot.margin = margin(0.25, -5, 5, -5, "cm")) +
   annotation_custom(legend1, # Node color
                     xmin = -0.03, xmax = 0.75,

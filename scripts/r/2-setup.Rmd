@@ -307,7 +307,8 @@ check_amp <- c100 %>% select(q_amplicon) %>% unique() #2513 ASVs
 
 c100_strat <- c100 %>% 
   select(q_amplicon, id) %>% 
-  mutate(type = ifelse(id <= 85.93, "[77.35, 85.93]", 
+  mutate(type = 
+           ifelse(id <= 85.93, "Uncultured", # "[77.35, 85.93]"
                        ifelse(id <= 87.95, "(85.93, 87.95]",
                               ifelse(id <= 90.1, "(87.95, 90.1]",
                                      ifelse(id <= 92.9, "(90.1, 92.9]",
@@ -315,13 +316,15 @@ c100_strat <- c100 %>%
                                                    ifelse(id <= 99, "(96.55, 99]",
                                                          "(99, 100]"))))))) %>%
   mutate(type = factor(type, levels = c("(99, 100]", "(96.55, 99]", "(92.9, 96.55]", "(90.1, 92.9]", 
-                                        "(87.95, 90.1]", "(85.93, 87.95]", "[77.35, 85.93]"))) %>%
+                                        "(87.95, 90.1]", "(85.93, 87.95]", "Uncultured"))) %>% # "[77.35, 85.93]"
   arrange(type) %>%
   distinct(q_amplicon, .keep_all = T) # 2513
 
 check_unique <- c100_strat %>% select(q_amplicon) %>% unique() # 2513
 check_type <- c100_strat  %>% group_by(type) %>% summarize(n = n_distinct(q_amplicon)); check_type
 sum(check_type$n) # 2513
+
+x <- setdiff(c100_strat$q_amplicon, rownames(otu_table(bh))) %>% as.data.frame()
 
 # save(c100, file = "outputs/r/2_setup/c100.RData")
 # save(c100_strat, file = "outputs/r/2_setup/c100-strat.RData")
