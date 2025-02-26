@@ -326,6 +326,8 @@ sum(check_type$n) # 2513
 
 x <- setdiff(c100_strat$q_amplicon, rownames(otu_table(bh))) %>% as.data.frame()
 
+c100_strat86 <- subset(c100_strat, c100_strat$type != "Uncultured")
+
 # save(c100, file = "outputs/r/2_setup/c100.RData")
-# save(c100_strat, file = "outputs/r/2_setup/c100-strat.RData")
+# save(c100_strat86, file = "outputs/r/2_setup/c100-strat86.RData")
 ```

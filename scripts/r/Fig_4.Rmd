@@ -16,7 +16,7 @@ library(igraph)
 ```{r}
 load("outputs/r/2_setup/bh-amp.RData") # bh
 load("outputs/r/2_setup/taxo-amp.RData") # taxo.amp
-load("outputs/r/2_setup/c100-strat.RData") # c100_strat
+load("outputs/r/2_setup/c100-strat86.RData") # c100_strat86
 ```
 
 # Flashweave & Cytoscape Prep
@@ -48,7 +48,7 @@ nodes <- read.csv(file = "outputs/julia/nodes-hetero-n20-a05-mk3.csv") %>%
   select(name, Class, Class_mod, RA, Degree)
 
 # Get assignment table and change names according to node
-pv.pb.sp <- c100_strat %>%
+pv.pb.sp <- c100_strat86 %>%
   select(q_amplicon, type) %>% 
   filter(type == ">99") %>%
   select(q_amplicon)
@@ -249,6 +249,10 @@ cult <- node.data %>% filter(recovered2 == "true")
   
 uncult <- node.data %>% filter(recovered2 == "false")
 
+# To test abundance as a co factor for being peripheral
+hra <- node.data %>% filter(RA >= 0.1) # 10/29 uncultured (34%)
+lra <- node.data %>% filter(RA < 0.1) # 64/74 uncultured (86)
+
 var <- colnames(node.data); var
 ```
 
@@ -284,12 +288,12 @@ mwu_TCo <- wilcox.test(TopologicalCoefficient ~ recovered2, node.data); mwu_TCo 
 ***Higher values indicate that a node is "close" to others and can easily reach them.***
 ```{r}
 close <- ggplot() +
-  geom_density(data = uncult, 
+  geom_density(data = uncult, #hra
                aes(x = ClosenessCentrality, y = stat(count / sum(count)),
                color = recovered2), 
                alpha = 1,
                size = 1) +
-  geom_density(data = cult, 
+  geom_density(data = cult, #lra
                aes(x = ClosenessCentrality, y = stat(count / sum(count)),
                color = recovered2), 
                alpha = 1,

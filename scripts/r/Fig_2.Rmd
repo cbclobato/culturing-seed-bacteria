@@ -15,7 +15,7 @@ library(tidyverse)
 ```{r}
 load("outputs/r/2_setup/bh-amp.RData") # bh, 5297 taxa and 451 samples
 load("outputs/r/2_setup/taxo-amp.RData") # taxo.amp
-load("outputs/r/2_setup/c100-strat.RData") # c100_strat
+load("outputs/r/2_setup/c100-strat86.RData") # c100_strat86
 ```
 
 # Plot A: Summary ASV & RA%
@@ -26,7 +26,7 @@ asv.rel <- apply(vegan::decostand(x = asv, method = "total", MARGIN = 2), 1, mea
 asv.rel <- as.data.frame(asv.rel*100) %>% rownames_to_column()
 colnames(asv.rel) <- c("q_amplicon", "RA")
 
-df <- c100_strat %>%
+df <- c100_strat86 %>%
   merge(x = asv.rel, y = .,  by = "q_amplicon", all.x = T)
 df$type <- as.character(df$type)
 df[is.na(df$id), "type"] <- "Uncultured"
@@ -148,12 +148,12 @@ Fig2A <- cowplot::plot_grid(asv.matches, ra.matches,
 # Plot B: Summary Tax
 ## Prep
 ```{r}
-spe <- c100_strat  %>% filter(type == "(99, 100]") # 335 ASVs
-gen <- c100_strat  %>% filter(type == "(96.55, 99]") # 337 ASVs
-fam <- c100_strat  %>% filter(type == "(92.9, 96.55]") # 501 ASVs
-ord <- c100_strat  %>% filter(type == "(90.1, 92.9]") # 495 ASVs
-cla <- c100_strat  %>% filter(type == "(87.95, 90.1]") # 309 ASVs
-phy <- c100_strat  %>% filter(type == "(85.93, 87.95]") # 162 ASVs
+spe <- c100_strat86  %>% filter(type == "(99, 100]") # 335 ASVs
+gen <- c100_strat86  %>% filter(type == "(96.55, 99]") # 337 ASVs
+fam <- c100_strat86  %>% filter(type == "(92.9, 96.55]") # 501 ASVs
+ord <- c100_strat86  %>% filter(type == "(90.1, 92.9]") # 495 ASVs
+cla <- c100_strat86  %>% filter(type == "(87.95, 90.1]") # 309 ASVs
+phy <- c100_strat86  %>% filter(type == "(85.93, 87.95]") # 162 ASVs
 
 spe.tax <- merge(spe, taxo.amp, by = "q_amplicon"); spe.tax
 gen.tax <- merge(gen, taxo.amp, by = "q_amplicon"); gen.tax 
@@ -393,7 +393,7 @@ colnames(asv.rel) <- c("q_amplicon", "RA")
 pv.amp <- asv.rel %>% mutate(type = "Community") %>% select(type, RA)
 
 # Diversity/RA Pacbio
-df <- c100_strat %>%
+df <- c100_strat86 %>%
   merge(x = asv.rel, y = .,  by = "q_amplicon", all.x = T)
 df$type <- as.character(df$type)
 df[is.na(df$id), "type"] <- "Uncultured"

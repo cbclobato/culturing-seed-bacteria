@@ -15,7 +15,7 @@ library(tidyverse)
 ```{r, echo = F}
 load("outputs/r/2_setup/bh-amp.RData") # 5297 taxa and 451 samples
 load("outputs/r/2_setup/taxo-amp.RData") # taxo.amp
-load("outputs/r/2_setup/c100-strat.RData") # c100_strat
+load("outputs/r/2_setup/c100-strat86.RData") # c100_strat86
 ```
 
 ## Prep
@@ -44,7 +44,7 @@ asv.rel.taxo.total <- asv.rel.taxo %>%
   arrange(-tRA)
 asv.rel.taxo.total$Class <- factor(asv.rel.taxo.total$Class, levels = asv.rel.taxo.total$Class)
 
-asv.rel.taxo.lvl <- left_join(asv.rel.taxo, c100_strat, by = c("q_amplicon")) %>%
+asv.rel.taxo.lvl <- left_join(asv.rel.taxo, c100_strat86, by = c("q_amplicon")) %>%
   group_by(Class, type) %>%
   summarise(tRA = sum(RA))
 
@@ -99,7 +99,7 @@ asv.rel.taxo.total <- asv.rel.taxo %>%
   arrange(-tRA)
 asv.rel.taxo.total$Class <- factor(asv.rel.taxo.total$Class, levels = asv.rel.taxo.total$Class)
 
-asv.rel.taxo.lvl <- left_join(asv.rel.taxo, c100_strat, by = c("q_amplicon")) %>%
+asv.rel.taxo.lvl <- left_join(asv.rel.taxo, c100_strat86, by = c("q_amplicon")) %>%
   group_by(Class, type) %>%
   summarise(tRA = sum(RA))
 
@@ -152,7 +152,7 @@ asv.rel.taxo.total <- asv.rel.taxo %>%
   arrange(-tRA)
 asv.rel.taxo.total$Class <- factor(asv.rel.taxo.total$Class, levels = asv.rel.taxo.total$Class)
 
-asv.rel.taxo.lvl <- left_join(asv.rel.taxo, c100_strat, by = c("q_amplicon")) %>%
+asv.rel.taxo.lvl <- left_join(asv.rel.taxo, c100_strat86, by = c("q_amplicon")) %>%
   group_by(Class, type) %>%
   summarise(RA = sum(RA))
 
@@ -223,7 +223,9 @@ tile.raclass <- ggplot(sel.taxo,
                                vjust = 1, 
                                hjust = 1),
     legend.position = "none",
-    axis.title = element_blank(),
+    axis.title = element_text(size = 6,
+                              vjust = 1, 
+                              hjust = 1),
     axis.ticks = element_blank(),
     axis.line = element_blank(),
     plot.margin = margin(-3,0.75,-3,0, "cm")) +
@@ -247,7 +249,7 @@ asv.rel.taxo.total <- asv.rel.taxo %>%
   arrange(-tRA)
 asv.rel.taxo.total$Genus <- factor(asv.rel.taxo.total$Genus, levels = asv.rel.taxo.total$Genus)
 
-asv.rel.taxo.lvl <- left_join(asv.rel.taxo, c100_strat, by = c("q_amplicon")) %>%
+asv.rel.taxo.lvl <- left_join(asv.rel.taxo, c100_strat86, by = c("q_amplicon")) %>%
   group_by(Genus, type) %>%
   summarise(tRA = sum(RA))
 
@@ -301,7 +303,7 @@ asv.rel.taxo.total <- asv.rel.taxo %>%
   arrange(-tRA)
 asv.rel.taxo.total$Genus <- factor(asv.rel.taxo.total$Genus, levels = asv.rel.taxo.total$Genus)
 
-asv.rel.taxo.lvl <- left_join(asv.rel.taxo, c100_strat, by = c("q_amplicon")) %>%
+asv.rel.taxo.lvl <- left_join(asv.rel.taxo, c100_strat86, by = c("q_amplicon")) %>%
   group_by(Genus, type) %>%
   summarise(RA = sum(RA))
 
@@ -363,7 +365,9 @@ tile.ragenus <- ggplot(sel.taxo,
                                vjust = 1, 
                                hjust = 1),
     legend.position = "none",
-    axis.title = element_blank(),
+    axis.title = element_text(size = 6, 
+                               vjust = 1, 
+                               hjust = 1),
     axis.ticks = element_blank(),
     axis.line = element_blank(),
     plot.margin = margin(-3,0.75,-3,0, "cm")) +
@@ -388,7 +392,7 @@ asv.n.taxo.total <- asv.rel.taxo %>%
   arrange(-Total_n)
 asv.n.taxo.total$Class <- factor(asv.n.taxo.total$Class, levels = asv.n.taxo.total$Class)
 
-asv.n.taxo.lvl <- left_join(asv.rel.taxo, c100_strat, by = c("q_amplicon")) %>%
+asv.n.taxo.lvl <- left_join(asv.rel.taxo, c100_strat86, by = c("q_amplicon")) %>%
   group_by(Class, type) %>%
   summarise(n = n()) %>%
   group_by(Class) %>%
@@ -451,7 +455,9 @@ tile.nclass <- ggplot(sel.taxo,
                                vjust = 1, 
                                hjust = 1),
     legend.position = "none",
-    axis.title = element_blank(),
+    axis.title = element_text(size = 6, 
+                               vjust = 1, 
+                               hjust = 1),
     axis.ticks = element_blank(),
     axis.line = element_blank(),
     plot.margin = margin(-3,1.2,-3,0, "cm")) +
@@ -472,7 +478,7 @@ asv.n.taxo.total <- asv.rel.taxo %>%
   arrange(-Total_n)
 asv.n.taxo.total$Genus <- factor(asv.n.taxo.total$Genus, levels = asv.n.taxo.total$Genus)
 
-asv.n.taxo.lvl <- left_join(asv.rel.taxo, c100_strat, by = c("q_amplicon")) %>%
+asv.n.taxo.lvl <- left_join(asv.rel.taxo, c100_strat86, by = c("q_amplicon")) %>%
   group_by(Genus, type) %>%
   summarise(n = n()) %>%
   group_by(Genus) %>%
@@ -532,7 +538,9 @@ tile.ngenus <- ggplot(sel.taxo,
                                vjust = 1, 
                                hjust = 1),
     legend.position = "none",
-    axis.title = element_blank(),
+    axis.title = element_text(size = 6, 
+                               vjust = 1, 
+                               hjust = 1),
     axis.ticks = element_blank(),
     axis.line = element_blank(),
     plot.margin = margin(-3,1.2,-3,0, "cm")) +
@@ -602,4 +610,5 @@ FigS5 <- cowplot::plot_grid(tile.ragenus, tile.ngenus,
 #   scale = 1,
 #   bg = "white",
 #   dpi = 600)
+
 ```
