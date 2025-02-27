@@ -575,25 +575,7 @@ Fig3 <- cowplot::plot_grid(ra.class, n.class,
 
 # SI
 ```{r}
-FigS4 <- cowplot::plot_grid(tile.raclass, tile.nclass,
-                           labels = c("A", "B"),
-                           ncol = 1,
-                           label_size = 12,
-                           hjust = -2,
-                           greedy = T) +
-  theme(plot.margin = margin(0,1.25,0,0, "cm")); FigS4
-
-# cowplot::save_plot(
-#   plot = FigS4,
-#   "outputs/r/SI/figS4.png",
-#   base_width = 20,
-#   base_height = 15,
-#   units = "cm",
-#   scale = 1,
-#   bg = "white",
-#   dpi = 600)
-
-FigS5 <- cowplot::plot_grid(tile.ragenus, tile.ngenus, 
+FigS5 <- cowplot::plot_grid(tile.raclass, tile.nclass,
                            labels = c("A", "B"),
                            ncol = 1,
                            label_size = 12,
@@ -604,6 +586,24 @@ FigS5 <- cowplot::plot_grid(tile.ragenus, tile.ngenus,
 # cowplot::save_plot(
 #   plot = FigS5,
 #   "outputs/r/SI/figS5.png",
+#   base_width = 20,
+#   base_height = 15,
+#   units = "cm",
+#   scale = 1,
+#   bg = "white",
+#   dpi = 600)
+
+FigS6 <- cowplot::plot_grid(tile.ragenus, tile.ngenus, 
+                           labels = c("A", "B"),
+                           ncol = 1,
+                           label_size = 12,
+                           hjust = -2,
+                           greedy = T) +
+  theme(plot.margin = margin(0,1.25,0,0, "cm")); FigS6
+
+# cowplot::save_plot(
+#   plot = FigS6,
+#   "outputs/r/SI/figS6.png",
 #   base_width = 20,
 #   base_height = 15,
 #   units = "cm",

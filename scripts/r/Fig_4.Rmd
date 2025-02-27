@@ -568,16 +568,16 @@ Fig4_final <- cowplot::plot_grid(Fig4A) +
 
 # SI
 ```{r}
-FigS6 <- cowplot::plot_grid(close, aspl,
+FigS7 <- cowplot::plot_grid(close, aspl,
                             neig, rad,
                             labels = c("A", "B", "C", "D"),
                             label_size = 12,
                             # vjust = 2,
                             ncol = 2,
-                            align = "hv"); FigS6
+                            align = "hv"); FigS7
 
-# cowplot::save_plot(plot = FigS6,
-#   "outputs/r/SI/figS6.png",
+# cowplot::save_plot(plot = FigS7,
+#   "outputs/r/SI/figS7.png",
 #   base_width = 27,
 #   base_height = 18,
 #   units = "cm",

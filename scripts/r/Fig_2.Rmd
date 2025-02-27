@@ -545,7 +545,7 @@ df2 <- df %>%
 
 medasgn <- quantile(df2$id); medasgn
 
-FigS3 <- ggplot(df2, aes(x = id, y = cult, color = cult)) +
+FigS4 <- ggplot(df2, aes(x = id, y = cult, color = cult)) +
   geom_boxplot(alpha = 1,
                color = "black",
                size = 1) +
@@ -564,10 +564,10 @@ FigS3 <- ggplot(df2, aes(x = id, y = cult, color = cult)) +
   scale_x_continuous(expand = c(0, 0)) +
   scale_color_manual(values = total) +
   labs(x = "Similarity to cultured ASVs [%]",
-       y = ""); FigS3
+       y = ""); FigS4
 
 # ggsave(
-#   "outputs/r/SI/figS3.png",
+#   "outputs/r/SI/figS4.png",
 #   width = 15,
 #   height = 15,
 #   units = "cm",

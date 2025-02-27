@@ -216,15 +216,17 @@ final.reads <- sum(metadata_bh_pb$total_reads)
 load("outputs/r/2_setup/bh-pb.RData"); bh_pb # 419 taxa and 132 samples
 load("outputs/r/2_setup/bh-amp.RData"); bh # 5297 taxa and 451 samples
 
+# Check samples per Genotype
+sg <- as.data.frame(bh_pb@sam_data[["genotype"]]) #%>% summarise(count = n())
+names(sg)[1] ="Genotype"
+n_sg <- as.data.frame(table(sg$Genotype))
+
 # Check sample overlaps
 Community <- as.data.frame(unique(bh@sam_data[["genotype"]]))
 colnames(Community) <- c("Gen") 
 
 Culturing <- as.data.frame(unique(bh_pb@sam_data[["genotype"]]))
 colnames(Culturing) <- c("Gen") 
-
-test1 <- Community %>% mutate(testing = Gen %in% Culturing$Gen)
-test2 <- Culturing %>% mutate(testing = Gen %in% Community$Gen)
 
 sets <- list(Community = sort(as.character(unique(bh@sam_data[["genotype"]]))),
              Culture =  sort(as.character(unique(bh_pb@sam_data[["genotype"]]))))

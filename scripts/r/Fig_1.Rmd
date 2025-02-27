@@ -116,7 +116,7 @@ Fig1l <- cowplot::plot_grid(Fig1, ncol = 1) +
 
 # save(Fig1l, file = "outputs/r/Fig_1/pb_tree_lg.RData")
 
-load("/home/jmachadofreitas/Projects/culturing-seed-bacteria/outputs/r/Fig_1/pb_tree_lg.RData") #Fig1l
+load("outputs/r/Fig_1/pb_tree_lg.RData") #Fig1l
 
 # Add Genera
 pos.x <- c(0.041, 0.038, 0.047, 0.053, #1
@@ -152,7 +152,7 @@ label <- c("Pedobacter","Sphingobacterium","Aeromicrobium","Arthrobacter", #1
            "Pantoea","Enterobacter","Klebsiella","Enterobacter", #9
            "Escherichia-Shingella","Pantoea") #10
 
-Fig1lg <- cowplot::plot_grid(Fig1l, 
+FigS3 <- cowplot::plot_grid(Fig1l, 
                              label_size = 12,
                              greedy = T,
                              nrow = 1) + 
@@ -161,15 +161,104 @@ Fig1lg <- cowplot::plot_grid(Fig1l,
             label = label,
             fontface = "italic",
             size = 2) + 
-  theme(plot.margin = margin(0, -3, 0.25, -3, "cm")) #; Fig1lg
+  theme(plot.margin = margin(0, -3, 0.25, -3, "cm")) #; FigS3
 
 cowplot::save_plot(
-  plot = Fig1lg,
-  "/home/jmachadofreitas/Projects/culturing-seed-bacteria/outputs/r/Fig_1/fig1-final2.png",
+  plot = FigS3,
+  "outputs/r/Fig_1/figS3.png",
   base_width = 27,
   base_height = 18,
   units = "cm",
   bg =  "white",
+  scale = 1,
+  dpi = 600)
+```
+
+# SI
+
+## Prep
+```{r}
+check <- bh_pb@sam_data[["genotype"]];check # n = 54
+
+counts.merged <- 
+  merge_samples(bh_pb, group = "genotype", fun = mean) %>%
+  otu_table() %>% 
+  t() %>%
+  as.data.frame()
+
+# Get taxonomic information 
+names(taxo.pb)[1] ="ASV"
+taxo <- taxo.pb %>% select(ASV, Genus, Class)
+
+counts.taxa <- counts.merged %>% 
+  rownames_to_column(var = "ASV") %>%
+  merge(taxo, by = "ASV")
+
+counts.taxa.long <- counts.taxa %>%
+  pivot_longer(cols = c(-ASV, -Genus, -Class),
+               names_to = c("Genotype"), 
+               values_to = "counts") %>%
+  mutate(has.counts = counts > 0) %>%
+  select(-counts)
+```
+
+## Plot prevalence
+```{r}
+# Nº Genotypes/Genus or Class
+prev <- counts.taxa.long %>%
+  filter(has.counts) %>%
+  group_by(Genus, Class) %>%
+  summarise(n.genotypes = n_distinct(Genotype)) %>%
+  ungroup() %>%
+  arrange(-n.genotypes)
+prev$Genus <- factor(prev$Genus,
+                     ordered = T)
+
+Class <- c("Actinobacteria", "Alphaproteobacteria", "Bacilli", "Bacteroidia", "Gammaproteobacteria")
+color.class <- rev(c("#98cc90","#563C5C","#5197c5","#d8cd99","#8A4D30"))
+
+FigS3 <- ggplot() +
+  geom_bar(
+    data = prev, 
+    stat = "identity",
+    aes(x = reorder(Genus, -n.genotypes),
+        y = n.genotypes,
+        fill = Class),
+    alpha = 1) + 
+  scale_y_continuous(expand = expansion(mult = c(0.01, 0.01))) +
+  theme_classic() +
+  theme(
+    panel.grid.major.x = element_blank(),
+    axis.text.x = element_text(angle = 45, 
+                               hjust = 1,
+                               vjust = 1,
+                               size = 6),
+    axis.text.y = element_text(size = 6),
+    axis.title = element_text(size = 8),
+    legend.text = element_text(size = 6),
+    legend.title = element_text(size = 8),
+    legend.key.size = unit(0.3, "cm"),
+    legend.key.spacing.x = unit(1, "lines"),
+    legend.box.margin = margin(0,0,0,0, "cm"),
+    legend.box.spacing = unit(0, "lines"),
+    legend.spacing = unit(0, "lines"),
+    legend.position = c(0.7, 0.7)) +
+  geom_text(data = prev,
+            aes(x = reorder(Genus, -n.genotypes),
+                y = n.genotypes + 0.5,
+                label = n.genotypes),
+                fontface = "bold",
+                colour = "black",
+                size = 2) +
+  labs(x = "Genus", y = "Nº genotypes", fill = "Class") +
+  scale_fill_manual(values = color.class); FigS3
+
+ggsave(
+  plot = FigS3,
+  "outputs/r/SI/figS3.png",
+  width = 15,
+  height = 10,
+  units = "cm",
   scale = 1,
   dpi = 600)
 ```
