@@ -10,6 +10,9 @@ output: html_document
 library(phyloseq)
 library(tidyverse)
 library(igraph)
+#library(FactoMineR)
+#library(factoextra)
+library(psych)
 ```
 
 # Import data
@@ -584,4 +587,133 @@ FigS7 <- cowplot::plot_grid(close, aspl,
 #   bg =  "white",
 #   scale = 1,
 #   dpi = 600)
+```
+
+## PCA
+### Prep
+```{r}
+node.data1 <- node.data %>% select(-c(Phylum, Class, Order, Family, Genus))
+node.data1$Hub[node.data1$Hub=="Yes"] <- 1
+node.data1$Hub[node.data1$Hub==""] <- 0
+node.data1$recovered2[node.data1$recovered2=="true"] <- 1
+node.data1$recovered2[node.data1$recovered2=="false"] <- 0
+
+# From Plot B: Distance to Hubs
+G2 <- as_data_frame(G, what = "vertices") %>% select(c(name2, sp_hub_n_hops, sp_hub_total_weight, NumberOfUndirectedEdges)) 
+G2$name2[G2$name2=="ASV 2381 Burkholderia-C-P"] <- "ASV 2381 BC-Paraburkholderia"
+G2$name2[G2$name2=="ASV 2377 Burkholderia-C-P"] <- "ASV 2377 BC-Paraburkholderia"
+G2$name2[G2$name2=="ASV 2373 Burkholderia-C-P"] <- "ASV 2373 BC-Paraburkholderia"
+
+x <- setdiff(G2$name2, node.data1$name2) %>% as.data.frame()
+y <- setdiff(node.data1$name2, G2$name2) %>% as.data.frame()
+
+node.data2 <- merge(G2, node.data1, by = "name2")  
+node.data2$sp_hub_n_hops[node.data2$sp_hub_n_hops=="Inf"] <- 0
+node.data2$sp_hub_total_weight[node.data2$sp_hub_total_weight=="Inf"] <- 0
+
+node.data2$Degree <- as.numeric(node.data2$Degree)
+node.data2$Hub <- as.numeric(node.data2$Hub)
+node.data2$Eccentricity <- as.numeric(node.data2$Eccentricity)
+node.data2$Stress <- as.numeric(node.data2$Stress)
+node.data2$sp_hub_n_hops <- as.numeric(node.data2$sp_hub_n_hops)
+node.data2$sp_hub_total_weight <- as.numeric(node.data2$sp_hub_total_weight)
+node.data2$recovered2 <- as.factor(node.data2$recovered2)
+
+colSums(is.na(node.data2)) # returns the number of missing values in each column
+node.data3 <- node.data2[,2:17]
+summary(node.data3)
+```
+
+#### Approach 1
+```{r}
+# https://www.datacamp.com/tutorial/pca-analysis-r
+
+node.data4 <- node.data3 %>% scale()
+data.pca <- princomp(node.data4)
+summary(data.pca)
+
+data.pca$loadings[, 1:2]
+fviz_eig(data.pca, addlabels = TRUE)
+fviz_pca_var(data.pca, col.var = "black")
+fviz_cos2(data.pca, choice = "var", axes = 1:2)
+
+fviz_pca_var(data.pca, col.var = "cos2",
+            gradient.cols = c("black", "orange", "green"),
+            repel = TRUE)
+```
+
+#### Approach 2
+```{r}
+# https://www.r-bloggers.com/2021/05/principal-component-analysis-pca-in-r/
+
+set.seed(111)
+ind <- sample(2, nrow(node.data3),
+              replace = TRUE,
+              prob = c(0.8, 0.2))
+training <- node.data3[ind==1,]
+testing <- node.data3[ind==2,]
+
+pairs.panels(training[,-16],
+             gap = 0,
+             bg = c("red", "yellow", "blue")[training$recovered2],
+             pch=21)
+
+pc <- prcomp(training[,-16],
+             center = TRUE,
+            scale. = TRUE)
+attributes(pc)
+pc$center
+pc$scale
+print(pc)
+summary(pc)
+
+pairs.panels(pc$x,
+             gap=0,
+             bg = c("red", "yellow", "blue")[training$recovered2],
+             pch=21)
+
+library(devtools)
+# install_github("vqv/ggbiplot")
+library(ggbiplot)
+g <- ggbiplot(pc,
+              obs.scale = 1,
+              var.scale = 1,
+              groups = training$recovered2,
+              ellipse = TRUE,
+              circle = TRUE,
+              ellipse.prob = 0.68)
+g <- g + 
+  scale_color_manual(name = "Fraction",
+                       values = c("#0073C2FF", "#CD534CFF")) +
+  theme_classic() +
+  theme(legend.direction = 'vertical',
+        legend.position = c(0.8, 0.9))
+print(g)
+
+cowplot::save_plot(plot = g,
+  "outputs/r/SI/PCA.png",
+  base_width = 20,
+  base_height = 10,
+  units = "cm",
+  bg =  "white",
+  scale = 1,
+  dpi = 600)
+
+pc$loadings[, 1:2]
+ev <- fviz_eig(pc, addlabels = TRUE); ev # Percentage of explained variances
+fviz_pca_var(pc, col.var = "black")
+vc <- fviz_cos2(pc, choice = "var", axes = 1); vc # How much each variable is represented in a given component.
+fviz_pca_var(pc, col.var = "cos2",
+            gradient.cols = c("black", "orange", "green"),
+            repel = TRUE)
+
+# cowplot::save_plot(plot = ev,
+#   "outputs/r/SI/explained-var.png",
+#   base_width = 20,
+#   base_height = 10,
+#   units = "cm",
+#   bg =  "white",
+#   scale = 1,
+#   dpi = 600)
+
 ```
