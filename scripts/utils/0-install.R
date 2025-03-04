@@ -9,6 +9,8 @@ install.packages("gridExtra")
 install.packages("tidyverse")
 install.packages("igraph")
 install.packages("RColorBrewer")
+install.packages("factoextra")
+install.packages("FactoMineR")
   
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")

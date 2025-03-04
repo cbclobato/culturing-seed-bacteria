@@ -12,7 +12,6 @@ library(tidyverse)
 library(igraph)
 library(FactoMineR)
 library(factoextra)
-library(psych)
 ```
 
 # Import data
@@ -570,27 +569,7 @@ Fig4_final <- cowplot::plot_grid(Fig4A) +
 ```
 
 # SI
-```{r}
-FigS7 <- cowplot::plot_grid(close, aspl,
-                            neig, rad,
-                            labels = c("A", "B", "C", "D"),
-                            label_size = 12,
-                            # vjust = 2,
-                            ncol = 2,
-                            align = "hv"); FigS7
-
-# cowplot::save_plot(plot = FigS7,
-#   "outputs/r/SI/figS7.png",
-#   base_width = 27,
-#   base_height = 18,
-#   units = "cm",
-#   bg =  "white",
-#   scale = 1,
-#   dpi = 600)
-```
-
-## Contributions to variance
-### Prep
+## Prep
 ```{r}
 # From Prep Network Analysis
 node.data1 <- node.data %>% select(-c(Phylum, Class, Order, Family, Genus))
@@ -625,7 +604,7 @@ node.data3 <- node.data2[,2:17]
 summary(node.data3)
 ```
 
-#### PCA
+### PCA
 ```{r}
 colors <- c("#0073C2FF", "#CD534CFF")
 col_u <- as.character(node.data3$recovered2)
@@ -655,24 +634,24 @@ ev <- fviz_eig(res, addlabels = T, ncp = 15, barfill = "#2abfa4", barcolor = "#2
    theme(plot.margin = margin(0,0,0,0, "cm")); ev 
 
 
-FigS8 <- cowplot::plot_grid(ev, vc1, vc2, 
+FigS7 <- cowplot::plot_grid(ev, vc1, vc2, 
                            labels = c("B", "C", "D"),
                            label_size = 12,
                            hjust = 1.5,
                            ncol = 1,
-                           align = "hv"); FigS8
+                           align = "hv"); FigS7
 
-FigS8_final <- cowplot::plot_grid(biplot, FigS8,labels = c("A", ""),
+FigS7_final <- cowplot::plot_grid(biplot, FigS8,labels = c("A", ""),
                            label_size = 12,
                            rel_heights = c(0.2, .8),
                            rel_widths = c(1, .7),
                            scale = c(0.75, 1),
                            ncol = 2,
                            align = "hv") +
-   theme(plot.margin = margin(0,0,0,0, "cm")); FigS8_final
+   theme(plot.margin = margin(0,0,0,0, "cm")); FigS7_final
 
-cowplot::save_plot(plot = FigS8_final,
-  "outputs/r/SI/figS8.png",
+cowplot::save_plot(plot = FigS7_final,
+  "outputs/r/SI/figS7.png",
   base_width = 50,
   base_height = 30,
   units = "cm",
@@ -682,7 +661,26 @@ cowplot::save_plot(plot = FigS8_final,
 
 ```
 
-#### Logistic regression
+```{r}
+FigS8 <- cowplot::plot_grid(close, aspl,
+                            neig, rad,
+                            labels = c("A", "B", "C", "D"),
+                            label_size = 12,
+                            # vjust = 2,
+                            ncol = 2,
+                            align = "hv"); FigS8
+
+# cowplot::save_plot(plot = FigS8,
+#   "outputs/r/SI/figS8.png",
+#   base_width = 27,
+#   base_height = 18,
+#   units = "cm",
+#   bg =  "white",
+#   scale = 1,
+#   dpi = 600)
+```
+
+### Logistic regression
 ```{r}
 library(aod)
 summary(node.data3)
@@ -699,7 +697,8 @@ confint.default(mylogit)
 
 wald.test(b = coef(mylogit), Sigma = vcov(mylogit), Terms = 17)
 ```
-#### Correlation Test
+
+### Correlation Test
 ```{r}
 library(ggpubr)
 colnames(node.data3)
