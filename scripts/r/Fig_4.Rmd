@@ -10,8 +10,8 @@ output: html_document
 library(phyloseq)
 library(tidyverse)
 library(igraph)
-#library(FactoMineR)
-#library(factoextra)
+library(FactoMineR)
+library(factoextra)
 library(psych)
 ```
 
@@ -589,9 +589,10 @@ FigS7 <- cowplot::plot_grid(close, aspl,
 #   dpi = 600)
 ```
 
-## PCA
+## Contributions to variance
 ### Prep
 ```{r}
+# From Prep Network Analysis
 node.data1 <- node.data %>% select(-c(Phylum, Class, Order, Family, Genus))
 node.data1$Hub[node.data1$Hub=="Yes"] <- 1
 node.data1$Hub[node.data1$Hub==""] <- 0
@@ -624,96 +625,93 @@ node.data3 <- node.data2[,2:17]
 summary(node.data3)
 ```
 
-#### Approach 1
+#### PCA
 ```{r}
-# https://www.datacamp.com/tutorial/pca-analysis-r
+colors <- c("#0073C2FF", "#CD534CFF")
+col_u <- as.character(node.data3$recovered2)
+node.data4 <- node.data3[1:15]
 
-node.data4 <- node.data3 %>% scale()
-data.pca <- princomp(node.data4)
-summary(data.pca)
+res <- PCA(node.data4, scale.unit = T)
 
-data.pca$loadings[, 1:2]
-fviz_eig(data.pca, addlabels = TRUE)
-fviz_pca_var(data.pca, col.var = "black")
-fviz_cos2(data.pca, choice = "var", axes = 1:2)
+# Cumulative percentage of variance
+res$eig
 
-fviz_pca_var(data.pca, col.var = "cos2",
-            gradient.cols = c("black", "orange", "green"),
-            repel = TRUE)
-```
+biplot <- fviz_pca_biplot(res, geom.ind = "point", pointsize = 2.5, 
+                          col.var = "black", col.ind = col_u, pointshape = 19,
+                          repel = T, addEllipses = T, alpha.var = 1) +
+  theme(title = element_blank()) +
+  scale_fill_manual(values = c("transparent", "transparent")) +
+  scale_color_manual(name = "Taxa", 
+                     labels = c("Unultured", "Cultured"),
+                     values = colors) +
+  guides(fill = "none"); biplot
 
-#### Approach 2
-```{r}
-# https://www.r-bloggers.com/2021/05/principal-component-analysis-pca-in-r/
+# Contribution of variable to the dimentions
+vc1 <- fviz_contrib(res, choice = "var", axes = 1, top = 15, fill = "#2abfa4", color = "#2abfa4"); vc1
+vc2 <- fviz_contrib(res, choice = "var", axes = 2, top = 15, fill = "#2abfa4", color = "#2abfa4"); vc2
+# Percentage of explained variances
+ev <- fviz_eig(res, addlabels = T, ncp = 15, barfill = "#2abfa4", barcolor = "#2abfa4",
+               main = "", xlab = "", ylab = "Percentage of Explained Variances") +
+   theme(plot.margin = margin(0,0,0,0, "cm")); ev 
 
-set.seed(111)
-ind <- sample(2, nrow(node.data3),
-              replace = TRUE,
-              prob = c(0.8, 0.2))
-training <- node.data3[ind==1,]
-testing <- node.data3[ind==2,]
 
-pairs.panels(training[,-16],
-             gap = 0,
-             bg = c("red", "yellow", "blue")[training$recovered2],
-             pch=21)
+FigS8 <- cowplot::plot_grid(ev, vc1, vc2, 
+                           labels = c("B", "C", "D"),
+                           label_size = 12,
+                           hjust = 1.5,
+                           ncol = 1,
+                           align = "hv"); FigS8
 
-pc <- prcomp(training[,-16],
-             center = TRUE,
-            scale. = TRUE)
-attributes(pc)
-pc$center
-pc$scale
-print(pc)
-summary(pc)
+FigS8_final <- cowplot::plot_grid(biplot, FigS8,labels = c("A", ""),
+                           label_size = 12,
+                           rel_heights = c(0.2, .8),
+                           rel_widths = c(1, .7),
+                           scale = c(0.75, 1),
+                           ncol = 2,
+                           align = "hv") +
+   theme(plot.margin = margin(0,0,0,0, "cm")); FigS8_final
 
-pairs.panels(pc$x,
-             gap=0,
-             bg = c("red", "yellow", "blue")[training$recovered2],
-             pch=21)
-
-library(devtools)
-# install_github("vqv/ggbiplot")
-library(ggbiplot)
-g <- ggbiplot(pc,
-              obs.scale = 1,
-              var.scale = 1,
-              groups = training$recovered2,
-              ellipse = TRUE,
-              circle = TRUE,
-              ellipse.prob = 0.68)
-g <- g + 
-  scale_color_manual(name = "Fraction",
-                       values = c("#0073C2FF", "#CD534CFF")) +
-  theme_classic() +
-  theme(legend.direction = 'vertical',
-        legend.position = c(0.8, 0.9))
-print(g)
-
-cowplot::save_plot(plot = g,
-  "outputs/r/SI/PCA.png",
-  base_width = 20,
-  base_height = 10,
+cowplot::save_plot(plot = FigS8_final,
+  "outputs/r/SI/figS8.png",
+  base_width = 50,
+  base_height = 30,
   units = "cm",
   bg =  "white",
   scale = 1,
   dpi = 600)
 
-pc$loadings[, 1:2]
-ev <- fviz_eig(pc, addlabels = TRUE); ev # Percentage of explained variances
-fviz_pca_var(pc, col.var = "black")
-vc <- fviz_cos2(pc, choice = "var", axes = 1); vc # How much each variable is represented in a given component.
-fviz_pca_var(pc, col.var = "cos2",
-            gradient.cols = c("black", "orange", "green"),
-            repel = TRUE)
+```
 
-# cowplot::save_plot(plot = ev,
-#   "outputs/r/SI/explained-var.png",
-#   base_width = 20,
-#   base_height = 10,
-#   units = "cm",
-#   bg =  "white",
-#   scale = 1,
-#   dpi = 600)
+#### Logistic regression
+```{r}
+library(aod)
+summary(node.data3)
+colnames(node.data3)
 
+node.data3$Hub <- as.factor(node.data3$Hub)
+
+sapply(node.data3, sd)
+mylogit <- glm(recovered2 ~ ClosenessCentrality + RA + sp_hub_n_hops + sp_hub_total_weight + NumberOfUndirectedEdges + Degree + NeighborhoodConnectivity  + AverageShortestPathLength + BetweennessCentrality + ClusteringCoefficient + Eccentricity + Radiality + Stress + TopologicalCoefficient + Hub, data = node.data3, family = "binomial")
+summary(mylogit)
+
+confint(mylogit)
+confint.default(mylogit)
+
+wald.test(b = coef(mylogit), Sigma = vcov(mylogit), Terms = 17)
+```
+#### Correlation Test
+```{r}
+library(ggpubr)
+colnames(node.data3)
+node.data3$recovered2 <- as.numeric(node.data3$recovered2)
+
+cor(node.data3$recovered2, node.data3$RA, method = "spearman") #0.56
+cor(node.data3$recovered2, node.data3$sp_hub_n_hops, method = "spearman") #0.3
+cor(node.data3$recovered2, node.data3$AverageShortestPathLength, method = "spearman") #0.26
+cor(node.data3$recovered2, node.data3$BetweennessCentrality, method = "spearman") #0.066
+cor(node.data3$recovered2, node.data3$ClosenessCentrality, method = "spearman") #-0.27
+cor(node.data3$recovered2, node.data3$Degree, method = "spearman") #-0.059
+cor(node.data3$recovered2, node.data3$NeighborhoodConnectivity, method = "spearman") #-0.29
+
+ggscatter(node.data3, x = "recovered2", y = "sp_hub_n_hops", add = "reg.line", conf.int = T, cor.coef = T, cor.method = "spearman")
 ```
