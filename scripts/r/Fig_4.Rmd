@@ -98,18 +98,18 @@ node.rel.rec$name2 <- gsub("Burkholderia-Caballeronia-Paraburkholderia", "BC-Par
 
 # Add legend
 ## Node color
-df1 <- data.frame(x = factor(1:5), y = rep("Node", 5))
-Class <- c("Actinobacteria", "Alphaproteobacteria", "Bacilli", "Bacteroidia", "Gammaproteobacteria")
-color.class <- rev(c("#98cc90","#563C5C","#5197c5","#d8cd99","#8A4D30"))
+df1 <- data.frame(x = factor(1:6), y = rep("Node", 6))
+Class <- c("Actinobacteria", "Alphaproteobacteria", "Bacilli", "Bacteroidia", "Gammaproteobacteria", "Other")
+color.class <- rev(c("#808588","#98cc90","#563C5C","#5197c5","#d8cd99","#8A4D30"))
 
 legend1 <- cowplot::get_legend(
   ggplot(df1) +
-  geom_point(aes(x = x, y = y, color = x)) +
-  scale_color_manual(name = "Class", values = color.class, labels = Class) +
+  geom_point(aes(x = x, y = y, color = x), shape = 21, stroke = 2) +
+  scale_color_manual(name = "Nodes", values = color.class, labels = Class) +
   theme_classic() +
   theme(legend.direction = "horizontal",
         legend.text = element_text(size = 8),
-        legend.title = element_text(size = 10),
+        legend.title = element_text(size = 9, face = "bold"),
         legend.key.size = unit(0.5, "cm"),
         legend.key.spacing.x = unit(1, "lines"),
         legend.box.margin = margin(0,0,0,0, "cm"),
@@ -124,12 +124,12 @@ color.edges <- c("#2abfa4", "#BF592A")
 
 legend2 <- cowplot::get_legend(
   ggplot(df2) +
-  geom_segment(aes(x = x1, y = y1, xend = x2, yend = y2 ,color = color)) +
-  scale_color_manual(name = "", values = color.edges, labels = Edges) +
+  geom_segment(aes(x = x1, y = y1, xend = x2, yend = y2 ,color = color), size = 1) +
+  scale_color_manual(name = "Edges", values = color.edges, labels = Edges) +
   theme_classic() +
   theme(legend.direction = "horizontal",
         legend.text = element_text(size = 8),
-        legend.title = element_text(size = 10),
+        legend.title = element_text(size = 9, face = "bold"),
         legend.key.size = unit(0.5, "cm"),
         legend.key.spacing.x = unit(1, "lines"),
         legend.box.margin = margin(0,0,0,0, "cm"),
@@ -140,16 +140,17 @@ legend2 <- cowplot::get_legend(
 ## Node fill and shape
 df3 <- data.frame(x = factor(1:2), y = rep("Hub", 2), color = rep("Cultured", 2))
 Cult <- c("Cultured")
+
 legend3 <- cowplot::get_legend(
   ggplot(df3) +
-  geom_point(aes(x = x, y = y, shape = y, color = color)) +
+  geom_point(aes(x = x, y = y, shape = y, color = color), size = 3, stroke = 1) +
   scale_color_manual(name = "", values = c("#BF592A"), labels = Cult) +
   scale_shape_manual(name = "", values = 5) +
   theme_classic() +
   theme(legend.direction = "horizontal",
         legend.box = "horizontal",
         legend.text = element_text(size = 8),
-        legend.title = element_text(size = 10),
+        legend.title = element_text(size = 9, face = "bold"),
         legend.key.size = unit(0.75, "cm"),
         legend.key.spacing.x = unit(1, "lines"),
         legend.box.margin = margin(0,0,0,0, "cm"),
@@ -163,12 +164,12 @@ Size1 <- c(0.35, 0.65, 1.05)
 
 legend4 <- cowplot::get_legend(
   ggplot(df4) +
-  geom_segment(aes(x = x1, y = y1, xend = x2, yend = y2 ,size = size)) +
-  scale_size_manual(name = "Weight", values = Size1, labels = df4$size) +
+  geom_segment(aes(x = x1, y = y1, xend = x2, yend = y2, size = size)) +
+  scale_size_manual(name = "", values = Size1, labels = df4$size) +
   theme_classic() +
   theme(legend.direction = "horizontal",
         legend.text = element_text(size = 8),
-        legend.title = element_text(size = 10),
+        legend.title = element_text(size = 9, face = "bold"),
         legend.key.size = unit(0.5, "cm"),
         legend.key.spacing.x = unit(1, "lines"),
         legend.box.margin = margin(0,0,0,0, "cm"),
@@ -180,16 +181,17 @@ legend4 <- cowplot::get_legend(
 df5 <- data.frame(x = factor(1:6), y = rep("Hub", 6))
 Size2 <- c(3, 6, 9, 12, 15, 18)
 s.labs <- c("0.001%", "0.01%", "0.1%", "1%", "10%", "20%")
+
 legend5 <- cowplot::get_legend(
   ggplot(df5) +
-  geom_point(aes(x = x, y = y, size = x), shape = 21) +
+  geom_point(aes(x = x, y = y, size = x), shape = 21, stroke = 1) +
   scale_size_manual(name = "", values = Size2, labels = s.labs) +
   theme_classic() +
-  guides(size = guide_legend(title = "Mean rel. ab.", nrow = 1, reverse = F)) +
+  guides(size = guide_legend(title = "", nrow = 1, reverse = F)) + # Mean rel. ab.
   theme(legend.direction = "horizontal",
         legend.box = "horizontal",
         legend.text = element_text(size = 8),
-        legend.title = element_text(size = 10),
+        legend.title = element_text(size = 9, face = "bold"),
         legend.key.size = unit(0.75, "cm"),
         legend.key.spacing.x = unit(1, "lines"),
         legend.box.margin = margin(0,0,0,0, "cm"),
@@ -200,20 +202,21 @@ legend5 <- cowplot::get_legend(
 Fig4A <- cowplot::plot_grid(Nw, ncol = 1, labels = c("A"), label_size = 12, vjust = 3, hjust = -18) + 
   theme(plot.margin = margin(0.25, -5, 5, -5, "cm")) +
   annotation_custom(legend1, # Node color
-                    xmin = -0.03, xmax = 0.75,
+                    xmin = 0.14, xmax = 0.51,
                     ymin = -0.075, ymax = -0.075) +
-  annotation_custom(legend2, # Edge color
-                    xmin = 0.099, xmax = 0.3,
-                    ymin = -0.175, ymax = -0.175) + 
   annotation_custom(legend3, # Node fill and shape
-                    xmin = 0.25, xmax = 0.4,
-                    ymin = -0.175, ymax = -0.175) + 
-  annotation_custom(legend4, # Edge size
-                    xmin = 0.35, xmax = 0.6,
-                    ymin = -0.175, ymax = -0.175) + 
-  annotation_custom(legend5, # Node size
-                    xmin = 0, xmax = 0.75,
-                    ymin = -0.3, ymax = -0.3)
+                    xmin = 0.51, xmax = 0.61,
+                    ymin = -0.075, ymax = -0.075) + 
+    annotation_custom(legend5, # Node size
+                    xmin = 0.045, xmax = 0.75,
+                    ymin = -0.2, ymax = -0.2) +
+  annotation_custom(legend2, # Edge color
+                    xmin = 0.14, xmax = 0.35,
+                    ymin = -0.32, ymax = -0.32) + 
+  annotation_custom(legend4, # Edge size 
+                    xmin = 0.35, xmax = 0.45,
+                    ymin = -0.32, ymax = -0.32)
+
 
 # save(Fig4A, file = "outputs/r/Fig_4/fig4A.RData")
 
@@ -441,7 +444,7 @@ mwu_hubs <- wilcox.test(value ~ group, data); mwu_hubs # 0.0007538 SIG
 
 #### Plot
 ```{r}
-mycolors = c("#BF592A", "#dbdddd")
+mycolors = c("#BF592A", "#b3b5b5")
 
 Fig4B <- ggplot(data,
                 aes(x = value,
@@ -515,7 +518,7 @@ tbl.se.p <- tbl.se %>% rownames_to_column("Groups") %>%
                           "True" = "Cultured")) %>% 
   mutate(per = round(c(9*100/67, 58*100/67, 14*100/25, 11*100/25),2))
 
-mycolors = c("#BF592A", "#dbdddd")
+mycolors = c("#BF592A", "#b3b5b5")
 
 Fig4C <- ggplot(tbl.se.p) +
   geom_bar(aes(x = Groups, y = per, fill = Edges_to), 
