@@ -102,3 +102,4 @@ project/
 The 16S Pacbio V1-V9 rRNA gene amplicon raw FASTQ files for *Cannabis* cultured seed endophytic bacterial taxa were deposited in [ENA](https://www.ebi.ac.uk/ena) under the accession number PRJEB83654.
 
 ### References
+Lobato, C. *et al.* Defining the cultured and uncultured bacterial fractions in Cannabis seeds. Environmental Microbiome 20, 68 (2025). [https://doi.org/10.1186/s40793-025-00731-4](https://doi.org/10.1186/s40793-025-00731-4)
